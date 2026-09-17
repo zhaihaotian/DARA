@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.dependencies/
+.venv/
+outputs/
+checkpoints/
+wandb/
+*.log
+data/rlla_4k/*.parquet

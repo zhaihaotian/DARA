@@ -1,0 +1,14 @@
+{
+  "v4": {
+    "version": "v4",
+    "model": "haotian-gdpo-s0",
+    "cases": 3301,
+    "accuracy_equal": true,
+    "format_max_difference": 0.0
+  },
+  "v3": {
+    "model": "haotian-3b-gdpo-s0",
+    "cases": 2501,
+    "accuracy_equal": true
+  }
+}

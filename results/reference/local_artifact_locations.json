@@ -1,0 +1,254 @@
+[
+  {
+    "run_id": "1.5b-grpo-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed0/actor/global_step_100",
+    "export": "training_logs/1.5b/grpo_s0.jsonl"
+  },
+  {
+    "run_id": "1.5b-grpo-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed1/actor/global_step_100",
+    "export": "training_logs/1.5b/grpo_s1.jsonl"
+  },
+  {
+    "run_id": "1.5b-grpo-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed2/actor/global_step_100",
+    "export": "training_logs/1.5b/grpo_s2.jsonl"
+  },
+  {
+    "run_id": "1.5b-grpo-s4",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed4/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed4/actor/global_step_100",
+    "export": "training_logs/1.5b/grpo_s4.jsonl"
+  },
+  {
+    "run_id": "1.5b-grpo-s5",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed5/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/grpo_seed5/actor/global_step_100",
+    "export": "training_logs/1.5b/grpo_s5.jsonl"
+  },
+  {
+    "run_id": "1.5b-gdpo-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed0/actor/global_step_100",
+    "export": "training_logs/1.5b/gdpo_s0.jsonl"
+  },
+  {
+    "run_id": "1.5b-gdpo-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed1/actor/global_step_100",
+    "export": "training_logs/1.5b/gdpo_s1.jsonl"
+  },
+  {
+    "run_id": "1.5b-gdpo-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed2/actor/global_step_100",
+    "export": "training_logs/1.5b/gdpo_s2.jsonl"
+  },
+  {
+    "run_id": "1.5b-gdpo-s4",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed4/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed4/actor/global_step_100",
+    "export": "training_logs/1.5b/gdpo_s4.jsonl"
+  },
+  {
+    "run_id": "1.5b-gdpo-s5",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed5/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_seed5/actor/global_step_100",
+    "export": "training_logs/1.5b/gdpo_s5.jsonl"
+  },
+  {
+    "run_id": "1.5b-dara-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed0/actor/global_step_100",
+    "export": "training_logs/1.5b/dara_s0.jsonl"
+  },
+  {
+    "run_id": "1.5b-dara-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed1/actor/global_step_100",
+    "export": "training_logs/1.5b/dara_s1.jsonl"
+  },
+  {
+    "run_id": "1.5b-dara-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed2/actor/global_step_100",
+    "export": "training_logs/1.5b/dara_s2.jsonl"
+  },
+  {
+    "run_id": "1.5b-dara-s4",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed4/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed4/actor/global_step_100",
+    "export": "training_logs/1.5b/dara_s4.jsonl"
+  },
+  {
+    "run_id": "1.5b-dara-s5",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed5/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/rdgdpo_seed5/actor/global_step_100",
+    "export": "training_logs/1.5b/dara_s5.jsonl"
+  },
+  {
+    "run_id": "1.5b-rvpo-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/rvpo_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/rvpo_seed0/actor/global_step_100",
+    "export": "training_logs/1.5b/rvpo_s0.jsonl"
+  },
+  {
+    "run_id": "1.5b-rvpo-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/rvpo_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/rvpo_seed1/actor/global_step_100",
+    "export": "training_logs/1.5b/rvpo_s1.jsonl"
+  },
+  {
+    "run_id": "1.5b-rvpo-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/rvpo_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/rvpo_seed2/actor/global_step_100",
+    "export": "training_logs/1.5b/rvpo_s2.jsonl"
+  },
+  {
+    "run_id": "1.5b-dvao-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/dvao_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/dvao_seed0/actor/global_step_100",
+    "export": "training_logs/1.5b/dvao_s0.jsonl"
+  },
+  {
+    "run_id": "1.5b-dvao-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/dvao_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/dvao_seed1/actor/global_step_100",
+    "export": "training_logs/1.5b/dvao_s1.jsonl"
+  },
+  {
+    "run_id": "1.5b-dvao-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/dvao_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/dvao_seed2/actor/global_step_100",
+    "export": "training_logs/1.5b/dvao_s2.jsonl"
+  },
+  {
+    "run_id": "1.5b-gd2po_hard-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gd2po_hard_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gd2po_hard_seed0/actor/global_step_100",
+    "export": "training_logs/1.5b/gd2po_hard_s0.jsonl"
+  },
+  {
+    "run_id": "1.5b-gd2po_hard-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gd2po_hard_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gd2po_hard_seed1/actor/global_step_100",
+    "export": "training_logs/1.5b/gd2po_hard_s1.jsonl"
+  },
+  {
+    "run_id": "1.5b-gd2po_hard-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gd2po_hard_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gd2po_hard_seed2/actor/global_step_100",
+    "export": "training_logs/1.5b/gd2po_hard_s2.jsonl"
+  },
+  {
+    "run_id": "1.5b-gdpo_saw-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_saw_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_saw_seed0/actor/global_step_100",
+    "export": "training_logs/1.5b/gdpo_saw_s0.jsonl"
+  },
+  {
+    "run_id": "1.5b-gdpo_saw-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_saw_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_saw_seed1/actor/global_step_100",
+    "export": "training_logs/1.5b/gdpo_saw_s1.jsonl"
+  },
+  {
+    "run_id": "1.5b-gdpo_saw-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_saw_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO/results/figure1/gdpo_saw_seed2/actor/global_step_100",
+    "export": "training_logs/1.5b/gdpo_saw_s2.jsonl"
+  },
+  {
+    "run_id": "3b-grpo-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed0/actor/global_step_100",
+    "export": "training_logs/3b/grpo_s0.jsonl"
+  },
+  {
+    "run_id": "3b-grpo-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed1/actor/global_step_100",
+    "export": "training_logs/3b/grpo_s1.jsonl"
+  },
+  {
+    "run_id": "3b-grpo-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed2/actor/global_step_100",
+    "export": "training_logs/3b/grpo_s2.jsonl"
+  },
+  {
+    "run_id": "3b-grpo-s4",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed4/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed4/actor/global_step_100",
+    "export": "training_logs/3b/grpo_s4.jsonl"
+  },
+  {
+    "run_id": "3b-grpo-s5",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed5/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/grpo_seed5/actor/global_step_100",
+    "export": "training_logs/3b/grpo_s5.jsonl"
+  },
+  {
+    "run_id": "3b-gdpo-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed0/actor/global_step_100",
+    "export": "training_logs/3b/gdpo_s0.jsonl"
+  },
+  {
+    "run_id": "3b-gdpo-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed1/actor/global_step_100",
+    "export": "training_logs/3b/gdpo_s1.jsonl"
+  },
+  {
+    "run_id": "3b-gdpo-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed2/actor/global_step_100",
+    "export": "training_logs/3b/gdpo_s2.jsonl"
+  },
+  {
+    "run_id": "3b-gdpo-s4",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed4/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed4/actor/global_step_100",
+    "export": "training_logs/3b/gdpo_s4.jsonl"
+  },
+  {
+    "run_id": "3b-gdpo-s5",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed5/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/gdpo_seed5/actor/global_step_100",
+    "export": "training_logs/3b/gdpo_s5.jsonl"
+  },
+  {
+    "run_id": "3b-dara-s0",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed0/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed0/actor/global_step_100",
+    "export": "training_logs/3b/dara_s0.jsonl"
+  },
+  {
+    "run_id": "3b-dara-s1",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed1/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed1/actor/global_step_100",
+    "export": "training_logs/3b/dara_s1.jsonl"
+  },
+  {
+    "run_id": "3b-dara-s2",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed2/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed2/actor/global_step_100",
+    "export": "training_logs/3b/dara_s2.jsonl"
+  },
+  {
+    "run_id": "3b-dara-s4",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed4/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed4/actor/global_step_100",
+    "export": "training_logs/3b/dara_s4.jsonl"
+  },
+  {
+    "run_id": "3b-dara-s5",
+    "source_metrics": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed5/metrics.jsonl",
+    "checkpoint": "/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian/rdgdpo_symmetric_seed5/actor/global_step_100",
+    "export": "training_logs/3b/dara_s5.jsonl"
+  }
+]

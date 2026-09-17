@@ -1,0 +1,1022 @@
+{
+  "date": "2026-09-17",
+  "advantage_comparisons": [
+    {
+      "method": "grpo",
+      "group": 4,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 4,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 4,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 4,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 4,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 4,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 4,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 4,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 4,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 4,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 4,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 4,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 4,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 4,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 4,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 4,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 4,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 4,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 4,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 4,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 4,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 4,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 4,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 4,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 4,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 4,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 4,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 4,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 4,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 4,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 4,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 4,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 4,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 4,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 4,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 8,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 8,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 8,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 8,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 8,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 8,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 8,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 8,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 8,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 8,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 8,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 8,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 8,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 8,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 8,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 8,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 8,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 8,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 8,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 8,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 8,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 8,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 8,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 8,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 8,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 8,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 8,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 8,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 8,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 8,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 8,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 8,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 8,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 8,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 8,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 16,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 16,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 16,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 16,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 16,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 16,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 16,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 16,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 16,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 16,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 16,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 16,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 16,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 16,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 16,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 16,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 16,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 16,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 16,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 16,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 16,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 16,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 16,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 16,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 16,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 16,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 16,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 16,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 16,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 16,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 16,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 16,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 16,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 16,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 16,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 32,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 32,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 32,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 32,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 32,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 32,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 32,
+      "pattern": "random",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 32,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 32,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 32,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 32,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 32,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 32,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 32,
+      "pattern": "sparse",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 32,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 32,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 32,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 32,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 32,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 32,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 32,
+      "pattern": "constant",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 32,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 32,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 32,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 32,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 32,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 32,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 32,
+      "pattern": "conflict",
+      "exact_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 32,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 32,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 32,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 32,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 32,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 32,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 32,
+      "pattern": "partial_credit",
+      "exact_equal": true
+    }
+  ],
+  "configuration_comparisons": [
+    {
+      "method": "grpo",
+      "group": 4,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 4,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 4,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 4,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 4,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 4,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 4,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 8,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 8,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 8,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 8,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 8,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 8,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 8,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 16,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 16,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 16,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 16,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 16,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 16,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 16,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "grpo",
+      "group": 32,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gdpo",
+      "group": 32,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "dara",
+      "group": 32,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "rvpo",
+      "group": 32,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "dvao",
+      "group": 32,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gdpo_saw",
+      "group": 32,
+      "old_resolved_config_equal": true
+    },
+    {
+      "method": "gd2po_hard",
+      "group": 32,
+      "old_resolved_config_equal": true
+    }
+  ],
+  "unchanged_files": {
+    "utils/reward_score/rlla.py": true,
+    "trainer/ppo/multi_reward_algos.py": true,
+    "trainer/main_ppo.py": true,
+    "trainer/config/ppo_trainer.yaml": true,
+    "workers/rollout/vllm_rollout/vllm_rollout.py": true,
+    "utils/dataset/rl_dataset.py": true
+  },
+  "unchanged_actor_worker_methods": {
+    "workers/actor/dp_actor.py": {
+      "__init__": true,
+      "_forward_micro_batch": true,
+      "_optimizer_step": true,
+      "compute_log_prob": true,
+      "update_policy": true
+    },
+    "workers/fsdp_workers.py": {
+      "__init__": true,
+      "_build_model_optimizer": true,
+      "_build_rollout": true,
+      "init_model": true,
+      "update_actor": true,
+      "generate_sequences": true,
+      "compute_ref_log_prob": true,
+      "save_checkpoint": true,
+      "_build_critic_model_optimizer": true,
+      "compute_values": true,
+      "update_critic": true,
+      "_build_model": true,
+      "_forward_micro_batch": true,
+      "_expand_to_token_level": true,
+      "_switch_chat_template": true,
+      "compute_rm_score": true
+    }
+  }
+}

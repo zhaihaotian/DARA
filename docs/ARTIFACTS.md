@@ -1,0 +1,29 @@
+# 数据与实验工件
+
+运行 `python scripts/fetch_data.py` 后获得实际使用的 `data/rlla_4k/train.parquet`（3920题）和 `test.parquet`（80题）。下载源固定为ToolRL提交 `8cee13ec0ca72f0461da372a93a6fd8140dbb840`；已直接比较确认两个文件与Haotian现有数据逐字节一致。不是跟随上游最新版，也不重新生成split。BFCL评测数据由固定版本的官方evaluator单独读取。
+
+## 可直接拿去画图的文件
+
+| 文件 | 内容 |
+|---|---|
+| results/reference/per_model.csv | 44个模型、各seed的V3/V4最终分数 |
+| results/reference/all_seeds.csv | 完整seed汇总，mean与sample SD分列 |
+| results/reference/selected_seeds.csv | 事后筛选诊断，明确n与保留的seed |
+| results/reference/training_dynamics.csv | 42个训练run，每step的format、correctness、length、validation、耗时、density |
+| results/reference/training_status.csv | 完整step数、format首次达到0.8、最终format、累计训练step耗时 |
+| results/reference/training_logs/ | 42份metrics.jsonl，保留每项已记录指标；仅把历史rdgdpo/日志前缀映射为dara/ |
+| results/reference/local_artifact_locations.json | 本服务器上的原始日志与最终checkpoint位置 |
+
+训练曲线中`train_format`来自`critic/format_score/mean`，`train_correctness`来自`critic/correctness_score/mean`，不能把训练reward范围[-3,3]画成BFCL accuracy。`val_format`只在step0/10/…/100有值。缺失CSV单元格不是0；GRPO/GDPO旧日志没有DARA的π，不能从平均reward唯一还原它。
+
+历史模型ID保存在`source_model_id`列，供定位原始评测输出；显示方法名和新命令统一用DARA。所有已完成参考结果都来自原Haotian代码的两奖励训练，不是从新整理仓库重新训练得出的独立replication。
+
+## 大型工件位置
+
+原1.5B训练目录为`/scratch.global/lian0190/RD-GDPO/results/figure1`，3B目录为`/scratch.global/lian0190/RD-GDPO-3B/20260913/haotian`。每run最终模型在`actor/global_step_100`。这些模型权重没有塞进Git仓库。
+
+V3的原始1.5B批次位于`/scratch.global/lian0190/BFCL-v3-evaluation/20260913`；3B当前两组AST批次位于`/scratch.global/lian0190/BFCL-v3-evaluation/20260914/haotian_3b`。V4的44模型批次位于`/scratch.global/lian0190/BFCL-v4-evaluation/20260916/haotian_1p5b_dvao`，内含checkpoint_manifest.json、protocol.json、models/<model-id>/shards、result、score和summary.json。目录命名来自历史批次，V4这个目录实际包含两种规模及全部当前方法。
+
+这些绝对路径仅用于现服务器定位，不是别人机器上的依赖。要在别处重新评分已有模型，需要额外同步相应raw/result工件；下载本Git仓库、创建环境并执行固定数据下载脚本后，即可运行新训练和评测；轻量结果表和训练曲线已在Git仓库中。复制已保存的BFCL分片时，按category合并为`evaluation/run.py`使用的`raw/<category>.jsonl`，保留case ID和完整metadata，不能只拿表格数字当作可重新judge的输入。
+
+`scripts/export_reference.py`可以从原combined per_model.csv与训练日志重新导出这份轻量参考包。来源参数显式传入；不要将其他infra的行混进Haotian参考结果。
