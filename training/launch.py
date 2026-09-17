@@ -54,7 +54,7 @@ def configuration(args):
         'trainer.experiment_name': f'qwen-{args.model_size}-{args.method}-s{args.seed}-G{group}-{args.rewards}-100',
         'trainer.n_gpus_per_node': 4,
         'trainer.nnodes': 1,
-        'trainer.save_freq': 100,
+        'trainer.save_freq': args.save_freq,
         'trainer.test_freq': 10,
         'trainer.default_local_dir': str(output),
         'trainer.total_training_steps': 100,
@@ -101,6 +101,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--rewards', choices=['two', 'three'], default='two')
     parser.add_argument('--group-size', type=int, choices=[4, 8, 16, 32], default=4)
+    parser.add_argument('--save-freq', type=int, choices=[10, 100], default=100,
+                        help='Save a Hugging Face model every N training steps')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
     settings, environment, command = configuration(args)

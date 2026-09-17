@@ -19,7 +19,7 @@ class LaunchTest(unittest.TestCase):
                 rewards = ('two', 'three') if method in ('grpo', 'gdpo', 'dara') else ('two',)
                 for reward in rewards:
                     args = SimpleNamespace(method=method,seed=0,group_size=group,model_size='1.5b',
-                                           rewards=reward,output=Path('/tmp/dara-test'),
+                                           rewards=reward,save_freq=100,output=Path('/tmp/dara-test'),
                                            data_dir=launch.REPO/'data/rlla_4k',model='Qwen/Qwen2.5-1.5B-Instruct')
                     _, env, cmd = launch.configuration(args)
                     with initialize_config_dir(config_dir=str(launch.FRAMEWORK/'verl/trainer/config'),version_base=None):
@@ -55,6 +55,16 @@ class LaunchTest(unittest.TestCase):
         self.assertEqual({r['seed'] for r in group+three},{0,1,2,4,5})
         self.assertEqual({r['method'] for r in group+three},{'grpo','gdpo','dara'})
         self.assertTrue(all(r['gpus']==4 and r['steps']==100 for r in group+three))
+
+    def test_periodic_checkpoint_option_preserves_training_configuration(self):
+        command = [sys.executable, str(launch.REPO/'training/launch.py'),
+                   '--method', 'dvao', '--seed', '0', '--model', 'Qwen/Qwen2.5-1.5B-Instruct',
+                   '--model-size', '1.5b', '--output', '/tmp/dara-dvao-save10', '--dry-run']
+        default = json.loads(subprocess.check_output(command, text=True))
+        periodic = json.loads(subprocess.check_output(command + ['--save-freq', '10'], text=True))
+        self.assertEqual(periodic['settings']['trainer.save_freq'], 10)
+        default['settings']['trainer.save_freq'] = 10
+        self.assertEqual(periodic['settings'], default['settings'])
 
 
 if __name__=='__main__': unittest.main()

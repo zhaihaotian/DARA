@@ -30,6 +30,8 @@ GRPO 使用经过原 reward-KL 接线的总 reward；GDPO、DARA 和其他分通
 
 3B 已在四卡 A10040GB 跑完五 seeds。它使用 `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`；launch.py 按 `--model-size 3b` 设置。3B 沿用表中 batch、response 长度、TP 和训练步数，模型路径指定对应的 3B 权重。
 
+两节点各两卡的资源布局、Ray/FSDP启动方式和当前接线状态见 [MULTINODE.md](MULTINODE.md)。
+
 ## Group 消融的预算
 
 | G | prompt batch | PPO mini（prompt 基数） | PPO micro（prompt 基数） | 回答/step |
@@ -54,6 +56,8 @@ GRPO 对三路原 reward 之和使用原有组内归一化与 KL 接线。GDPO �
 ## 输出与中断
 
 每个 run 保存 `launch.json`、`command.json`、展开的 `config.json`、`metrics.jsonl`、`exit.code` 和最终模型。最终模型保存为 Hugging Face 权重与 tokenizer。为完整 run 申请足够租期；训练中断后，用新输出目录从相同 base 与 seed 重跑。
+
+需要保留训练过程模型时，启动命令加入 `--save-freq 10`，在steps10/20/…/100分别保存到 `actor/global_step_<step>`。每份包含模型权重与tokenizer，供相应训练阶段的推理和评测使用；验证频率仍为每10步。默认 `--save-freq 100` 保存最终模型。
 
 GRPO、GDPO、DARA每step在 `metrics.jsonl` 中记录各奖励通道的π、权重和活跃group数，两奖励包含correctness/format，三奖励再包含length。日志字段与导出训练曲线的命令见 [HANDOFF.md](HANDOFF.md#训练-dynamics)。
 

@@ -10,11 +10,11 @@ from verl.trainer.ppo.ray_trainer import RayPPOTrainer
 
 
 class TrainingStepsTest(unittest.TestCase):
-    def run_loop(self, steps):
+    def run_loop(self, steps, save_freq=100):
         trainer = object.__new__(RayPPOTrainer)
         trainer.config = OmegaConf.create({
             'trainer': {'project_name': 'test', 'experiment_name': 'steps', 'logger': ['console'],
-                        'total_epochs': 1, 'test_freq': 10, 'save_freq': 100, 'critic_warmup': 0},
+                        'total_epochs': 1, 'test_freq': 10, 'save_freq': save_freq, 'critic_warmup': 0},
             'actor_rollout_ref': {'rollout': {'n': 1}, 'actor': {'use_kl_loss': True}},
             'algorithm': {'adv_estimator': 'gdpo', 'gamma': 1.0, 'lam': 1.0},
         })
@@ -64,6 +64,11 @@ class TrainingStepsTest(unittest.TestCase):
         validations, saves = self.run_loop(23)
         self.assertEqual(validations, [0, 10, 20, 23])
         self.assertEqual(saves, [23])
+
+    def test_save_every_ten_steps(self):
+        validations, saves = self.run_loop(100, save_freq=10)
+        self.assertEqual(validations, list(range(0, 101, 10)))
+        self.assertEqual(saves, list(range(10, 101, 10)))
 
 
 if __name__ == '__main__':
