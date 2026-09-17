@@ -15,7 +15,7 @@ from protocol import categories, expected_counts
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--version', choices=['v3', 'v4'], required=True)
-    p.add_argument('--model', required=True, help='Base model or final actor/global_step_100')
+    p.add_argument('--model', required=True, help='Base model or actor/global_step_<step> directory')
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--server-python', required=True, help='vLLM 0.11.0 environment interpreter')
     p.add_argument('--port', type=int, default=8000)

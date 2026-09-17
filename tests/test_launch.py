@@ -84,5 +84,44 @@ class LaunchTest(unittest.TestCase):
         pair['environment'].pop('RAY_ADDRESS')
         self.assertEqual(single['environment'], pair['environment'])
 
+    def test_two_h100_keep_global_training_parameters(self):
+        command = [sys.executable, str(launch.REPO/'training/launch.py'),
+                   '--method', 'dvao', '--seed', '4', '--model', 'Qwen/Qwen2.5-3B-Instruct',
+                   '--model-size', '3b', '--output', '/tmp/dara-h100', '--save-freq', '10', '--dry-run']
+        a100 = json.loads(subprocess.check_output(command, text=True))
+        h100 = json.loads(subprocess.check_output(command + ['--gpus', '2'], text=True))
+        self.assertEqual(h100['gpus'], 2)
+        self.assertEqual(h100['environment']['N_GPUS'], '2')
+        a100['settings']['trainer.n_gpus_per_node'] = 2
+        self.assertEqual(a100['settings'], h100['settings'])
+        self.assertEqual(h100['responses_per_step'], 2048)
+        self.assertEqual(h100['optimizer_updates_per_step'], 4)
+
+    def test_checkpoint_study_scope_and_seed_coverage(self):
+        plan = json.loads((launch.REPO/'configs/checkpoint_study.json').read_text())
+        runs = plan['runs']
+        self.assertEqual(len(runs), 25)
+        self.assertEqual(len({run['id'] for run in runs}), 25)
+        self.assertEqual(sum(run['final_extension'] for run in runs), 14)
+        self.assertEqual(sum(run['checkpoint_study'] for run in runs), 15)
+        self.assertEqual({run['method'] for run in runs}, {'grpo','gdpo','dara','dvao','gd2po_hard'})
+        for method, seeds in plan['checkpoint_seeds'].items():
+            selected = [run['seed'] for run in runs if run['method']==method and run['checkpoint_study']]
+            self.assertEqual(sorted(selected), sorted(seeds))
+            self.assertEqual(len(selected), 3)
+        self.assertEqual(plan['checkpoint_steps'], list(range(10, 101, 10)))
+        self.assertTrue(all(run['model_size']=='1.5b' for run in runs if run['checkpoint_study']))
+        self.assertTrue(all(run['save_freq']==10 for run in runs))
+
+    def test_checkpoint_manifest_preserves_periodic_saving_at_launch(self):
+        command = [sys.executable, str(launch.REPO/'training/run_manifest.py'),
+                   '--manifest', str(launch.REPO/'configs/checkpoint_study.json'),
+                   '--id', 'haotian_1p5b_dvao_s4_save10', '--model-root', '/shared/models',
+                   '--output-root', '/tmp/dara-manifest-check', '--dry-run']
+        record = json.loads(subprocess.check_output(command, text=True))
+        self.assertEqual(record['settings']['trainer.save_freq'], 10)
+        self.assertEqual(record['seed'], 4)
+        self.assertEqual(record['gpus'], 4)
+
 
 if __name__=='__main__': unittest.main()

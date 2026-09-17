@@ -13,6 +13,9 @@ METHODS = ('grpo', 'gdpo', 'dara', 'dvao', 'gdpo_saw', 'gd2po_hard', 'rvpo')
 
 def configuration(args):
     group = args.group_size
+    gpus = getattr(args, 'gpus', 4)
+    if args.nnodes == 2 and gpus != 4:
+        raise ValueError('Paired allocations use four GPUs in total.')
     if args.nnodes == 2 and not args.ray_address:
         raise ValueError('Two-node training requires --ray-address for the four-GPU Ray cluster.')
     estimator = args.method
@@ -54,7 +57,7 @@ def configuration(args):
         'trainer.logger': ['console', 'jsonl'],
         'trainer.project_name': 'Var_inspect',
         'trainer.experiment_name': f'qwen-{args.model_size}-{args.method}-s{args.seed}-G{group}-{args.rewards}-100',
-        'trainer.n_gpus_per_node': 4 // args.nnodes,
+        'trainer.n_gpus_per_node': gpus // args.nnodes,
         'trainer.nnodes': args.nnodes,
         'trainer.save_freq': args.save_freq,
         'trainer.test_freq': 10,
@@ -78,7 +81,7 @@ def configuration(args):
                        PYTHONNOUSERSITE='1', PYTHONDONTWRITEBYTECODE='1',
                        TOKENIZERS_PARALLELISM='false', OMP_NUM_THREADS='4',
                        VLLM_ATTENTION_BACKEND='XFORMERS',
-                       N_GPUS='4', ROLLOUT_TP_SIZE='1',
+                       N_GPUS=str(gpus), ROLLOUT_TP_SIZE='1',
                        RAY_USAGE_STATS_ENABLED='0', RAY_DISABLE_DOCKER_CPU_WARNING='1')
     if args.ray_address:
         environment['RAY_ADDRESS'] = args.ray_address
@@ -110,13 +113,15 @@ def main():
                         help='Save a Hugging Face model every N training steps')
     parser.add_argument('--nnodes', type=int, choices=[1, 2], default=1,
                         help='Split the fixed four GPUs over one or two Ray nodes')
+    parser.add_argument('--gpus', type=int, choices=[2, 4], default=4,
+                        help='GPUs per run: four A100 or two H100, with the same global batch settings')
     parser.add_argument('--ray-address', help='Address of an existing Ray head')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
     settings, environment, command = configuration(args)
     record = dict(method=args.method, seed=args.seed, group_size=args.group_size,
                   model_size=args.model_size, rewards=args.rewards,
-                  gpus=4, responses_per_step=2048, optimizer_updates_per_step=4,
+                  gpus=args.gpus, responses_per_step=2048, optimizer_updates_per_step=4,
                   rollout_seed=0, settings=settings, environment=environment, command=command)
     if args.dry_run:
         print(json.dumps(record, indent=2))

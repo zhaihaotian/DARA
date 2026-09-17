@@ -1,0 +1,44 @@
+# 最终比较与过程 checkpoint 实验
+
+本轮使用 Haotian infra、Qwen2.5-Instruct、G4、correctness+format 两奖励、100训练steps和现有固定数据。任务定义见 [checkpoint_study.json](../configs/checkpoint_study.json)。
+
+## 最终比较
+
+先把1.5B和3B的GRPO、GDPO、DARA、DVAO、GD²PO-Hard补到seeds0/1/2/4/5，并完成step100的BFCL V4评测。GRPO、GDPO、DARA在两个尺寸各有五seed的历史训练与最终评测。1.5B的DVAO、GD²PO-Hard已有seeds0/1/2，各新增4/5；3B的这两个方法各新增五seed，共新增14次最终训练。RVPO与GDPO-SAW复用已有结果。
+
+新增训练统一每10steps保存模型。任务顺序优先覆盖3B的seeds0/1/2，再补剩余4/5；每次分配选择剩余租期能够覆盖的最前任务。
+
+## 1.5B过程比较
+
+1.5B的上述五个方法各保留三个seed，逐个评测steps10/20/…/100。GRPO选择4/5/2，GDPO选择4/0/1，DARA选择4/0/2；历史seed按训练Format Reward首次达到0.8的step升序选择，相同step按seed升序。原始逐seed数据与选择依据保存在manifest。该选择规则随过程比较结果一起披露。
+
+DVAO复用本轮正在运行的seed0和新增4/5；GD²PO-Hard复用新增4/5，再补seed0。除当前DVAO seed0和14个最终训练任务外，另需10次1.5B训练：GRPO、GDPO、DARA各三次，GD²PO-Hard一次。两个尺寸的最终比较优先获得训练资源，后续可用资源接入过程训练。
+
+这批共25个训练任务，包括已启动的DVAO seed0。1.5B过程评测共150个checkpoint；3B新增训练评测10个step100模型，合计160个新增BFCL V4模型评测。
+
+## 启动与保存
+
+在训练环境中使用manifest启动一个待执行任务：
+
+```bash
+conda activate rdgdpo
+python training/run_manifest.py --manifest configs/checkpoint_study.json \
+  --id haotian_1p5b_dvao_s4_save10 \
+  --model-root /shared/models --output-root outputs
+```
+
+每次训练放在tmux中运行，输出使用独立目录。A100每run四卡；8张A100同时运行两个run。两份A100两卡allocation的拼接见 [MULTINODE.md](MULTINODE.md)。H100使用单run两卡，在四卡allocation内并行两个run；直接启动时添加 `--gpus 2`，全局prompt batch512、G4、2048回答/step、PPO mini128/micro64、学习率1e-6、TP1与其余训练设置继续沿用 [TRAINING.md](TRAINING.md)。实际卡型与GPU数量记录在调度记录及launch.json。H100两卡的显存与速度等待首次资源获配后实测。
+
+模型与tokenizer保存在 `actor/global_step_10` 至 `actor/global_step_100`。训练日志逐step记录reward；GRPO、GDPO、DARA还记录各通道π、权重、活跃group数量。验证在steps0/10/…/100执行。保存的是用于推理的HF actor模型；租期中断的训练以新attempt目录从相同base与seed重新开始，原attempt的模型和日志保留。
+
+## BFCL V4与表格
+
+每次训练完整完成后，检查该次attempt的目标模型文件齐全，再送入相同的BFCL V4队列。step100优先评测；过程checkpoint按训练step排列。调用 [evaluation/run.py](../evaluation/run.py) 时，把 `--model` 指向所需step的HF模型目录即可，其余评测参数保持 [EVALUATION.md](EVALUATION.md) 的设置。
+
+使用14类、3301cases，Non-Live AST按四组macro平均，Simple中的Python/Java/JavaScript等权；Live AST按1351cases加权；Multi-Turn为四类各200cases的均值。Average为三大组等权平均。Format按每题assistant输出的RLLA结构符合率平均，再沿用相同类别权重。各checkpoint先独立算分，然后在相同模型尺寸、方法、step内计算跨seed均值与样本标准差。
+
+最终比较汇总44个已完成历史模型和14个新增seed的最终模型，共58个模型。过程重跑的seed在独立的过程表中汇总。每条原始结果保留具体模型路径、step、seed和训练attempt。
+
+MSI当前执行目录为 `/scratch.global/lian0190/RD-GDPO-3B/20260913`，自动训练记录为 `runs.json`，任务文件为 `dara_training_tasks.json`。新训练进入 `dara_save10/<run-id>/attempt_<n>`。DVAO seed0使用 `/scratch.global/lian0190/DARA/20260917/1p5b-dvao-g4-s0-two-save10`。
+
+新评测目录为 `/scratch.global/lian0190/BFCL-v4-evaluation/20260917/dara_checkpoint_study`。`report/final_per_model.csv` 与 `final_method_results.csv`给出最终结果；`checkpoint_per_model.csv`与`checkpoint_method_results.csv`给出过程结果。原始回答、官方评分和Format统计保存在各 `models/<model-id>` 目录。训练调度、评测派发和跨seed汇总由登录节点tmux内的持久控制器执行，每分钟检查一次资源和任务状态，每30分钟保存一次进度报告。

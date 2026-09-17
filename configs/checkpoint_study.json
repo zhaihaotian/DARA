@@ -1,0 +1,560 @@
+{
+  "training_steps": 100,
+  "checkpoint_steps": [
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
+  ],
+  "final_comparison_sizes": [
+    "1.5b",
+    "3b"
+  ],
+  "checkpoint_comparison_sizes": [
+    "1.5b"
+  ],
+  "checkpoint_seeds": {
+    "grpo": [
+      4,
+      5,
+      2
+    ],
+    "gdpo": [
+      4,
+      0,
+      1
+    ],
+    "dara": [
+      4,
+      0,
+      2
+    ],
+    "dvao": [
+      0,
+      4,
+      5
+    ],
+    "gd2po_hard": [
+      0,
+      4,
+      5
+    ]
+  },
+  "selection": "For historical reruns, ascending first training step with Format Reward >= 0.8, then ascending seed.",
+  "selection_evidence": {
+    "grpo": [
+      {
+        "seed": 4,
+        "format_0p8_step": 31
+      },
+      {
+        "seed": 5,
+        "format_0p8_step": 31
+      },
+      {
+        "seed": 2,
+        "format_0p8_step": 34
+      },
+      {
+        "seed": 0,
+        "format_0p8_step": 37
+      },
+      {
+        "seed": 1,
+        "format_0p8_step": 43
+      }
+    ],
+    "gdpo": [
+      {
+        "seed": 4,
+        "format_0p8_step": 16
+      },
+      {
+        "seed": 0,
+        "format_0p8_step": 18
+      },
+      {
+        "seed": 1,
+        "format_0p8_step": 19
+      },
+      {
+        "seed": 5,
+        "format_0p8_step": 65
+      },
+      {
+        "seed": 2,
+        "format_0p8_step": 75
+      }
+    ],
+    "dara": [
+      {
+        "seed": 4,
+        "format_0p8_step": 13
+      },
+      {
+        "seed": 0,
+        "format_0p8_step": 14
+      },
+      {
+        "seed": 2,
+        "format_0p8_step": 15
+      },
+      {
+        "seed": 1,
+        "format_0p8_step": 16
+      },
+      {
+        "seed": 5,
+        "format_0p8_step": 29
+      }
+    ],
+    "gd2po_hard": [
+      {
+        "seed": 0,
+        "format_0p8_step": 26
+      },
+      {
+        "seed": 1,
+        "format_0p8_step": 44
+      }
+    ]
+  },
+  "excluded_new_training": [
+    "rvpo",
+    "gdpo_saw"
+  ],
+  "runs": [
+    {
+      "id": "haotian_1p5b_dvao_s0_save10",
+      "method": "dvao",
+      "seed": 0,
+      "model_size": "1.5b",
+      "phase": "checkpoint_existing_run",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "output": "/scratch.global/lian0190/DARA/20260917/1p5b-dvao-g4-s0-two-save10",
+      "status": "running",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_dvao_s0_save10",
+      "method": "dvao",
+      "seed": 0,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_gd2po_hard_s0_save10",
+      "method": "gd2po_hard",
+      "seed": 0,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_dvao_s1_save10",
+      "method": "dvao",
+      "seed": 1,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_gd2po_hard_s1_save10",
+      "method": "gd2po_hard",
+      "seed": 1,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_dvao_s2_save10",
+      "method": "dvao",
+      "seed": 2,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_gd2po_hard_s2_save10",
+      "method": "gd2po_hard",
+      "seed": 2,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_dvao_s4_save10",
+      "method": "dvao",
+      "seed": 4,
+      "model_size": "1.5b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": true,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_gd2po_hard_s4_save10",
+      "method": "gd2po_hard",
+      "seed": 4,
+      "model_size": "1.5b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": true,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_dvao_s4_save10",
+      "method": "dvao",
+      "seed": 4,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_gd2po_hard_s4_save10",
+      "method": "gd2po_hard",
+      "seed": 4,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_dvao_s5_save10",
+      "method": "dvao",
+      "seed": 5,
+      "model_size": "1.5b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": true,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_gd2po_hard_s5_save10",
+      "method": "gd2po_hard",
+      "seed": 5,
+      "model_size": "1.5b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": true,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_dvao_s5_save10",
+      "method": "dvao",
+      "seed": 5,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_3b_gd2po_hard_s5_save10",
+      "method": "gd2po_hard",
+      "seed": 5,
+      "model_size": "3b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 19800,
+      "pair_minimum_seconds": 23400,
+      "final_extension": true,
+      "checkpoint_study": false,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_grpo_s4_save10",
+      "method": "grpo",
+      "seed": 4,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_gdpo_s4_save10",
+      "method": "gdpo",
+      "seed": 4,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_dara_s4_save10",
+      "method": "dara",
+      "seed": 4,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_grpo_s5_save10",
+      "method": "grpo",
+      "seed": 5,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_gdpo_s0_save10",
+      "method": "gdpo",
+      "seed": 0,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_dara_s0_save10",
+      "method": "dara",
+      "seed": 0,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_grpo_s2_save10",
+      "method": "grpo",
+      "seed": 2,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_gdpo_s1_save10",
+      "method": "gdpo",
+      "seed": 1,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_dara_s2_save10",
+      "method": "dara",
+      "seed": 2,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_gd2po_hard_s0_save10",
+      "method": "gd2po_hard",
+      "seed": 0,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    }
+  ]
+}

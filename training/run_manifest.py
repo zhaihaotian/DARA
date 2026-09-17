@@ -23,6 +23,8 @@ def main():
                '--seed', str(row['seed']), '--model-size', row['model_size'], '--model', str(model),
                '--group-size', str(row['group_size']), '--rewards', row['rewards'],
                '--output', str(a.output_root/row['id'])]
+    if 'save_freq' in row:
+        command += ['--save-freq', str(row['save_freq'])]
     if a.dry_run:
         command.append('--dry-run')
     subprocess.run(command, check=True)

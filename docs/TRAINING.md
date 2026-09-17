@@ -30,7 +30,7 @@ GRPO 使用经过原 reward-KL 接线的总 reward；GDPO、DARA 和其他分通
 
 3B 已在四卡 A10040GB 跑完五 seeds。它使用 `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`；launch.py 按 `--model-size 3b` 设置。3B 沿用表中 batch、response 长度、TP 和训练步数，模型路径指定对应的 3B 权重。
 
-两节点各两卡的资源布局、Ray/FSDP启动方式和当前接线状态见 [MULTINODE.md](MULTINODE.md)。
+当前补齐与过程比较每10steps保存，任务与H100两卡启动配置见 [CHECKPOINT_STUDY.md](CHECKPOINT_STUDY.md)。两节点各两卡的资源布局、Ray/FSDP启动方式和当前接线状态见 [MULTINODE.md](MULTINODE.md)。
 
 ## Group 消融的预算
 

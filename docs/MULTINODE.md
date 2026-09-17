@@ -34,4 +34,4 @@ python training/launch_pair.py --jobs JOB_A JOB_B --output outputs/1p5b-dvao-g4-
 
 训练配置为 `trainer.nnodes=2`、`trainer.n_gpus_per_node=2`。底层 [main_ppo.py](../vendor/verl/verl/trainer/main_ppo.py) 生成 `[2, 2]` 资源池，[RayWorkerGroup](../vendor/verl/verl/single_controller/ray/base.py) 分配四个全局rank，[FSDP worker](../vendor/verl/verl/workers/fsdp_workers.py) 建立NCCL通信。独立四卡启动继续使用单节点默认设置。流程参考[verl多节点文档](https://verl.readthedocs.io/en/v0.3.x/start/multinode.html)和[Ray的Slurm说明](https://docs.ray.io/en/latest/cluster/vms/user-guides/community/slurm.html)，命令使用当前环境的Ray2.10接口。
 
-31项CPU测试已通过，覆盖两节点与单节点的训练参数对照、Slurm资源解析和双侧启动参数。两卡申请已进入实际队列；四卡NCCL通信、双节点训练更新与模型导出将在获配资源后验证。首跑记录排队等待时间、每step耗时和模型保存耗时，用于后续租期安排。
+34项CPU测试已通过，覆盖两节点与单节点的训练参数对照、Slurm资源解析和双侧启动参数。两卡申请已进入实际队列；四卡NCCL通信、双节点训练更新与模型导出将在获配资源后验证。首跑记录排队等待时间、每step耗时和模型保存耗时，用于后续租期安排。

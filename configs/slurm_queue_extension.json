@@ -1,0 +1,102 @@
+{
+  "date": "2026-09-17",
+  "added_pending_gpus": 44,
+  "routes": {
+    "myq-a1002-more-short": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      2,
+      "06:00:00"
+    ],
+    "myq-a1002-more-mid": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      2,
+      "12:00:00"
+    ],
+    "myq-a1002-more-long": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      2,
+      "23:00:00"
+    ],
+    "myq-a1004-more-short": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      4,
+      "06:00:00"
+    ],
+    "myq-a1004-more-mid": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      4,
+      "12:00:00"
+    ],
+    "myq-a1004-more-long": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      4,
+      "23:00:00"
+    ],
+    "myq-h1002-more-short": [
+      "msigpu",
+      "h100",
+      2,
+      "06:00:00"
+    ],
+    "myq-h1002-more-long": [
+      "msigpu",
+      "h100",
+      2,
+      "23:00:00"
+    ],
+    "dkq-a1002-more-short": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      2,
+      "06:00:00"
+    ],
+    "dkq-a1002-more-mid": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      2,
+      "12:00:00"
+    ],
+    "dkq-a1002-more-long": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      2,
+      "23:00:00"
+    ],
+    "dkq-a1004-more-short": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      4,
+      "06:00:00"
+    ],
+    "dkq-a1004-more-mid": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      4,
+      "12:00:00"
+    ],
+    "dkq-a1004-more-long": [
+      "a100-4,a100-4-profile,a100-8,msigpu",
+      "a100",
+      4,
+      "23:00:00"
+    ],
+    "dkq-h1002-more-short": [
+      "msigpu",
+      "h100",
+      2,
+      "06:00:00"
+    ],
+    "dkq-h1002-more-long": [
+      "msigpu",
+      "h100",
+      2,
+      "23:00:00"
+    ]
+  }
+}

@@ -19,6 +19,8 @@ hf download Qwen/Qwen2.5-3B-Instruct --local-dir "$DARA_MODELS/Qwen2.5-3B-Instru
 
 安装脚本会执行依赖检查和训练单元测试。已有本地模型时，将 `DARA_MODELS` 设为包含这两个模型目录的路径。
 
+当前最终比较补齐与1.5B过程checkpoint实验见 [CHECKPOINT_STUDY.md](CHECKPOINT_STUDY.md)，使用独立manifest及每10steps保存设置。
+
 ## 领取实验
 
 | 实验 | 模型 | 方法 | G | Seeds | 工作量 |
