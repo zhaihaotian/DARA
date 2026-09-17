@@ -9,6 +9,7 @@
 | 需求 | 文档或入口 |
 |---|---|
 | 合作者从 clone 到训练、评测的完整流程 | [HANDOFF.md](docs/HANDOFF.md)、[AGENTS.md](AGENTS.md) |
+| 8×A100 80GB SXM4租机执行agent交接 | [RENTAL_A100_80G_SXM4_AGENT.md](docs/RENTAL_A100_80G_SXM4_AGENT.md) |
 | 可直接用于论文的实验设置与评测协议 | [PAPER_EXPERIMENTS.md](docs/PAPER_EXPERIMENTS.md) |
 | 创建环境 | [ENVIRONMENT.md](docs/ENVIRONMENT.md) |
 | 固定训练设置与方法定义 | [TRAINING.md](docs/TRAINING.md)、[ALGORITHMS.md](docs/ALGORITHMS.md) |

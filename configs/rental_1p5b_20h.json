@@ -352,5 +352,36 @@
   "evaluation": {
     "version": "v4",
     "final_step": 100
-  }
+  },
+  "hardware": {
+    "gpu_count": 8,
+    "gpu_model": "NVIDIA A100",
+    "memory_gb_per_gpu": 80,
+    "form_factor": "SXM4"
+  },
+  "target_execution": {
+    "physical_gpus_per_run": 2,
+    "logical_data_parallel_size": 4,
+    "gpu_groups": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        6,
+        7
+      ]
+    ],
+    "parallel_training_runs": 4,
+    "implementation_status": "pending_logical_four_alignment_and_gpu_validation"
+  },
+  "agent_handoff": "docs/RENTAL_A100_80G_SXM4_AGENT.md"
 }

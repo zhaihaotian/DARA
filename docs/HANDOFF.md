@@ -19,7 +19,7 @@ hf download Qwen/Qwen2.5-3B-Instruct --local-dir "$DARA_MODELS/Qwen2.5-3B-Instru
 
 安装脚本会执行依赖检查和训练单元测试。已有本地模型时，将 `DARA_MODELS` 设为包含这两个模型目录的路径。
 
-当前最终比较补齐与1.5B过程checkpoint实验见 [CHECKPOINT_STUDY.md](CHECKPOINT_STUDY.md)，使用独立manifest及每10steps保存设置。八卡租机的15次训练清单及逐checkpoint评测命令见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)。该清单要求每个run完成steps10/20/…/100的BFCL V4评测，并交付过程数据和step100最终结果表；第15项DVAO seed3同样包含最终评测。
+当前最终比较补齐与1.5B过程checkpoint实验见 [CHECKPOINT_STUDY.md](CHECKPOINT_STUDY.md)，使用独立manifest及每10steps保存设置。8×A100 80GB SXM4租机的独立agent交接见 [RENTAL_A100_80G_SXM4_AGENT.md](RENTAL_A100_80G_SXM4_AGENT.md)，15次训练清单见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)。该清单要求每个run完成steps10/20/…/100的BFCL V4评测，并交付过程数据和step100最终结果表；第15项DVAO seed3同样包含最终评测。
 
 ## 领取实验
 
