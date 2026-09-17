@@ -4,17 +4,17 @@
 
 ## 最终比较
 
-先把1.5B和3B的GRPO、GDPO、DARA、DVAO、GD²PO-Hard补到seeds0/1/2/4/5，并完成step100的BFCL V4评测。GRPO、GDPO、DARA在两个尺寸各有五seed的历史训练与最终评测。1.5B的DVAO、GD²PO-Hard已有seeds0/1/2，各新增4/5；3B的这两个方法各新增五seed，共新增14次最终训练。RVPO与GDPO-SAW复用已有结果。
+最终比较评测step100的BFCL V4。GRPO、GDPO、DARA在1.5B和3B各保留五seed的历史训练与最终评测。1.5B的DVAO、GD²PO-Hard已有seeds0/1/2，各新增4/5；3B的DVAO、GD²PO-Hard各运行seeds0/1/2，共新增10次最终训练。RVPO与GDPO-SAW复用已有结果。
 
-新增训练统一每10steps保存模型。任务顺序优先覆盖3B的seeds0/1/2，再补剩余4/5；每次分配选择剩余租期能够覆盖的最前任务。
+新增训练统一每10steps保存模型。任务顺序优先覆盖3B的seeds0/1/2，再补1.5B的4/5；每次分配选择剩余租期能够覆盖的最前任务。
 
 ## 1.5B过程比较
 
 1.5B的上述五个方法各保留三个seed，逐个评测steps10/20/…/100。GRPO选择4/5/2，GDPO选择4/0/1，DARA选择4/0/2；历史seed按训练Format Reward首次达到0.8的step升序选择，相同step按seed升序。原始逐seed数据与选择依据保存在manifest。该选择规则随过程比较结果一起披露。
 
-DVAO复用本轮正在运行的seed0和新增4/5；GD²PO-Hard复用新增4/5，再补seed0。除当前DVAO seed0和14个最终训练任务外，另需10次1.5B训练：GRPO、GDPO、DARA各三次，GD²PO-Hard一次。两个尺寸的最终比较优先获得训练资源，后续可用资源接入过程训练。
+DVAO复用本轮已完成的seed0和新增4/5；GD²PO-Hard复用新增4/5，再补seed0。除该DVAO seed0和10个最终训练任务外，另需10次1.5B训练：GRPO、GDPO、DARA各三次，GD²PO-Hard一次。两个尺寸的最终比较优先获得训练资源，后续可用资源接入过程训练。
 
-这批共25个训练任务，包括已启动的DVAO seed0。1.5B过程评测共150个checkpoint；3B新增训练评测10个step100模型，合计160个新增BFCL V4模型评测。
+这批共21个训练任务。1.5B过程评测共150个checkpoint；3B新增训练评测6个step100模型，合计156个新增BFCL V4模型评测。
 
 ## 启动与保存
 
@@ -41,7 +41,7 @@ python training/run_manifest.py --manifest configs/checkpoint_study.json \
 
 使用14类、3301cases，Non-Live AST按四组macro平均，Simple中的Python/Java/JavaScript等权；Live AST按1351cases加权；Multi-Turn为四类各200cases的均值。Average为三大组等权平均。Format按每题assistant输出的RLLA结构符合率平均，再沿用相同类别权重。各checkpoint先独立算分，然后在相同模型尺寸、方法、step内计算跨seed均值与样本标准差。
 
-最终比较汇总44个已完成历史模型和14个新增seed的最终模型，共58个模型。过程重跑的seed在独立的过程表中汇总。每条原始结果保留具体模型路径、step、seed和训练attempt。
+最终比较汇总44个已完成历史模型和10个新增seed的最终模型，共54个模型。过程重跑的seed在独立的过程表中汇总。每条原始结果保留具体模型路径、step、seed和训练attempt。
 
 MSI当前执行目录为 `/scratch.global/lian0190/RD-GDPO-3B/20260913`，自动训练记录为 `runs.json`，任务文件为 `dara_training_tasks.json`。新训练进入 `dara_save10/<run-id>/attempt_<n>`。DVAO seed0使用 `/scratch.global/lian0190/DARA/20260917/1p5b-dvao-g4-s0-two-save10`。
 
