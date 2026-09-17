@@ -100,9 +100,9 @@ class LaunchTest(unittest.TestCase):
     def test_checkpoint_study_scope_and_seed_coverage(self):
         plan = json.loads((launch.REPO/'configs/checkpoint_study.json').read_text())
         runs = plan['runs']
-        self.assertEqual(len(runs), 25)
-        self.assertEqual(len({run['id'] for run in runs}), 25)
-        self.assertEqual(sum(run['final_extension'] for run in runs), 14)
+        self.assertEqual(len(runs), 21)
+        self.assertEqual(len({run['id'] for run in runs}), 21)
+        self.assertEqual(sum(run['final_extension'] for run in runs), 10)
         self.assertEqual(sum(run['checkpoint_study'] for run in runs), 15)
         self.assertEqual({run['method'] for run in runs}, {'grpo','gdpo','dara','dvao','gd2po_hard'})
         for method, seeds in plan['checkpoint_seeds'].items():
@@ -112,6 +112,20 @@ class LaunchTest(unittest.TestCase):
         self.assertEqual(plan['checkpoint_steps'], list(range(10, 101, 10)))
         self.assertTrue(all(run['model_size']=='1.5b' for run in runs if run['checkpoint_study']))
         self.assertTrue(all(run['save_freq']==10 for run in runs))
+
+    def test_dvao_seed3_process_launch_preserves_training_budget(self):
+        command = [sys.executable, str(launch.REPO/'training/run_manifest.py'),
+                   '--manifest', str(launch.REPO/'configs/rental_1p5b_20h.json'),
+                   '--id', 'haotian_1p5b_dvao_s3_save10', '--model-root', '/shared/models',
+                   '--output-root', '/tmp/dara-dvao-seed3', '--dry-run']
+        record = json.loads(subprocess.check_output(command, text=True))
+        self.assertEqual(record['seed'], 3)
+        self.assertEqual(record['environment']['SEED'], '3')
+        self.assertEqual(record['rollout_seed'], 0)
+        self.assertEqual(record['gpus'], 4)
+        self.assertEqual(record['responses_per_step'], 2048)
+        self.assertEqual(record['settings']['trainer.save_freq'], 10)
+        self.assertEqual(record['settings']['trainer.total_training_steps'], 100)
 
     def test_checkpoint_manifest_preserves_periodic_saving_at_launch(self):
         command = [sys.executable, str(launch.REPO/'training/run_manifest.py'),

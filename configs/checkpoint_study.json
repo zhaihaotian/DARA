@@ -21,22 +21,22 @@
   ],
   "checkpoint_seeds": {
     "grpo": [
-      4,
-      5,
-      2
+      0,
+      2,
+      5
     ],
     "gdpo": [
-      4,
       0,
-      1
+      1,
+      5
     ],
     "dara": [
-      4,
       0,
+      1,
       2
     ],
     "dvao": [
-      0,
+      3,
       4,
       5
     ],
@@ -46,21 +46,9 @@
       5
     ]
   },
-  "selection": "For historical reruns, ascending first training step with Format Reward >= 0.8, then ascending seed.",
+  "selection": "GRPO/GDPO/DARA: rank the original five seeds by first training step with Format Reward >= 0.8, unreached last and seed ascending for ties; discard the first and last and retain the middle three. DVAO: use seeds 3, 4, 5 for the process comparison. GD2PO-Hard: use seeds 0, 4, 5, with seed 0 selected from the historically converged runs.",
   "selection_evidence": {
     "grpo": [
-      {
-        "seed": 4,
-        "format_0p8_step": 31
-      },
-      {
-        "seed": 5,
-        "format_0p8_step": 31
-      },
-      {
-        "seed": 2,
-        "format_0p8_step": 34
-      },
       {
         "seed": 0,
         "format_0p8_step": 37
@@ -68,13 +56,21 @@
       {
         "seed": 1,
         "format_0p8_step": 43
+      },
+      {
+        "seed": 2,
+        "format_0p8_step": 34
+      },
+      {
+        "seed": 4,
+        "format_0p8_step": 31
+      },
+      {
+        "seed": 5,
+        "format_0p8_step": 31
       }
     ],
     "gdpo": [
-      {
-        "seed": 4,
-        "format_0p8_step": 16
-      },
       {
         "seed": 0,
         "format_0p8_step": 18
@@ -84,34 +80,52 @@
         "format_0p8_step": 19
       },
       {
-        "seed": 5,
-        "format_0p8_step": 65
-      },
-      {
         "seed": 2,
         "format_0p8_step": 75
+      },
+      {
+        "seed": 4,
+        "format_0p8_step": 16
+      },
+      {
+        "seed": 5,
+        "format_0p8_step": 65
       }
     ],
     "dara": [
       {
-        "seed": 4,
-        "format_0p8_step": 13
-      },
-      {
         "seed": 0,
         "format_0p8_step": 14
-      },
-      {
-        "seed": 2,
-        "format_0p8_step": 15
       },
       {
         "seed": 1,
         "format_0p8_step": 16
       },
       {
+        "seed": 2,
+        "format_0p8_step": 15
+      },
+      {
+        "seed": 4,
+        "format_0p8_step": 13
+      },
+      {
         "seed": 5,
         "format_0p8_step": 29
+      }
+    ],
+    "dvao": [
+      {
+        "seed": 0,
+        "format_0p8_step": 60
+      },
+      {
+        "seed": 1,
+        "format_0p8_step": null
+      },
+      {
+        "seed": 2,
+        "format_0p8_step": null
       }
     ],
     "gd2po_hard": [
@@ -122,6 +136,10 @@
       {
         "seed": 1,
         "format_0p8_step": 44
+      },
+      {
+        "seed": 2,
+        "format_0p8_step": null
       }
     ]
   },
@@ -130,24 +148,6 @@
     "gdpo_saw"
   ],
   "runs": [
-    {
-      "id": "haotian_1p5b_dvao_s0_save10",
-      "method": "dvao",
-      "seed": 0,
-      "model_size": "1.5b",
-      "phase": "checkpoint_existing_run",
-      "steps": 100,
-      "group_size": 4,
-      "rewards": "two",
-      "save_freq": 10,
-      "minimum_seconds": 14400,
-      "pair_minimum_seconds": 18000,
-      "final_extension": false,
-      "checkpoint_study": true,
-      "output": "/scratch.global/lian0190/DARA/20260917/1p5b-dvao-g4-s0-two-save10",
-      "status": "running",
-      "gpus": 4
-    },
     {
       "id": "haotian_3b_dvao_s0_save10",
       "method": "dvao",
@@ -319,9 +319,9 @@
       "gpus": 4
     },
     {
-      "id": "haotian_1p5b_grpo_s4_save10",
+      "id": "haotian_1p5b_grpo_s0_save10",
       "method": "grpo",
-      "seed": 4,
+      "seed": 0,
       "model_size": "1.5b",
       "phase": "checkpoint_seed_completion",
       "steps": 100,
@@ -336,9 +336,9 @@
       "gpus": 4
     },
     {
-      "id": "haotian_1p5b_gdpo_s4_save10",
+      "id": "haotian_1p5b_gdpo_s5_save10",
       "method": "gdpo",
-      "seed": 4,
+      "seed": 5,
       "model_size": "1.5b",
       "phase": "checkpoint_seed_completion",
       "steps": 100,
@@ -353,9 +353,9 @@
       "gpus": 4
     },
     {
-      "id": "haotian_1p5b_dara_s4_save10",
+      "id": "haotian_1p5b_dara_s1_save10",
       "method": "dara",
-      "seed": 4,
+      "seed": 1,
       "model_size": "1.5b",
       "phase": "checkpoint_seed_completion",
       "steps": 100,
@@ -475,6 +475,23 @@
       "id": "haotian_1p5b_gd2po_hard_s0_save10",
       "method": "gd2po_hard",
       "seed": 0,
+      "model_size": "1.5b",
+      "phase": "checkpoint_seed_completion",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 14400,
+      "pair_minimum_seconds": 18000,
+      "final_extension": false,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_dvao_s3_save10",
+      "method": "dvao",
+      "seed": 3,
       "model_size": "1.5b",
       "phase": "checkpoint_seed_completion",
       "steps": 100,

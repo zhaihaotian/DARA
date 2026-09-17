@@ -8,7 +8,7 @@
 
 ## 过程比较的种子选择
 
-使用每个方法原始五seed实验中训练Format Reward首次达到0.8的step，按从快到慢排序；未达到阈值的seed排在末尾，并列按seed编号升序排列。去掉排序首尾各一个，保留中间三个。最终比较继续汇总完整seed结果，过程比较记录实际使用的seed。
+GRPO、GDPO、DARA使用原始五seed实验中训练Format Reward首次达到0.8的step，按从快到慢排序；未达到阈值的seed排在末尾，并列按seed编号升序排列。去掉排序首尾各一个，保留中间三个。最终比较继续汇总完整seed结果，过程比较记录实际使用的seed。
 
 | 方法 | seed0 / 1 / 2 / 4 / 5 的首次达标step | 去掉最快seed | 去掉最慢seed | 过程重跑seed |
 |---|---|---|---|---|
@@ -16,11 +16,11 @@
 | GDPO | 18 / 19 / 75 / 16 / 65 | 4 | 2 | 0、1、5 |
 | DARA | 14 / 16 / 15 / 13 / 29 | 4 | 5 | 0、1、2 |
 
-DVAO和GD²PO-Hard的原始seed4、5尚待完成。DVAO已有seed0首次达标step60，seed1、2在100steps内未达标；Hard已有seed0、1首次达标step26、44，seed2未达标。先补齐各自seed4、5，再按上述同一规则确定过程比较的三个seed。
+DVAO使用seed3、4、5做过程比较，新增seed3过程训练，同时补齐seed4、5的最终训练并保存全部过程模型。GD²PO-Hard使用seed0、4、5；原始seed0首次达到Format0.8为step26，重跑该seed并补齐seed4、5。
 
-排名依据采用原始最终比较的五seed cohort。本轮DVAO seed0的完整过程模型作为已有工件保留；当seed0被选入过程比较时直接复用该工件，并保留其实际训练曲线。
+DVAO seed3用于过程比较，最终五seed比较沿用原始seed0/1/2及新增4/5。已完成的DVAO seed0重跑日志、模型和评测结果单独保留，复跑对照见 [DVAO_SEED0_REPLAY.md](DVAO_SEED0_REPLAY.md)。
 
-## 首批确定的13次训练
+## 需要执行的15次训练
 
 | 顺序 | 方法 | Seed | 目的 | Run ID |
 |---:|---|---:|---|---|
@@ -37,16 +37,18 @@ DVAO和GD²PO-Hard的原始seed4、5尚待完成。DVAO已有seed0首次达标st
 | 11 | GRPO | 5 | 过程checkpoint比较 | `haotian_1p5b_grpo_s5_save10` |
 | 12 | GDPO | 5 | 过程checkpoint比较 | `haotian_1p5b_gdpo_s5_save10` |
 | 13 | DARA | 2 | 过程checkpoint比较 | `haotian_1p5b_dara_s2_save10` |
+| 14 | GD²PO-Hard | 0 | 历史收敛seed的过程checkpoint重跑 | `haotian_1p5b_gd2po_hard_s0_save10` |
+| 15 | DVAO | 3 | 新seed的过程checkpoint训练 | `haotian_1p5b_dvao_s3_save10` |
 
-先并行执行前四个补种子任务，约5小时后取得两种方法的完整五seed训练记录，再确定DVAO和Hard的过程补跑任务。复用已选seed的完整过程模型；只给缺少steps10/20/…/100的入选seed追加训练。按现有工件，DVAO还会需要1–2次过程补跑，Hard需要1–3次，具体seed由4、5的训练结果决定。
+先并行执行前四个补种子任务，再运行其余十一个过程训练。两组四卡分别承担八次和七次训练。完成15次训练后，五个方法各有三个seed的完整过程checkpoint，同时补齐1.5B最终比较。
 
 ## 时间与输出
 
-历史四卡1.5B完整训练约2.3–2.6小时，最近每10steps保存的DVAO训练端到端耗时2小时28分钟。首批13次训练以两路并行安排，约需17–18小时纯训练时间。完成全部过程补跑后，总训练数预计15–18次，约需20–23小时训练时间；环境安装、模型下载、数据回传与BFCL评测另计。20小时租期优先完成13次确定任务，按剩余租期继续安排额外过程补跑，短尾时间可用于评测。
+历史四卡1.5B完整训练约2.3–2.6小时，最近每10steps保存的DVAO训练端到端耗时2小时28分钟。15次训练以两路并行安排，预计约19–21小时训练时间，环境准备、数据回传和BFCL评测另计。20小时租期按剩余时间安排完整run，最终与过程BFCL评测按已完成模型逐项接入既定队列。
 
 每个run保存独立输出目录、展开配置、完整训练日志和十份HF checkpoint。GRPO、GDPO、DARA记录两路reward、π、权重和活跃group数量。用tmux维持两组任务，并在开始下一项前确认上一项exit.code为0。
 
-按现有DVAO训练导出的文件实测，一份1.5B HF checkpoint约6.64GiB，13个run的130份模型约863GiB。全部15–18个run约需996–1194GiB存放模型，机器建议配置2TB可持久保存的空间，另留环境、日志和评测输出空间。
+按现有DVAO训练导出的文件实测，一份1.5B HF checkpoint约6.64GiB，15个run的150份模型约996GiB。机器建议配置2TB可持久保存的空间，另留环境、日志和评测输出空间。
 
 以下命令在已安装环境与模型的机器上执行，另一组相应设置 `CUDA_VISIBLE_DEVICES=4,5,6,7`，使用不同run ID与日志文件：
 

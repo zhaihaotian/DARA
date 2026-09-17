@@ -28,7 +28,7 @@
     90,
     100
   ],
-  "selection": "Rank each method by the first training step with Format Reward >= 0.8, with unreached seeds last and seed number ascending for ties; discard the first and last and retain the middle three. Use the original five-seed cohort for ranking.",
+  "selection": "GRPO/GDPO/DARA: rank the original five seeds by first training step with Format Reward >= 0.8, unreached last and seed ascending for ties; discard the first and last and retain the middle three. DVAO: use seeds 3, 4, 5 for the process comparison. GD2PO-Hard: use seeds 0, 4, 5, with seed 0 selected from the historically converged runs.",
   "checkpoint_seeds": {
     "grpo": [
       0,
@@ -44,6 +44,16 @@
       0,
       1,
       2
+    ],
+    "dvao": [
+      3,
+      4,
+      5
+    ],
+    "gd2po_hard": [
+      0,
+      4,
+      5
     ]
   },
   "selection_evidence": {
@@ -141,23 +151,6 @@
         "format_0p8_step": null
       }
     ]
-  },
-  "deferred_checkpoint_selection": {
-    "methods": [
-      "dvao",
-      "gd2po_hard"
-    ],
-    "await_final_seeds": [
-      4,
-      5
-    ],
-    "available_process_seeds": {
-      "dvao": [
-        0
-      ],
-      "gd2po_hard": []
-    },
-    "action": "After seeds 4 and 5 finish, select each method's middle three from the full five-seed cohort, reuse complete process checkpoints, and rerun selected seeds whose process checkpoints are missing."
   },
   "runs": [
     {
@@ -320,6 +313,32 @@
       "id": "haotian_1p5b_dara_s2_save10",
       "method": "dara",
       "seed": 2,
+      "model_size": "1.5b",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "gpus": 4,
+      "status": "planned",
+      "purpose": "checkpoint_dynamics"
+    },
+    {
+      "id": "haotian_1p5b_gd2po_hard_s0_save10",
+      "method": "gd2po_hard",
+      "seed": 0,
+      "model_size": "1.5b",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "gpus": 4,
+      "status": "planned",
+      "purpose": "checkpoint_dynamics"
+    },
+    {
+      "id": "haotian_1p5b_dvao_s3_save10",
+      "method": "dvao",
+      "seed": 3,
       "model_size": "1.5b",
       "steps": 100,
       "group_size": 4,

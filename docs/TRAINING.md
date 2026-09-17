@@ -22,7 +22,7 @@
 | gradient checkpointing / remove padding | True / True |
 | entropy coefficient | 0.001 |
 | actor use_kl_loss | False；原 reward KL coefficient 0.001 |
-| training/data seeds | 0、1、2、4、5；三 seed 基线为 0、1、2 |
+| training/data seeds | 历史最终比较为0、1、2、4、5；本轮过程比较按manifest指定，DVAO使用3、4、5 |
 | rollout seed | 沿用 vLLM 引擎默认 0 |
 | DARA weight cap | 5 |
 
