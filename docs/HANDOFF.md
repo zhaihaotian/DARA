@@ -61,7 +61,7 @@ python training/run_manifest.py --manifest configs/three_rewards.json \
 
 ## 训练 dynamics
 
-每个run的 `outputs/<run-id>/metrics.jsonl` 按step保存训练指标。所有方法记录correctness、format、length的reward统计、总reward和回答token数；DARA另外记录各奖励通道的π、校准权重和活跃group数量。
+每个run的 `outputs/<run-id>/metrics.jsonl` 按step保存训练指标。所有方法记录correctness、format、length的reward统计、总reward和回答token数；GRPO、GDPO、DARA同时记录各奖励通道的π、权重和活跃group数量。
 
 | 曲线 | 日志字段 |
 |---|---|
@@ -70,11 +70,13 @@ python training/run_manifest.py --manifest configs/three_rewards.json \
 | Length reward | `critic/length_score/mean` |
 | 总reward | `critic/score/mean` |
 | 平均回答token数 | `response_length/mean` |
-| DARA通道密度π | `dara/pi_correctness`、`dara/pi_format`；三奖励另有 `dara/pi_length` |
-| DARA通道权重 | `dara/w_correctness`、`dara/w_format`；三奖励另有 `dara/w_length` |
-| DARA活跃group数 | `dara/active_groups_correctness`、`dara/active_groups_format`；三奖励另有 `dara/active_groups_length` |
+| 通道密度π | `<method>/pi_correctness`、`<method>/pi_format`；三奖励另有 `<method>/pi_length` |
+| 通道权重 | `<method>/w_correctness`、`<method>/w_format`；三奖励另有 `<method>/w_length` |
+| 活跃group数 | `<method>/active_groups_correctness`、`<method>/active_groups_format`；三奖励另有 `<method>/active_groups_length` |
 
-π是当前训练batch中该通道具有非零组内优势的prompt group比例。训练指标覆盖steps1–100；验证指标在steps0/10/…/100记录为 `val/test_correctness/rlla`、`val/test_format/rlla` 和 `val/test_length/rlla`。对应的逐条验证回答与reward保存在 `outputs/<run-id>/eval/step_000.jsonl`、`step_010.jsonl` 等文件中。
+`<method>` 对应 `grpo`、`gdpo` 或 `dara`，例如 `gdpo/pi_format`。三个方法的π都按原始通道reward分别计算组内z-score、广播到有效response tokens后，统计优势绝对值和大于1e-8的prompt group比例。GRPO的日志权重是原始reward求和时各通道的系数1；GDPO是各通道标准化优势相加时的系数1；DARA记录实际使用的密度校准权重。
+
+训练指标覆盖steps1–100；验证指标在steps0/10/…/100记录为 `val/test_correctness/rlla`、`val/test_format/rlla` 和 `val/test_length/rlla`。对应的逐条验证回答与reward保存在 `outputs/<run-id>/eval/step_000.jsonl`、`step_010.jsonl` 等文件中。
 
 在训练环境中将单个run的完整曲线导出为CSV，供画reward、π和权重随step变化的图：
 
@@ -130,4 +132,4 @@ CUDA_VISIBLE_DEVICES=0 python evaluation/run.py --version v4 \
 
 ## 发给执行 agent 的任务文本
 
-> 请按照本仓库 docs/HANDOFF.md 安装环境、下载固定数据和模型，并运行分配给你的manifest条目。每run使用4张A10040GB、100steps和manifest规定的参数；Group实验固定2048回答/step，三奖励实验使用correctness+format+length。用tmux运行，每run单独保存日志和输出。完成训练后对step100模型执行本仓库的BFCL V3与V4评测，按相同设置汇总各seed的mean±sample SD，三奖励结果包含Length Reward、Length≥512和平均think词数。交回完整训练日志、training_dynamics.csv、模型路径、逐case输出及表格数据；曲线数据包含各路reward，以及DARA各通道的π与权重。优先覆盖各方法的seeds0/1/2，再完成4/5。
+> 请按照本仓库 docs/HANDOFF.md 安装环境、下载固定数据和模型，并运行分配给你的manifest条目。每run使用4张A10040GB、100steps和manifest规定的参数；Group实验固定2048回答/step，三奖励实验使用correctness+format+length。用tmux运行，每run单独保存日志和输出。完成训练后对step100模型执行本仓库的BFCL V3与V4评测，按相同设置汇总各seed的mean±sample SD，三奖励结果包含Length Reward、Length≥512和平均think词数。交回完整训练日志、training_dynamics.csv、模型路径、逐case输出及表格数据；曲线数据包含各路reward，以及GRPO、GDPO、DARA各通道的π、权重和活跃group数。优先覆盖各方法的seeds0/1/2，再完成4/5。

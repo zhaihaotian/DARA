@@ -156,28 +156,13 @@ def compute_grpo_outcome_advantage(token_level_rewards: torch.Tensor,
     return scores, scores
 
 
-def compute_dara_combined_advantage(channel_advantages,
-                                      index: torch.Tensor,
-                                      channel_names=None,
-                                      w_max: float = 5.0):
-    """
-    DARA: density-calibrated, symmetric multi-channel combination.
+@torch.no_grad()
+def compute_channel_densities(channel_advantages, index):
+    """Return per-channel active-group fractions and counts, grouped by UID.
 
-    Args:
-        channel_advantages: list of K tensors, each shape (N, response_len), the
-            per-channel group-wise z-scored advantages A_j (output of
-            compute_grpo_outcome_advantage). N = num_groups * G, with the G
-            rollouts of the same uid contiguous (GDPO grouping).
-        index: (N,) group ids (uid) aligned with the rows of each A_j. Rollouts
-            sharing a uid form one group.
-        channel_names: optional list of K names for logging keys.
-        w_max: cap on the density-inverse weight.
-
-    Returns:
-        combined: (N, response_len) sum_j A_tilde_j (pre-whiten).
-        metrics: dict with pi_<ch>, w_<ch>, active_groups_<ch>.
+    Inputs are the masked, broadcast group z-scores for each raw reward
+    channel. A group is active when its summed absolute advantage exceeds 1e-8.
     """
-    device = channel_advantages[0].device
     N = channel_advantages[0].shape[0]
 
     # map uid -> list of row positions, preserving first-seen order
@@ -186,10 +171,6 @@ def compute_dara_combined_advantage(channel_advantages,
         id2rows[index[i]].append(i)
     group_ids = list(id2rows.keys())
     num_groups = len(group_ids)
-
-    K = len(channel_advantages)
-    if channel_names is None:
-        channel_names = [f"ch{j}" for j in range(K)]
 
     pis = []
     active_counts = []
@@ -207,6 +188,32 @@ def compute_dara_combined_advantage(channel_advantages,
         pis.append(pi_j)
         active_counts.append(active)
 
+    return pis, active_counts
+
+
+def compute_dara_combined_advantage(channel_advantages,
+                                      index: torch.Tensor,
+                                      channel_names=None,
+                                      w_max: float = 5.0):
+    """
+    DARA: density-calibrated, symmetric multi-channel combination.
+
+    Args:
+        channel_advantages: list of K tensors, each shape (N, response_len), the
+            per-channel group-wise z-scored advantages A_j (output of
+            compute_grpo_outcome_advantage).
+        index: (N,) group ids (uid) aligned with the rows of each A_j. Rollouts
+            sharing a uid form one group.
+        channel_names: optional list of K names for logging keys.
+        w_max: cap on the density-inverse weight.
+
+    Returns:
+        combined: (N, response_len) sum_j A_tilde_j (pre-whiten).
+        metrics: dict with pi_<ch>, w_<ch>, active_groups_<ch>.
+    """
+    if channel_names is None:
+        channel_names = [f"ch{j}" for j in range(len(channel_advantages))]
+    pis, active_counts = compute_channel_densities(channel_advantages, index)
     pi_ref = max(pis) if len(pis) > 0 else 1.0
 
     weights = []

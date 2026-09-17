@@ -55,4 +55,6 @@ GRPO 对三路原 reward 之和使用原有组内归一化与 KL 接线。GDPO �
 
 每个 run 保存 `launch.json`、`command.json`、展开的 `config.json`、`metrics.jsonl`、`exit.code` 和最终模型。最终模型保存为 Hugging Face 权重与 tokenizer。为完整 run 申请足够租期；训练中断后，用新输出目录从相同 base 与 seed 重跑。
 
+GRPO、GDPO、DARA每step在 `metrics.jsonl` 中记录各奖励通道的π、权重和活跃group数，两奖励包含correctness/format，三奖励再包含length。日志字段与导出训练曲线的命令见 [HANDOFF.md](HANDOFF.md#训练-dynamics)。
+
 已完成的 3B G4 两奖励累计训练 step 耗时约 4–5 小时；申请至少约 6 小时并预留模型加载、验证、导出时间。G 消融与三奖励的耗时在首个完整 run 后更新，length 会影响生成量。获配 GPU 按四卡一组分配完整 run，CPU/RAM 按集群资源配置。

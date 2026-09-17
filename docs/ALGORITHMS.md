@@ -32,3 +32,5 @@ DARA 保留历史 Haotian RD-GDPO symmetric 的数值定义，仅统一方法标
 两套实现使用相同的原始数据文件。Reward parser 的具体行为是：内容正确但缺少 `</tool_call>` 时，Haotian correctness 为−3，Jay 可给+3；两者 format 都为0。本仓库使用 Haotian scorer，附加方法的优势公式沿用已有的 Jay→Haotian 移植。
 
 DARA π 的有效组阈值为广播后的 token 优势绝对值和 >1e-8。死通道 π=0 时日志权重为5，实际通道优势为0。新三奖励实验将相同定义扩展至 length 通道；两奖励默认行为通过回归测试保持一致。
+
+GRPO、GDPO与DARA共用 `core_algos.py::compute_channel_densities` 统计各通道的π和活跃group数。三个方法均以原始通道reward的组内z-score计算这些统计量。GRPO记录原reward求和系数1，GDPO记录标准化通道优势的组合系数1，DARA记录实际密度校准权重。每step的字段为 `<method>/pi_<channel>`、`<method>/w_<channel>` 和 `<method>/active_groups_<channel>`；三奖励时包含length通道。GRPO的通道统计用于日志，策略优势继续由含原KL惩罚的总reward计算。

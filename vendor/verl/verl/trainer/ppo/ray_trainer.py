@@ -217,6 +217,22 @@ def compute_advantage(data: DataProto, adv_estimator, gamma=1.0, lam=1.0, num_re
 
     else:
         raise NotImplementedError
+
+    if adv_estimator in ('grpo', 'gdpo'):
+        if adv_estimator == 'grpo':
+            # Diagnose raw reward channels alongside GRPO's summed-reward update.
+            channel_names = list((algorithm_config or {}).get(
+                'reward_channels', ['correctness', 'format']))
+            channel_advantages = [core_algos.compute_grpo_outcome_advantage(
+                token_level_rewards=data.batch['token_level_scores_' + name],
+                eos_mask=response_mask, index=index)[0] for name in channel_names]
+        pis, active_counts = core_algos.compute_channel_densities(channel_advantages, index)
+        metrics = {}
+        for name, pi, active in zip(channel_names, pis, active_counts):
+            metrics[f'{adv_estimator}/pi_{name}'] = float(pi)
+            metrics[f'{adv_estimator}/w_{name}'] = 1.0
+            metrics[f'{adv_estimator}/active_groups_{name}'] = float(active)
+        data.meta_info['density_metrics'] = metrics
     return data
 
 
@@ -806,6 +822,8 @@ class RayPPOTrainer(object):
                                                   global_step=self.global_steps)
                         if 'dara_metrics' in batch.meta_info:
                             metrics.update(batch.meta_info.pop('dara_metrics'))
+                        if 'density_metrics' in batch.meta_info:
+                            metrics.update(batch.meta_info.pop('density_metrics'))
                         if 'multi_reward_metrics' in batch.meta_info:
                             metrics.update(batch.meta_info.pop('multi_reward_metrics'))
 
