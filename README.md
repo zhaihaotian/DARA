@@ -8,11 +8,12 @@
 
 | 需求 | 文档或入口 |
 |---|---|
-| 给协作者和 agent 的任务说明 | [HANDOFF.md](docs/HANDOFF.md)、[AGENTS.md](AGENTS.md) |
+| 合作者从 clone 到训练、评测的完整流程 | [HANDOFF.md](docs/HANDOFF.md)、[AGENTS.md](AGENTS.md) |
+| 可直接用于论文的实验设置与评测协议 | [PAPER_EXPERIMENTS.md](docs/PAPER_EXPERIMENTS.md) |
 | 创建环境 | [ENVIRONMENT.md](docs/ENVIRONMENT.md) |
 | 固定训练设置与方法定义 | [TRAINING.md](docs/TRAINING.md)、[ALGORITHMS.md](docs/ALGORITHMS.md) |
 | BFCL V3/V4、Avg、Format、Length 的完整定义 | [EVALUATION.md](docs/EVALUATION.md) |
-| 已完成哪些实验、有哪些局限 | [STATUS.md](docs/STATUS.md) |
+| 已完成实验和后续任务 | [STATUS.md](docs/STATUS.md) |
 | 所有 seed 的最终评测表 | [ALL_SEEDS.md](results/reference/ALL_SEEDS.md) |
 | 事后筛选的诊断表 | [SELECTED_SEEDS.md](results/reference/SELECTED_SEEDS.md) |
 | 自己画训练曲线 | [training_dynamics.csv](results/reference/training_dynamics.csv) |
@@ -32,7 +33,7 @@ python training/launch.py --method dara --seed 0 \
   --output outputs/1p5b-dara-g4-s0-two --dry-run
 ```
 
-实际训练在已有 **4 × A100 40GB** allocation 内执行同一命令，去掉 `--dry-run`。每个 run 100 steps，最终模型位于 `outputs/<run>/actor/global_step_100`。不把不同 run 写入同一输出目录。
+实际训练在已有 **4 × A100 40GB** allocation 内执行同一命令，去掉 `--dry-run`。每个 run 100 steps，最终模型位于 `outputs/<run>/actor/global_step_100`。每个 run 使用独立输出目录。
 
 ```bash
 python training/run_manifest.py --manifest configs/group_ablation.json \
@@ -45,4 +46,4 @@ python training/run_manifest.py --manifest configs/three_rewards.json \
 
 ## 来源
 
-训练源码 vendored 于 `vendor/verl`，源自 Haotian 的 RD-GDPO 工作目录，保留旧 verl/GDPO 的行为；不是把 Jay 的 runtime 换名。附加算法继承已有的 Jay→Haotian 移植。版本与差异见 [ALGORITHMS.md](docs/ALGORITHMS.md)。许可证和第三方来源见 [LICENSE](LICENSE)、[THIRD_PARTY.md](THIRD_PARTY.md)。
+训练源码 vendored 于 `vendor/verl`，源自 Haotian 的 RD-GDPO 工作目录，沿用该训练环境和实现。附加算法继承已有的 Jay→Haotian 移植。版本与差异见 [ALGORITHMS.md](docs/ALGORITHMS.md)。许可证和第三方来源见 [LICENSE](LICENSE)、[THIRD_PARTY.md](THIRD_PARTY.md)。

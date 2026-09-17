@@ -1,9 +1,9 @@
 # DARA research handoff
 
-先阅读 docs/HANDOFF.md、docs/TRAINING.md、docs/EVALUATION.md。本仓库采用 Haotian infra；DARA 使用双侧密度校准。用户只要求局部修改时，其他现有行为冻结。
+先阅读 docs/HANDOFF.md、docs/TRAINING.md、docs/EVALUATION.md。本仓库采用Haotian infra，DARA使用双侧密度校准。局部修改时，其余现有行为保持冻结；范围扩展以用户明确授权为准。
 
-训练每个 run 固定4×A10040GB、100steps、相同数据和固定参数。实验只按 configs/group_ablation.json 与 configs/three_rewards.json 执行；seeds为0/1/2/4/5。Group实验固定2048回答/step，三奖励实验固定G4。不能静默改数据、batch预算、学习率、rollout seed、KL、entropy、whitening或checkpoint选择规则。
+训练按 configs/group_ablation.json 与 configs/three_rewards.json 执行，每run固定4×A10040GB、100steps和相同数据，seeds为0/1/2/4/5。Group实验固定2048回答/step，三奖励固定G4。batch预算、学习率、rollout seed、KL、entropy、whitening和checkpoint规则使用仓库规定值。
 
-评测只使用final step100，固定V3/V4协议。保留全部seed、原始输出和基础设施失败记录。筛选seed的诊断不得冒充完整结果。新增length实验必须训练第三通道，不能以旧输出后处理代替。
+评测step100模型，执行固定V3/V4协议。完整保留各seed、原始输出和运行记录；筛选分析注明seed列表与样本数。三奖励run把length接入训练reward与优势计算。
 
-代码修改需运行与故障直接相关的检查；算法/训练接线修改运行scripts/test.sh。不要添加无用途的哈希、迁移框架、兼容层或泛化开关。不要覆盖已有实验目录，不更改其他项目的调度。与用户交流用连贯段落，不分点。
+检查与当前修改直接相关的行为；算法和训练接线修改运行scripts/test.sh。每个新run使用独立目录，其他项目调度保持原样。实现保持简洁，按任务实际需要添加代码。与用户交流使用连贯段落。文档直接写操作步骤、参数和计算定义，指标统一称为Format和Average Format。

@@ -1,54 +1,99 @@
-# 协作者与执行 agent 交接
+# 合作者使用说明
 
-本次目标是用一个干净仓库继续DARA研究。代码采用Haotian infra，所有现有结果和接下来的比较均按本仓库固定协议执行。先读 [ENVIRONMENT.md](ENVIRONMENT.md)、[TRAINING.md](TRAINING.md)、[EVALUATION.md](EVALUATION.md) 和 [STATUS.md](STATUS.md)，运行测试和 `python scripts/fetch_data.py` 后再领取manifest里的run。不要把环境升级、训练infra修正、reward parser变更或评测口径探索混在这些实验里。
+拿到仓库访问权限后，从下面的安装流程开始。训练设置见 [TRAINING.md](TRAINING.md)，评测设置见 [EVALUATION.md](EVALUATION.md)，已有结果见 [STATUS.md](STATUS.md)。
 
-## 需求与交付位置
+## 获取仓库、环境和模型
 
-| 用户要求 | 本仓库对应交付 |
-|---|---|
-| 独立repo，方法名DARA | 本仓库；DARA仅使用双侧校准 |
-| 保留自己的infra和已有算法 | vendor/verl、training/launch.py、ALGORITHMS.md |
-| 环境可让别人创建 | 四份环境快照和依赖锁定、安装脚本 |
-| 训练数据不变 | scripts/fetch_data.py获取逐字节相同的3920/80原始parquet |
-| 明确V3/V4及average/format口径 | EVALUATION.md和evaluation/protocol.py |
-| 交代五seed/三seed和未收敛结果 | STATUS.md、完整表、逐seed CSV、筛选诊断表 |
-| 说明SAW/RVPO/DVAO/Hard现状 | STATUS.md |
-| Group大小消融 | configs/group_ablation.json |
-| 真正训练三reward并评测长度 | configs/three_rewards.json；WITHLENGTH与分通道优势接线；length诊断 |
-| 自行画training dynamics/density | training_dynamics.csv、42份原始指标JSONL |
-| 可重复执行和核对 | scripts/test.sh、VALIDATION.md、逐run命令与配置记录 |
-
-## 实验 A：Group size
-
-使用Qwen2.5-1.5B-Instruct；GRPO、GDPO、DARA；G=4/8/16/32；每格seeds0/1/2/4/5。共60个run，其中G4的15个已经完成、标为`reuse_complete`；新增45个标为`planned`。仅改变G及维持每步2048回答所必需的prompt/minibatch/microbatch基数。详细值见TRAINING.md。
-
-manifest是任务清单，不是集群状态数据库。执行时将领取的run ID记录到自己的调度日志，避免多人同时做同一个run。每run单节点四卡A10040GB；有8卡就运行两个完整run，有16卡就四个，继承allocation分配的GPU可见范围。跨方法先覆盖seeds0/1/2，再做4/5。保持获配资源利用率，但不能以缩步数、缩回答长度、提前选checkpoint替代完整实验。
+在 Linux x86_64、Conda 和 NVIDIA GPU 环境中执行：
 
 ```bash
+git clone git@github.com:zhaihaotian/DARA.git
+cd DARA
+bash environments/install_training.sh rdgdpo
 conda activate rdgdpo
-python training/run_manifest.py --manifest configs/group_ablation.json \
-  --id 1p5b-gdpo-g8-s0-two --model-root /models --output-root /experiments/dara
+python scripts/fetch_data.py
+export DARA_MODELS="$PWD/../dara-models"
+hf download Qwen/Qwen2.5-1.5B-Instruct --local-dir "$DARA_MODELS/Qwen2.5-1.5B-Instruct"
+hf download Qwen/Qwen2.5-3B-Instruct --local-dir "$DARA_MODELS/Qwen2.5-3B-Instruct"
 ```
 
-训练完成后确认恰有steps1–100、validation steps0/10/…/100、final模型可加载，再按相同V3/V4协议评测。所有run的曲线用同一横轴和汇总方式。密度π只在DARA历史日志中直接记录；GRPO/GDPO的平均reward不能唯一恢复prompt-group活动比例，缺失密度不得填0或推断成准确π。若后续要为所有方法记录π，需要明确另行增加只读统计，不能更改优势。
+安装脚本会执行依赖检查和训练单元测试。已有本地模型时，将 `DARA_MODELS` 设为包含这两个模型目录的路径。
 
-## 实验 B：correctness + format + length
+## 领取实验
 
-使用Qwen2.5-1.5B-Instruct和Qwen2.5-3B-Instruct；GRPO、GDPO、DARA；每格五seeds0/1/2/4/5；G固定4；100steps，共30个新增run。两奖励对照直接使用已有同规模、同seed结果。除增加length reward及其通道外保持全部参数和训练数据不变。
+| 实验 | 模型 | 方法 | G | Seeds | 工作量 |
+|---|---|---|---|---|---|
+| Group size | 1.5B | GRPO、GDPO、DARA | 4/8/16/32 | 0/1/2/4/5 | G4复用15个完整run，G8/16/32新增45个 |
+| 三奖励 | 1.5B、3B | GRPO、GDPO、DARA | 4 | 0/1/2/4/5 | 新增30个run |
+
+Group实验清单位于 `configs/group_ablation.json`，三奖励位于 `configs/three_rewards.json`。从 `status=planned` 的条目选择run ID，并在协作记录里登记负责人。每run固定4×A10040GB、100steps；优先覆盖三个方法的seeds0/1/2，之后做4/5。按四卡一组并行使用已获配GPU。
+
+Group实验固定2048回答/step和每step四次optimizer更新，脚本根据G同步设置prompt batch、PPO minibatch与microbatch。三奖励在原correctness、format基础上加入length，固定G4；其余参数沿用相同配置。
+
+## 启动训练
+
+进入分配到四张GPU的计算节点，打开持久终端：
+
+```bash
+tmux new -s dara-training
+conda activate rdgdpo
+cd /path/to/DARA
+export DARA_MODELS=/path/to/dara-models
+mkdir -p outputs/logs
+python training/run_manifest.py --manifest configs/group_ablation.json \
+  --id 1p5b-dara-g8-s0-two --model-root "$DARA_MODELS" --output-root outputs \
+  > outputs/logs/1p5b-dara-g8-s0-two.log 2>&1
+```
+
+在tmux中按 `Ctrl-b d` 脱离，之后用 `tmux attach -t dara-training` 返回。脚本继承调度器提供的GPU可见范围。
+
+运行三奖励时选择对应manifest和run ID：
 
 ```bash
 python training/run_manifest.py --manifest configs/three_rewards.json \
-  --id 1p5b-dara-g4-s0-three --model-root /models --output-root /experiments/dara
+  --id 3b-dara-g4-s0-three --model-root "$DARA_MODELS" --output-root outputs \
+  > outputs/logs/3b-dara-g4-s0-three.log 2>&1
 ```
 
-length定义固定为原scorer的think whitespace words/512、round2、cap1；它鼓励长度而不是压缩长度。正式run必须同时看到`critic/length_score/mean`和三奖励配置；DARA另有`dara/pi_length`、`dara/w_length`。不能只给旧checkpoint补一个Length表然后称为三奖励实验。
+命令加 `--dry-run` 可查看完整配置。每run使用独立输出目录，记录 `launch.json`、`command.json`、`config.json`、`metrics.jsonl` 和 `exit.code`；最终模型在 `outputs/<run-id>/actor/global_step_100`。
 
-最终模型仍按V3两组AST与V4三组评测，并在同一套原始输出上统计Format*、Length Reward、Length≥512和think words；分别报告，保持现有accuracy计算。比较中要能看到长度是否达标，以及正确率和格式是否维持。若长度没有学到，保留失败结果并报告；不偷偷调整512阈值、解码预算或数据。
+三奖励的长度分数为think区域词数/512、round2、上限1，训练日志记录 `critic/length_score/mean`；DARA还记录 `dara/pi_length` 与 `dara/w_length`。Group实验和三奖励的全部固定参数见 [TRAINING.md](TRAINING.md)。
 
-## 执行和交回
+## 评测最终模型
 
-用tmux等持久终端运行；训练每个输出目录只能归属一个run，评测每个目录只能归属一个checkpoint和一个版本。训练中断不能从当前仅保存最终模型的方案精确恢复optimizer，应按TRAINING.md处理。评测可直接重复命令补齐缺失case。
+创建推理服务和BFCL环境：
 
-交回每个run的配置、命令、完整metrics.jsonl、100step最终模型位置和可加载记录；每次评测交回原始raw JSONL、官方score、逐case诊断和summary.json。汇总表保留所有seed，采用mean±sample SD；另有筛选分析时必须标明筛选依据和样本数。让汇总表能追溯到原始case和模型，不只交回图片。
+```bash
+bash environments/install_inference.sh dara-inference
+bash environments/install_evaluation.sh v3 dara-bfcl-v3
+bash environments/install_evaluation.sh v4 dara-bfcl-v4
+```
 
-不要为这次交接自动扩大到3B的四个附加基线，不恢复旧单侧比较，不再训练MALT。当前明确新增任务只有上面45+30个run；四个附加基线的代码和已有1.5B三seed结果保留供后续使用。所有未经授权改变的训练和评测行为视为冻结。遇到确定的执行错误修局部根因并记录，不能通过更改任务定义让run“通过”。
+记录推理环境Python路径后，运行V3与V4：
+
+```bash
+conda activate dara-inference
+export DARA_SERVER_PYTHON="$(command -v python)"
+conda activate dara-bfcl-v3
+CUDA_VISIBLE_DEVICES=0 python evaluation/run.py --version v3 \
+  --model outputs/1p5b-dara-g8-s0-two/actor/global_step_100 \
+  --server-python "$DARA_SERVER_PYTHON" --port 8000 \
+  --output outputs/eval-v3/1p5b-dara-g8-s0-two
+conda activate dara-bfcl-v4
+CUDA_VISIBLE_DEVICES=0 python evaluation/run.py --version v4 \
+  --model outputs/1p5b-dara-g8-s0-two/actor/global_step_100 \
+  --server-python "$DARA_SERVER_PYTHON" --port 8000 \
+  --output outputs/eval-v4/1p5b-dara-g8-s0-two
+```
+
+每个checkpoint评测使用一张GPU。并行任务分别设置GPU、端口和输出目录。推理结果逐case保存，重复命令可补齐缺失case；评分完成后查看 `summary.json`。具体子集、Average和Average Format的定义见 [EVALUATION.md](EVALUATION.md)。
+
+## 交回结果
+
+交回训练配置、命令、完整metrics.jsonl、最终模型位置，以及评测的raw JSONL、官方score、逐case指标和summary.json。完成的训练记录包含steps1–100、validation steps0/10/…/100和可加载的最终模型。汇总按checkpoint分别计算指标，再报告跨seed的mean±sample SD；筛选分析附上使用的seed列表与n。
+
+已有42个训练run、44个模型的评测结果及训练曲线数据在 `results/reference/`。G4对照直接复用其中对应结果。DARA历史日志包含π；GRPO/GDPO历史密度字段留空。各方法已有结果和待执行任务见 [STATUS.md](STATUS.md)。
+
+## 发给执行 agent 的任务文本
+
+> 请按照本仓库 docs/HANDOFF.md 安装环境、下载固定数据和模型，并运行分配给你的manifest条目。每run使用4张A10040GB、100steps和manifest规定的参数；Group实验固定2048回答/step，三奖励实验使用correctness+format+length。用tmux运行，每run单独保存日志和输出。完成训练后对step100模型执行本仓库的BFCL V3与V4评测，交回完整训练日志、模型路径、逐case输出及汇总结果。优先覆盖各方法的seeds0/1/2，再完成4/5。

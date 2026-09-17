@@ -41,9 +41,9 @@ def main():
         aggregates = []
         md = ['# '+('Selected-seed diagnostic' if selected else 'All completed seeds'), '',
               '单位：百分数，mean ± sample standard deviation (ddof=1)。Base 为一次固定解码评测。', '',
-              ('此附表事后排除 DVAO seed 1、GD²PO-Hard seed 2 的 format 未收敛 run；不能称为三 seed 结果。完整结果见 ALL_SEEDS.md。'
+              ('此附表使用 DVAO seeds 0/2 和 GD²PO-Hard seeds 0/1，各 n=2；分别排除 format 未收敛的 seed 1 和 seed 2。完整结果见 ALL_SEEDS.md。'
                if selected else '包含每个已完成 seed；DVAO seed 1、GD²PO-Hard seed 2 的 format 未收敛结果也保留。'), '',
-              '| Model | Method | n | V3 Live AST | V3 Non-Live AST | V4 Live AST | V4 Non-Live AST | V4 Multi-Turn | V4 Avg | V4 Avg Format* |',
+              '| Model | Method | n | V3 Live AST | V3 Non-Live AST | V4 Live AST | V4 Non-Live AST | V4 Multi-Turn | V4 Avg | V4 Avg Format |',
               '|---|---|---:|---:|---:|---:|---:|---:|---:|---:|']
         for (size,method), runs in groups.items():
             row = dict(model_size=size,method=method,n=len(runs),seeds=','.join(r['seed'] for r in runs))

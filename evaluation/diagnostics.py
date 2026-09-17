@@ -1,4 +1,4 @@
-"""Format* and length: structural diagnostics separate from BFCL accuracy."""
+"""Compute per-case format and length scores from assistant outputs."""
 import contextlib
 import importlib.util
 import io

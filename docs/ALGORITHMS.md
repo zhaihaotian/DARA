@@ -14,7 +14,7 @@ DARA 保留历史 Haotian RD-GDPO symmetric 的数值定义，仅统一方法标
 | GDPO-SAW | 用理论下界[-3,0]平移 raw reward；batch sample std / mean 为 CV；权重 `2*CV/sum(CV)`；零 CV 时等权；最终 token whitening |
 | GD²PO-Hard | 同一 response 通道优势有正有负则删除；零中性；保留项参与 token whitening；每 prompt 保留比例乘在 clipped PPO surrogate 外 |
 
-这些定义延续已经移植到 Haotian 的算法。Jay 上游对照点为 `917da15`；RVPO 是后续按论文 k=1 配置同时加入两侧的实现，不是该 Jay 提交自带的方法。给相同 reward、mask 和 UID 时，已有对照核验了方法公式。GD²PO-Hard 这里保留 Jay 移植的“最终 loss 乘 query 权重”位置；不能称为后来拿到的 GD²PO 作者代码逐字复现，作者代码的权重/whitening 顺序存在差别。
+这些定义延续已经移植到 Haotian 的算法。Jay 上游对照点为 `917da15`；RVPO 是后续按论文 k=1 配置同时加入两侧的实现。给相同 reward、mask 和 UID 时，已有对照核验了方法公式。GD²PO-Hard 这里保留 Jay 移植的“最终 loss 乘 query 权重”位置；该权重位置在 whitening 和 clipped PPO 计算之后。
 
 ## 保留的 Haotian 行为
 
@@ -29,6 +29,6 @@ DARA 保留历史 Haotian RD-GDPO symmetric 的数值定义，仅统一方法标
 | vLLM seed | 默认0 | 随实验 seed |
 | checkpoint | 最终 HF 模型 | 周期性完整可恢复状态 |
 
-两套原始数据文件相同，但完整训练轨迹的差异不止软件版本。Reward parser 也确有差异：内容正确但缺少 `</tool_call>` 时，Haotian correctness 为−3，Jay 可给+3；两者 format 都为0。本仓库保留 Haotian scorer。不能声称“全流程除 infra 外完全相同”，可以准确声称“在同一 reward 输入下，附加方法的算法公式沿用 Jay 移植”。
+两套实现使用相同的原始数据文件。Reward parser 的具体行为是：内容正确但缺少 `</tool_call>` 时，Haotian correctness 为−3，Jay 可给+3；两者 format 都为0。本仓库使用 Haotian scorer，附加方法的优势公式沿用已有的 Jay→Haotian 移植。
 
 DARA π 的有效组阈值为广播后的 token 优势绝对值和 >1e-8。死通道 π=0 时日志权重为5，实际通道优势为0。新三奖励实验将相同定义扩展至 length 通道；两奖励默认行为通过回归测试保持一致。
