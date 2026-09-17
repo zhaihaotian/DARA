@@ -13,6 +13,8 @@ METHODS = ('grpo', 'gdpo', 'dara', 'dvao', 'gdpo_saw', 'gd2po_hard', 'rvpo')
 
 def configuration(args):
     group = args.group_size
+    if args.nnodes == 2 and not args.ray_address:
+        raise ValueError('Two-node training requires --ray-address for the four-GPU Ray cluster.')
     estimator = args.method
     if args.rewards == 'three' and args.method not in ('grpo', 'gdpo', 'dara'):
         raise ValueError('The three-reward experiment is defined for GRPO, GDPO and DARA.')
@@ -52,8 +54,8 @@ def configuration(args):
         'trainer.logger': ['console', 'jsonl'],
         'trainer.project_name': 'Var_inspect',
         'trainer.experiment_name': f'qwen-{args.model_size}-{args.method}-s{args.seed}-G{group}-{args.rewards}-100',
-        'trainer.n_gpus_per_node': 4,
-        'trainer.nnodes': 1,
+        'trainer.n_gpus_per_node': 4 // args.nnodes,
+        'trainer.nnodes': args.nnodes,
         'trainer.save_freq': args.save_freq,
         'trainer.test_freq': 10,
         'trainer.default_local_dir': str(output),
@@ -77,8 +79,11 @@ def configuration(args):
                        TOKENIZERS_PARALLELISM='false', OMP_NUM_THREADS='4',
                        VLLM_ATTENTION_BACKEND='XFORMERS',
                        N_GPUS='4', ROLLOUT_TP_SIZE='1',
-                       RAY_USAGE_STATS_ENABLED='0', RAY_DISABLE_DOCKER_CPU_WARNING='1',
-                       RAY_TMPDIR=f'/tmp/d{os.getuid()}p{os.getpid()}')
+                       RAY_USAGE_STATS_ENABLED='0', RAY_DISABLE_DOCKER_CPU_WARNING='1')
+    if args.ray_address:
+        environment['RAY_ADDRESS'] = args.ray_address
+    else:
+        environment['RAY_TMPDIR'] = f'/tmp/d{os.getuid()}p{os.getpid()}'
     for name in ('WITHLENGTH', 'REFINEDREWARD', 'COARSEREWARD', 'STRICTMATCH',
                  'CORRECTMAX1', 'MAX1STEP30MAX3', 'SCHEDULEREWARD', 'SCHEDULELENGTH',
                  'INTERMEDIATEREWARD', 'FORMAT_GRADED'):
@@ -103,6 +108,9 @@ def main():
     parser.add_argument('--group-size', type=int, choices=[4, 8, 16, 32], default=4)
     parser.add_argument('--save-freq', type=int, choices=[10, 100], default=100,
                         help='Save a Hugging Face model every N training steps')
+    parser.add_argument('--nnodes', type=int, choices=[1, 2], default=1,
+                        help='Split the fixed four GPUs over one or two Ray nodes')
+    parser.add_argument('--ray-address', help='Address of an existing Ray head')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
     settings, environment, command = configuration(args)

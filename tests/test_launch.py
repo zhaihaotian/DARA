@@ -19,7 +19,8 @@ class LaunchTest(unittest.TestCase):
                 rewards = ('two', 'three') if method in ('grpo', 'gdpo', 'dara') else ('two',)
                 for reward in rewards:
                     args = SimpleNamespace(method=method,seed=0,group_size=group,model_size='1.5b',
-                                           rewards=reward,save_freq=100,output=Path('/tmp/dara-test'),
+                                           rewards=reward,save_freq=100,nnodes=1,ray_address=None,
+                                           output=Path('/tmp/dara-test'),
                                            data_dir=launch.REPO/'data/rlla_4k',model='Qwen/Qwen2.5-1.5B-Instruct')
                     _, env, cmd = launch.configuration(args)
                     with initialize_config_dir(config_dir=str(launch.FRAMEWORK/'verl/trainer/config'),version_base=None):
@@ -65,6 +66,23 @@ class LaunchTest(unittest.TestCase):
         self.assertEqual(periodic['settings']['trainer.save_freq'], 10)
         default['settings']['trainer.save_freq'] = 10
         self.assertEqual(periodic['settings'], default['settings'])
+
+    def test_two_nodes_preserve_four_gpu_training_budget(self):
+        command = [sys.executable, str(launch.REPO/'training/launch.py'),
+                   '--method', 'dvao', '--seed', '1', '--model', 'Qwen/Qwen2.5-1.5B-Instruct',
+                   '--model-size', '1.5b', '--output', '/tmp/dara-pair', '--save-freq', '10', '--dry-run']
+        single = json.loads(subprocess.check_output(command, text=True))
+        pair = json.loads(subprocess.check_output(command + ['--nnodes', '2', '--ray-address', '10.1.2.3:23456'], text=True))
+        self.assertEqual(pair['settings']['trainer.nnodes'], 2)
+        self.assertEqual(pair['settings']['trainer.n_gpus_per_node'], 2)
+        single['settings']['trainer.nnodes'] = 2
+        single['settings']['trainer.n_gpus_per_node'] = 2
+        self.assertEqual(single['settings'], pair['settings'])
+        self.assertEqual(pair['environment']['RAY_ADDRESS'], '10.1.2.3:23456')
+        self.assertEqual(pair['environment']['SEED'], '1')
+        single['environment'].pop('RAY_TMPDIR')
+        pair['environment'].pop('RAY_ADDRESS')
+        self.assertEqual(single['environment'], pair['environment'])
 
 
 if __name__=='__main__': unittest.main()
