@@ -356,41 +356,7 @@
   "hardware": {
     "gpu_count": 8,
     "gpu_model": "NVIDIA A100",
-    "memory_gb_per_gpu": 80,
-    "form_factor": "SXM4"
+    "memory_gb_per_gpu": 40
   },
-  "target_execution": {
-    "physical_gpus_per_run": 4,
-    "data_parallel_size": 4,
-    "gpu_groups": [
-      [
-        0,
-        1,
-        2,
-        3
-      ],
-      [
-        0,
-        1,
-        2,
-        3
-      ],
-      [
-        4,
-        5,
-        6,
-        7
-      ],
-      [
-        4,
-        5,
-        6,
-        7
-      ]
-    ],
-    "parallel_training_runs": 4,
-    "training_ranks_per_physical_gpu": 2,
-    "implementation_status": "pending_shared_gpu_resource_setup_and_validation"
-  },
-  "agent_handoff": "docs/RENTAL_A100_80G_SXM4_AGENT.md"
+  "agent_handoff": "docs/RENTAL_A100_40G_AGENT.md"
 }

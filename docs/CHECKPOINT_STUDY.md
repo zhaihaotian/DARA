@@ -14,7 +14,7 @@
 
 DVAO的过程种子为3/4/5，新增seed3过程训练，并复用新增seed4/5的过程模型。GD²PO-Hard的过程种子为0/4/5，seed0在原始训练中首次达到Format0.8为step26；重跑seed0并复用新增4/5。除10个最终训练任务外，另需11次1.5B过程训练：GRPO、GDPO、DARA各三次，DVAO seed3和GD²PO-Hard seed0各一次。两个尺寸的最终比较优先获得训练资源，后续可用资源接入过程训练。
 
-1.5B租机为8×A100 80GB SXM4，包含15个待运行任务，清单见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)，执行agent使用独立的 [RENTAL_A100_80G_SXM4_AGENT.md](RENTAL_A100_80G_SXM4_AGENT.md)。机器获配后登记任务归属，再将对应任务从集群派发移交。
+1.5B租机为8×A100 40GB，包含15个待运行任务，清单见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)，执行agent使用独立的 [RENTAL_A100_40G_AGENT.md](RENTAL_A100_40G_AGENT.md)。机器获配后登记任务归属，再将对应任务从集群派发移交。
 
 这批共21个训练任务。1.5B过程评测共150个checkpoint；3B新增训练评测6个step100模型，合计156个新增BFCL V4模型评测。
 

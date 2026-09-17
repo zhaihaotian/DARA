@@ -1,6 +1,6 @@
-# 1.5B 八卡 A100 80GB SXM4 租机实验清单
+# 1.5B 八卡 A100 40GB 租机实验清单
 
-机器为8×A100 80GB SXM4、租期20小时。每个实验使用四张物理GPU和四个训练rank；两个实验共享GPU0–3，另两个共享GPU4–7，同时运行四个实验。独立的执行agent交接文档为 [RENTAL_A100_80G_SXM4_AGENT.md](RENTAL_A100_80G_SXM4_AGENT.md)，包含共享GPU资源配置与验证、GPU持续补位、环境、启动、评测和交付要求。任务清单位于 [rental_1p5b_20h.json](../configs/rental_1p5b_20h.json)。服务器获配后登记任务归属并移交集群中的对应待运行任务。
+机器为8×A100 40GB、租期20小时。每个实验独占四张GPU、四个训练rank，GPU0–3与GPU4–7分成两组，同时运行两个实验。独立的执行agent交接文档为 [RENTAL_A100_40G_AGENT.md](RENTAL_A100_40G_AGENT.md)，包含四卡训练启动、GPU持续补位、环境、启动、评测和交付要求。任务清单位于 [rental_1p5b_20h.json](../configs/rental_1p5b_20h.json)。服务器获配后登记任务归属并移交集群中的对应待运行任务。
 
 ## 固定设置
 
@@ -40,11 +40,11 @@ DVAO seed3完成steps10/20/…/100的BFCL V4过程评测，同时交付step100�
 | 14 | GD²PO-Hard | 0 | 历史收敛seed的过程checkpoint重跑 | `haotian_1p5b_gd2po_hard_s0_save10` |
 | 15 | DVAO | 3 | 过程checkpoint训练、逐step评测及step100最终评测 | `haotian_1p5b_dvao_s3_save10` |
 
-同组四卡的双实验共享验证通过后，先并行执行前四个补种子任务，再动态补入其余十一个过程训练，四条通道约分配4/4/4/3次。准备期间采用当前四卡两路执行。完成15次训练后，五个方法各有三个seed的完整过程checkpoint，同时补齐1.5B最终比较。
+先两路并行完成前四个补种子任务，再动态补入其余十一个过程训练，两条通道约分配8次和7次。完成15次训练后，五个方法各有三个seed的完整过程checkpoint，同时补齐1.5B最终比较。
 
 ## 时间与输出
 
-历史四卡40GB的1.5B完整训练约2.3–2.6小时，最近每10steps保存的DVAO训练端到端耗时2小时28分钟。新机器上两个实验共享四卡时的完整run耗时需实测；四路并行的训练预算约为四个共享负载run的耗时，环境准备、GPU验证、数据回传和BFCL评测另计。按实测整机吞吐选择布局，按剩余租期安排完整run，空出的GPU立即接训练或过程评测。
+历史四卡40GB的1.5B完整训练约2.3–2.6小时，最近每10steps保存的DVAO训练端到端耗时2小时28分钟。15次训练两路并行预计约19–21小时，环境准备、数据回传和BFCL评测另计。用本机实测耗时更新ETA，按剩余租期安排完整run，空出的GPU立即接训练或过程评测。
 
 每个run保存独立输出目录、展开配置、完整训练日志和十份HF checkpoint。GRPO、GDPO、DARA记录两路reward、π、权重和活跃group数量。用tmux维持持续派发任务的控制器，记录每项exit.code并即时补位。
 
@@ -54,4 +54,4 @@ DVAO seed3完成steps10/20/…/100的BFCL V4过程评测，同时交付step100�
 
 全部15次训练都要完成steps10/20/…/100的BFCL V4评测，共150份checkpoint结果。第15项DVAO seed3同时交付step100最终评测结果。所有模型使用14类3301cases及相同推理与评分参数，报告Non-Live、Live、Multi-Turn、Average的Accuracy和Format，按方法和step汇总三个seed的均值与样本标准差。
 
-训练启动、共享GPU资源配置与验证、评测命令、CPU表格导出以及每分钟GPU补位要求统一放在独立的 [agent交接文档](RENTAL_A100_80G_SXM4_AGENT.md)。**任何时候最大化利用所有已租GPU**：可开完整训练时立即开训，训练尾段或剩余租期较短时立即接checkpoint评测。评分完成后的四份CSV为 `checkpoint_per_model.csv`、`checkpoint_method_results.csv`、`process_final_per_model.csv`、`process_final_method_results.csv`，分别交付过程数据和本轮最终结果。评测定义见 [EVALUATION.md](EVALUATION.md)。
+四卡训练启动、评测命令、CPU表格导出以及每分钟GPU补位要求统一放在独立的 [agent交接文档](RENTAL_A100_40G_AGENT.md)。**任何时候最大化利用所有已租GPU**：可开完整训练时立即开训，训练尾段或剩余租期较短时立即接checkpoint评测。评分完成后的四份CSV为 `checkpoint_per_model.csv`、`checkpoint_method_results.csv`、`process_final_per_model.csv`、`process_final_method_results.csv`，分别交付过程数据和本轮最终结果。评测定义见 [EVALUATION.md](EVALUATION.md)。
