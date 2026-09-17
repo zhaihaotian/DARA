@@ -1,6 +1,6 @@
 # 1.5B 八卡 A100 40GB 租机实验清单
 
-机器为8×A100 40GB、租期20小时。每个实验独占四张GPU、四个训练rank，GPU0–3与GPU4–7分成两组，同时运行两个实验。独立的执行agent交接文档为 [RENTAL_A100_40G_AGENT.md](RENTAL_A100_40G_AGENT.md)，包含四卡训练启动、GPU持续补位、环境、启动、评测和交付要求。任务清单位于 [rental_1p5b_20h.json](../configs/rental_1p5b_20h.json)。服务器获配后登记任务归属并移交集群中的对应待运行任务。
+机器为8×A100 40GB、租期20小时。每个实验独占四张GPU、四个训练rank，GPU0–3与GPU4–7分成两组，同时运行两个实验。独立的执行agent交接文档为 [RENTAL_A100_40G_AGENT.md](RENTAL_A100_40G_AGENT.md)，包含四卡训练启动、GPU持续补位、环境、启动、评测和交付要求。任务清单位于 [rental_1p5b_20h.json](../configs/rental_1p5b_20h.json)。15个run及对应评测已交给租机执行agent，本地自动训练待办已移出这些任务。
 
 ## 固定设置
 

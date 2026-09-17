@@ -1,6 +1,6 @@
 # 8×A100 40GB：执行 agent 交接
 
-本次机器为单节点8×NVIDIA A100 40GB，租期20小时。每个实验独占四张GPU，同时运行两个实验。任务是完成 [15次1.5B训练清单](RENTAL_1P5B_20H.md)，保存全部过程模型，并完成150份checkpoint的BFCL V4评测及15份step100最终结果。任务清单为 [rental_1p5b_20h.json](../configs/rental_1p5b_20h.json)。开始前与原集群登记run归属，再领取对应任务。
+本次机器为单节点8×NVIDIA A100 40GB，租期20小时。每个实验独占四张GPU，同时运行两个实验。任务是完成 [15次1.5B训练清单](RENTAL_1P5B_20H.md)，保存全部过程模型，并完成150份checkpoint的BFCL V4评测及15份step100最终结果。任务清单为 [rental_1p5b_20h.json](../configs/rental_1p5b_20h.json)。这15项已登记交给租机执行agent，本地集群自动训练待办已移出对应任务。
 
 **第一调度规则：任何时候都要最大化利用所有已租GPU。有可执行任务时，空出的GPU立即接训练或checkpoint评测。每条训练通道独立补位。** 在tmux中持续维护任务，每分钟检查任务退出、可用GPU、剩余租期及待评测模型，每30分钟记录进展与ETA。
 
