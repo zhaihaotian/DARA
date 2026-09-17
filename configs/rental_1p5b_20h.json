@@ -346,7 +346,11 @@
       "save_freq": 10,
       "gpus": 4,
       "status": "planned",
-      "purpose": "checkpoint_dynamics"
+      "purpose": "checkpoint_and_final_evaluation"
     }
-  ]
+  ],
+  "evaluation": {
+    "version": "v4",
+    "final_step": 100
+  }
 }

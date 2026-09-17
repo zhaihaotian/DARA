@@ -2,7 +2,7 @@
 
 ## 模型与推理
 
-评测每个训练 run 的 step100 模型，并加入对应规模的 base 模型。每个 checkpoint 对每个 case 生成一条 trajectory。所有方法使用相同的 ToolRL prompt、输出解析器、数据子集和解码参数。
+最终评测使用每个训练 run 的 step100 模型，并加入对应规模的 base 模型。1.5B过程比较还对指定run的steps10/20/…/100逐个执行BFCL V4评测。每个 checkpoint 对每个 case 生成一条 trajectory。所有方法使用相同的 ToolRL prompt、输出解析器、数据子集和解码参数。
 
 | 项目 | V3 | V4 |
 |---|---|---|
@@ -91,7 +91,13 @@ $$
 
 ## Seeds 与汇总
 
-每个 checkpoint 先独立完成评测、计算组分数，再对 training seeds 报告 mean ± sample standard deviation（ddof=1）。GRPO、GDPO、DARA 在1.5B与3B均有seeds0/1/2/4/5；1.5B的额外基线有seeds0/1/2。Base使用一份固定协议输出。推理seed统一为0。
+每个 checkpoint 先独立完成评测、计算组分数，再对 training seeds 报告 mean ± sample standard deviation（ddof=1）。历史结果中GRPO、GDPO、DARA在1.5B与3B均有seeds0/1/2/4/5；1.5B的额外基线有seeds0/1/2，本轮DVAO与GD²PO-Hard补齐4/5。Base使用一份固定协议输出。推理seed统一为0。
+
+## 过程checkpoint与本轮最终结果
+
+本轮1.5B过程比较包含GRPO seeds0/2/5、GDPO seeds0/1/5、DARA seeds0/1/2、DVAO seeds3/4/5、GD²PO-Hard seeds0/4/5。每个run评测steps10/20/…/100，共15个run、150份BFCL V4结果，每份覆盖14类3301cases。按方法和训练step分别汇总三个seed的八项Accuracy/Format指标，绘制它们随训练step变化的曲线。种子选择依据见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)。
+
+本轮15个run各自的step100同时生成最终评测结果，第15项DVAO seed3包含在其中。step100的推理与评分执行一次，该结果同时写入过程数据和本轮最终结果表。使用 `evaluation/checkpoint_results.py` 汇总后，过程数据写入 `checkpoint_per_model.csv`、`checkpoint_method_results.csv`，本轮最终结果写入 `process_final_per_model.csv`、`process_final_method_results.csv`。逐模型表保留run ID、模型规模、方法、seed、step与summary路径；汇总表保留完成seed数、目标seed数、均值和样本标准差。命令见 [租机评测交接](RENTAL_1P5B_20H.md#训练完成后的bfcl-v4评测)。
 
 ## 三奖励实验的长度指标
 

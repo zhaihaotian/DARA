@@ -43,8 +43,8 @@ python training/run_manifest.py --manifest configs/checkpoint_study.json \
 
 使用14类、3301cases，Non-Live AST按四组macro平均，Simple中的Python/Java/JavaScript等权；Live AST按1351cases加权；Multi-Turn为四类各200cases的均值。Average为三大组等权平均。Format按每题assistant输出的RLLA结构符合率平均，再沿用相同类别权重。各checkpoint先独立算分，然后在相同模型尺寸、方法、step内计算跨seed均值与样本标准差。
 
-最终比较汇总44个已完成历史模型和10个新增seed的最终模型，共54个模型。过程重跑的seed在独立的过程表中汇总。每条原始结果保留具体模型路径、step、seed和训练attempt。
+历史最终比较汇总44个已完成历史模型和10个新增seed的最终模型，共54个模型。本轮15次1.5B训练还单独汇总各自的step100最终结果，包括租机清单第15项DVAO seed3。step100的同一份评分同时用于过程曲线终点和本轮最终结果。每条原始结果保留具体模型路径、step、seed和训练attempt。
 
 MSI当前执行目录为 `/scratch.global/lian0190/RD-GDPO-3B/20260913`，自动训练记录为 `runs.json`，任务文件为 `dara_training_tasks.json`。新训练进入 `dara_save10/<run-id>/attempt_<n>`。已完成的DVAO seed0训练和过程模型保留在 `/scratch.global/lian0190/DARA/20260917/1p5b-dvao-g4-s0-two-save10`，复跑对照见 [DVAO_SEED0_REPLAY.md](DVAO_SEED0_REPLAY.md)。
 
-新评测目录为 `/scratch.global/lian0190/BFCL-v4-evaluation/20260917/dara_checkpoint_study`。`report/final_per_model.csv` 与 `final_method_results.csv`给出最终结果；`checkpoint_per_model.csv`与`checkpoint_method_results.csv`给出过程结果。原始回答、官方评分和Format统计保存在各 `models/<model-id>` 目录。训练调度、评测派发和跨seed汇总由登录节点tmux内的持久控制器执行，每分钟检查一次资源和任务状态，每30分钟保存一次进度报告。
+新评测目录为 `/scratch.global/lian0190/BFCL-v4-evaluation/20260917/dara_checkpoint_study`。`report/final_per_model.csv` 与 `final_method_results.csv`给出历史最终比较及新增seed结果；`checkpoint_per_model.csv`与`checkpoint_method_results.csv`给出过程结果；`process_final_per_model.csv`与`process_final_method_results.csv`给出本轮15次1.5B训练的step100最终结果。原始回答、官方评分和Format统计保存在各 `models/<model-id>` 目录。训练调度、评测派发和跨seed汇总由登录节点tmux内的持久控制器执行，每分钟检查一次资源和任务状态，每30分钟保存一次进度报告。
