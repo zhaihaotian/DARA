@@ -27,7 +27,11 @@ python training/run_manifest.py --manifest configs/checkpoint_study.json \
   --model-root /shared/models --output-root outputs
 ```
 
-每次训练放在tmux中运行，输出使用独立目录。A100每run四卡；8张A100同时运行两个run。两份A100两卡allocation的拼接见 [MULTINODE.md](MULTINODE.md)。H100使用单run两卡，在四卡allocation内并行两个run；直接启动时添加 `--gpus 2`，全局prompt batch512、G4、2048回答/step、PPO mini128/micro64、学习率1e-6、TP1与其余训练设置继续沿用 [TRAINING.md](TRAINING.md)。实际卡型与GPU数量记录在调度记录及launch.json。H100两卡的显存与速度等待首次资源获配后实测。
+每次训练放在tmux中运行，输出使用独立目录。当前正式自动训练使用四个物理rank，4张A100或H100运行一个run，8张卡运行两个run。两份同型两卡allocation可以拼接，启动方式见 [MULTINODE.md](MULTINODE.md)。单独两卡资源用于评测。
+
+后续两卡训练需要保留原四路逻辑分组，让每张物理卡顺序执行两路，保持原来的每次optimizer更新样本、动态microbatch边界、loss权重和rollout请求分配。验收使用固定rollout、advantages和optimizer状态，对比loss、裁剪前梯度及参数更新。完整接线与验收尚待完成；全局batch参数相同不足以证明两卡与四卡的梯度口径相同。
+
+3B DVAO seed0在2026-09-17使用两张H100、两个物理rank完成训练，用户要求保留这一次实验和结果。它继续进入既定最终评测，硬件配置作为该run的记录保留。其他固定参数见 [TRAINING.md](TRAINING.md)。
 
 模型与tokenizer保存在 `actor/global_step_10` 至 `actor/global_step_100`。训练日志逐step记录reward；GRPO、GDPO、DARA还记录各通道π、权重、活跃group数量。验证在steps0/10/…/100执行。保存的是用于推理的HF actor模型；租期中断的训练以新attempt目录从相同base与seed重新开始，原attempt的模型和日志保留。
 

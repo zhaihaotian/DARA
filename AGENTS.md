@@ -7,3 +7,5 @@
 最终比较评测step100模型，执行固定V3/V4协议。本轮补齐与过程比较依照configs/checkpoint_study.json和docs/CHECKPOINT_STUDY.md；1.5B过程比较评测steps10/20/…/100，新训练每10steps保存。完整保留各seed、原始输出和运行记录；筛选分析注明seed列表与样本数。三奖励run把length接入训练reward与优势计算。
 
 检查与当前修改直接相关的行为；算法和训练接线修改运行scripts/test.sh。每个新run使用独立目录，其他项目调度保持原样。实现保持简洁，按任务实际需要添加代码。与用户交流使用连贯段落。文档直接写操作步骤、参数和计算定义，指标统一称为Format和Average Format。
+
+两卡训练必须在原四路逻辑分组下执行，保持每个optimizer更新的样本、动态microbatch边界、loss权重和rollout分配；上线前对同一固定batch的loss、梯度与参数更新做对照。当前正式自动训练使用四个物理rank，单独两卡allocation可用于评测或与另一份同型两卡allocation拼接。2026-09-17的3B DVAO seed0两H100实验按用户要求保留训练和结果。
