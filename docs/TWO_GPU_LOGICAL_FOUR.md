@@ -31,7 +31,7 @@ MSI自动调度已将以上两步串联，每个run先保存 `two_gpu_validation
 
 固定128条回答，使用不同长度、正负优势和GD²PO-Hard query权重，调用实际actor的PPO更新代码。四rank和两rank分别通过Gloo完成四次AdamW更新。逐逻辑rank的microbatch样本与顺序完全一致；loss最大绝对差7.45e-9，裁剪前梯度2.98e-8，梯度范数2.98e-8，更新后参数1.16e-10。四rank原始结果保存在 `training/reference/four_rank_ppo.json`。
 
-CUDA对照使用相同固定数据和PPO代码，并实际启用NCCL与FSDP，对照上述四rank结果。当前CPU对照和38项仓库测试已通过，GPU对照及完整Qwen训练等待下一份H100分配。该对照验证固定数据下的更新计算；完整生成轨迹与训练速度由实际GPU训练记录确认。
+CUDA对照使用相同固定数据和PPO代码，并实际启用NCCL与FSDP，对照上述四rank结果。2026-09-18在e9的两张H100上通过：loss最大绝对差1.86e-8、梯度与范数2.98e-8、更新后参数9.31e-10，microbatch归属与顺序一致。结果保存在 `/scratch.global/lian0190/DARA/audits/20260918_logical_four/two_h100_gpu.json`。38项仓库测试通过。该对照验证固定数据下的更新计算；完整生成轨迹与训练速度由实际GPU训练记录确认。
 
 CPU复跑命令：
 

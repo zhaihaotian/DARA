@@ -106,10 +106,8 @@ def worker(rank, world, device_kind, rendezvous, output):
     actor._optimizer_step = MethodType(optimizer_step, actor)
     batch = fixed_batch().chunk(world)[rank].to(device)
     with patch.object(torch.Tensor, 'backward', backward):
-        if device_kind == 'cpu':
-            with patch.object(TensorDict, 'cuda', lambda self, *a, **kw: self):
-                actor.update_policy(batch)
-        else:
+        # Ray workers see one GPU as cuda:0; the replay ranks share the visible list.
+        with patch.object(TensorDict, 'cuda', lambda self, *a, **kw: self.to(device)):
             actor.update_policy(batch)
     if rank == 0:
         Path(output).write_text(json.dumps(dict(world_size=world, logical_world_size=4,

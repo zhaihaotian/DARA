@@ -16,7 +16,7 @@
     "attrs": "26.1.0",
     "certifi": "2026.7.22",
     "charset-normalizer": "3.5.1",
-    "click": "8.5.0",
+    "click": "8.2.1",
     "cloudpickle": "3.1.2",
     "codetiming": "1.4.0",
     "datasets": "5.0.1",

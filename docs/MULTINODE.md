@@ -8,6 +8,8 @@
 
 每份资源申请2张同型GPU、8CPU和96GB内存。在两个账户下可分别申请A100或H100，租期使用6、12、23小时，TimeMin为5小时30分钟。A100可选 `a100-4,a100-4-profile,a100-8,msigpu`，H100使用 `msigpu`。这些参数已通过MSI调度器检查。两份allocation可以来自不同账户。
 
+训练环境固定Ray2.10.0与Click8.2.1，版本见 `environments/training.lock.txt`。启动器通过Ray原生集群地址连接head与worker。
+
 在登录节点激活训练环境并打开tmux，用两份实际job ID执行通信检查：
 
 ```bash
@@ -34,4 +36,4 @@ python training/launch_pair.py --jobs JOB_A JOB_B --output outputs/1p5b-dvao-g4-
 
 训练配置为 `trainer.nnodes=2`、`trainer.n_gpus_per_node=2`。底层 [main_ppo.py](../vendor/verl/verl/trainer/main_ppo.py) 生成 `[2, 2]` 资源池，[RayWorkerGroup](../vendor/verl/verl/single_controller/ray/base.py) 分配四个全局rank，[FSDP worker](../vendor/verl/verl/workers/fsdp_workers.py) 建立NCCL通信。独立四卡启动继续使用单节点默认设置。流程参考[verl多节点文档](https://verl.readthedocs.io/en/v0.3.x/start/multinode.html)和[Ray的Slurm说明](https://docs.ray.io/en/latest/cluster/vms/user-guides/community/slurm.html)，命令使用当前环境的Ray2.10接口。
 
-34项CPU测试已通过，覆盖两节点与单节点的训练参数对照、Slurm资源解析和双侧启动参数。两卡申请已进入实际队列；四卡NCCL通信、双节点训练更新与模型导出将在获配资源后验证。首跑记录排队等待时间、每step耗时和模型保存耗时，用于后续租期安排。
+38项CPU测试已通过，覆盖两节点与单节点的训练参数对照、Slurm资源解析和双侧启动参数。2026-09-18在agb04与agb02各两张A100上完成四rank NCCL通信检查，各rank均返回10，启动器退出码为0。结果保存在 `/scratch.global/lian0190/DARA/audits/20260918_pair_check/communication.json`。双节点训练更新与模型导出仍待完整训练验证。首跑记录排队等待时间、每step耗时和模型保存耗时，用于后续租期安排。

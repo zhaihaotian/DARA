@@ -31,7 +31,7 @@ python training/run_manifest.py --manifest configs/checkpoint_study.json \
 
 每次训练放在tmux中运行，输出使用独立目录。A100每个run使用四张物理卡；H100每个run使用两张物理卡，各顺序执行两路逻辑分组，因此四张H100可以并行两个run。两份同型两卡allocation也可以拼接成四个物理rank，启动方式见 [MULTINODE.md](MULTINODE.md)。
 
-两卡入口为 `training/launch.py --gpus 2`，原四路逻辑分组贯穿rollout、batch平衡、microbatch与loss累积。固定batch的分布式CPU对照已通过。自动调度在两张H100获配后，先运行GPU/FSDP对照，通过后启动训练；GPU实测结果随该run保存。配置、运行命令和验证范围见 [TWO_GPU_LOGICAL_FOUR.md](TWO_GPU_LOGICAL_FOUR.md)。
+两卡入口为 `training/launch.py --gpus 2`，原四路逻辑分组贯穿rollout、batch平衡、microbatch与loss累积。固定batch的分布式CPU对照和两H100上的GPU/FSDP对照均已通过。自动调度在两张H100获配后，先运行GPU/FSDP对照，通过后启动训练；GPU实测结果随该run保存。配置、运行命令和验证范围见 [TWO_GPU_LOGICAL_FOUR.md](TWO_GPU_LOGICAL_FOUR.md)。
 
 3B DVAO seed0在2026-09-17使用两张H100、两个物理rank完成训练，用户要求保留这一次实验和结果。它继续进入既定最终评测，硬件配置作为该run的记录保留。其他固定参数见 [TRAINING.md](TRAINING.md)。
 

@@ -70,8 +70,7 @@ def main():
                    '--object-store-memory=8589934592', '--memory=68719476736',
                    '--temp-dir='+os.environ['RAY_TMPDIR'], '--dashboard-agent-listen-port=0',
                    '--node-manager-port=0', '--object-manager-port=0',
-                   '--min-worker-port=0', '--max-worker-port=0',
-                   '--ray-client-server-port=0', '--block']
+                   '--min-worker-port=0', '--max-worker-port=0', '--block']
     address_file = output/'ray_address.json'
     if args.role == 'head':
         port = free_port()
