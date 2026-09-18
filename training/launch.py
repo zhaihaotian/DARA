@@ -75,6 +75,9 @@ def configuration(args):
         'rvpo': {'+algorithm.rvpo.k': 1.0},
     }
     settings.update(method_settings.get(args.method, {}))
+    if gpus == 2:
+        settings['+actor_rollout_ref.logical_world_size'] = 4
+        settings['+trainer.logical_world_size'] = 4
     environment = dict(SEED=str(args.seed),
                        EXPERIMENT_NAME=settings['trainer.experiment_name'],
                        DATA_DIR=str(data), BASE_MODEL=model, CKPT_DIR=str(output),
@@ -114,7 +117,7 @@ def main():
     parser.add_argument('--nnodes', type=int, choices=[1, 2], default=1,
                         help='Split the fixed four GPUs over one or two Ray nodes')
     parser.add_argument('--gpus', type=int, choices=[2, 4], default=4,
-                        help='GPUs per run: four A100 or two H100, with the same global batch settings')
+                        help='Physical GPUs per run; two GPUs execute the original four logical data shards')
     parser.add_argument('--ray-address', help='Address of an existing Ray head')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()

@@ -59,6 +59,8 @@ class ActorRolloutRefWorker(Worker):
 
         # build device mesh for FSDP
         world_size = torch.distributed.get_world_size()
+        logical_world_size = self.config.get('logical_world_size', world_size)
+        self.logical_shards = logical_world_size // world_size
         from torch.distributed.device_mesh import init_device_mesh
         # TODO(sgm): support FSDP hybrid shard for larger model
         self.device_mesh = init_device_mesh('cuda', mesh_shape=(world_size,), mesh_dim_names=['fsdp'])
@@ -94,19 +96,23 @@ class ActorRolloutRefWorker(Worker):
 
         # normalize config
         if self._is_actor:
-            self.config.actor.ppo_mini_batch_size //= (self.device_mesh.shape[0] // self.ulysses_sequence_parallel_size)
-            self.config.actor.ppo_micro_batch_size //= (self.device_mesh.shape[0] //
+            self.config.actor.ppo_mini_batch_size //= (logical_world_size // self.ulysses_sequence_parallel_size)
+            self.config.actor.ppo_micro_batch_size //= (logical_world_size //
                                                         self.ulysses_sequence_parallel_size)
             self.config.actor.ppo_mini_batch_size *= self.config.rollout.n
             self.config.actor.ppo_micro_batch_size *= self.config.rollout.n
         if self._is_rollout:
-            self.config.rollout.log_prob_micro_batch_size //= (self.device_mesh.shape[0] //
+            self.config.rollout.log_prob_micro_batch_size //= (logical_world_size //
                                                                self.ulysses_sequence_parallel_size)
             self.config.rollout.log_prob_micro_batch_size *= self.config.rollout.n
         if self._is_ref:
-            self.config.ref.log_prob_micro_batch_size //= (self.device_mesh.shape[0] //
+            self.config.ref.log_prob_micro_batch_size //= (logical_world_size //
                                                            self.ulysses_sequence_parallel_size)
             self.config.ref.log_prob_micro_batch_size *= self.config.rollout.n
+        if self.logical_shards > 1:
+            with open_dict(self.config):
+                self.config.actor.logical_shards = self.logical_shards
+                self.config.ref.logical_shards = self.logical_shards
 
     def _build_model_optimizer(self,
                                model_path,
@@ -277,6 +283,10 @@ class ActorRolloutRefWorker(Worker):
                                                                model_config=self.actor_model_config,
                                                                full_params='hf' in self.config.rollout.load_format,
                                                                device_mesh=rollout_device_mesh)
+            if self.logical_shards > 1:
+                from verl.utils.logical_dp import RolloutStreams
+                self.rollout_streams = RolloutStreams(rollout.inference_engine,
+                                                      self.rank * self.logical_shards, self.logical_shards)
             log_gpu_memory_usage('After building sharding manager', logger=None)
 
         return rollout, rollout_sharding_manager
@@ -416,7 +426,14 @@ class ActorRolloutRefWorker(Worker):
             log_gpu_memory_usage('After entering rollout sharding manager', logger=logger)
 
             prompts = self.rollout_sharding_manager.preprocess_data(prompts)
-            output = self.rollout.generate_sequences(prompts=prompts)
+            if self.logical_shards > 1:
+                outputs = []
+                for index, part in enumerate(prompts.chunk(self.logical_shards)):
+                    with self.rollout_streams.use(index):
+                        outputs.append(self.rollout.generate_sequences(prompts=part))
+                output = DataProto.concat(outputs)
+            else:
+                output = self.rollout.generate_sequences(prompts=prompts)
 
             log_gpu_memory_usage('After rollout generation', logger=logger)
 

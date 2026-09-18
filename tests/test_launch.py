@@ -84,7 +84,7 @@ class LaunchTest(unittest.TestCase):
         pair['environment'].pop('RAY_ADDRESS')
         self.assertEqual(single['environment'], pair['environment'])
 
-    def test_two_h100_keep_global_training_parameters(self):
+    def test_two_h100_keep_four_logical_training_groups(self):
         command = [sys.executable, str(launch.REPO/'training/launch.py'),
                    '--method', 'dvao', '--seed', '4', '--model', 'Qwen/Qwen2.5-3B-Instruct',
                    '--model-size', '3b', '--output', '/tmp/dara-h100', '--save-freq', '10', '--dry-run']
@@ -93,6 +93,8 @@ class LaunchTest(unittest.TestCase):
         self.assertEqual(h100['gpus'], 2)
         self.assertEqual(h100['environment']['N_GPUS'], '2')
         a100['settings']['trainer.n_gpus_per_node'] = 2
+        a100['settings']['+actor_rollout_ref.logical_world_size'] = 4
+        a100['settings']['+trainer.logical_world_size'] = 4
         self.assertEqual(a100['settings'], h100['settings'])
         self.assertEqual(h100['responses_per_step'], 2048)
         self.assertEqual(h100['optimizer_updates_per_step'], 4)

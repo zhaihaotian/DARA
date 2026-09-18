@@ -8,6 +8,6 @@
 
 检查与当前修改直接相关的行为；算法和训练接线修改运行scripts/test.sh。每个新run使用独立目录，其他项目调度保持原样。实现保持简洁，按任务实际需要添加代码。与用户交流使用连贯段落。文档直接写操作步骤、参数和计算定义，指标统一称为Format和Average Format。
 
-两卡训练必须在原四路逻辑分组下执行，保持每个optimizer更新的样本、动态microbatch边界、loss权重和rollout分配；上线前对同一固定batch的loss、梯度与参数更新做对照。当前正式自动训练使用四个物理rank，单独两卡allocation可用于评测或与另一份同型两卡allocation拼接。2026-09-17的3B DVAO seed0两H100实验按用户要求保留训练和结果。
+两卡训练在原四路逻辑分组下执行，保持每个optimizer更新的样本、动态microbatch边界、loss权重和rollout分配。H100每run使用两张物理卡，各顺序执行两路；自动启动先执行固定batch的GPU loss、梯度与参数更新对照，通过后训练。实现和验证记录见docs/TWO_GPU_LOGICAL_FOUR.md。A100每run使用四张物理卡，两份同型两卡allocation也可拼接。2026-09-17的3B DVAO seed0两H100实验按用户要求保留训练和结果。
 
 8×A100 40GB租机任务按docs/RENTAL_A100_40G_AGENT.md执行，每个实验独占四张GPU和四个训练rank，GPU0–3与GPU4–7分别运行一个实验，同时两路训练。使用现有四卡训练入口。第一调度规则是任何时候最大化利用所有已租GPU：任务结束立即补位，剩余租期较短时转入checkpoint评测，使用tmux持续维护任务。其他项目现有调度按各自配置执行。

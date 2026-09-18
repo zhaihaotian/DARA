@@ -29,6 +29,7 @@ from verl.utils.py_functional import append_to_dict
 from verl.utils.torch_functional import logprobs_from_logits, masked_mean
 from verl.utils.ulysses import ulysses_pad_and_slice_inputs, gather_outpus_and_unpad
 from verl.utils.seqlen_balancing import rearrange_micro_batches, get_reverse_idx
+from verl.utils.logical_dp import logical_micro_batches, logical_minibatches
 import verl.utils.torch_functional as verl_F
 
 from flash_attn.bert_padding import pad_input, unpad_input, rearrange, index_first_axis
@@ -180,11 +181,15 @@ class DataParallelPPOActor(BasePPOActor):
 
         select_keys = ['responses', 'input_ids', 'attention_mask', 'position_ids']
         batch = data.select(batch_keys=select_keys).batch
+        logical_shards = self.config.get('logical_shards', 1)
 
         if use_dynamic_bsz:
             # split using dynamic bsz
             max_token_len = data.meta_info['max_token_len'] * self.ulysses_sequence_parallel_size
-            micro_batches, indices = rearrange_micro_batches(batch=batch, max_token_len=max_token_len)
+            if logical_shards > 1:
+                micro_batches, indices = logical_micro_batches(batch, logical_shards, max_token_len)
+            else:
+                micro_batches, indices = rearrange_micro_batches(batch=batch, max_token_len=max_token_len)
         else:
             micro_batches = batch.split(micro_batch_size)
 
@@ -220,7 +225,9 @@ class DataParallelPPOActor(BasePPOActor):
 
         # Split to make minibatch iterator for updating the actor
         # See PPO paper for details. https://arxiv.org/abs/1707.06347
-        dataloader = batch.split(self.config.ppo_mini_batch_size)
+        logical_shards = self.config.get('logical_shards', 1)
+        dataloader = (logical_minibatches(batch, logical_shards, self.config.ppo_mini_batch_size)
+                      if logical_shards > 1 else batch.split(self.config.ppo_mini_batch_size))
 
         metrics = {}
         for batch_idx, data in enumerate(dataloader):
@@ -228,7 +235,10 @@ class DataParallelPPOActor(BasePPOActor):
             mini_batch = data
             if self.config.use_dynamic_bsz:
                 max_token_len = self.config.ppo_max_token_len_per_gpu * self.ulysses_sequence_parallel_size
-                micro_batches, _ = rearrange_micro_batches(batch=mini_batch, max_token_len=max_token_len)
+                if logical_shards > 1:
+                    micro_batches, _ = logical_micro_batches(mini_batch, logical_shards, max_token_len)
+                else:
+                    micro_batches, _ = rearrange_micro_batches(batch=mini_batch, max_token_len=max_token_len)
             else:
                 # split batch into micro_batches
                 micro_batches = mini_batch.split(self.config.ppo_micro_batch_size)
@@ -274,7 +284,7 @@ class DataParallelPPOActor(BasePPOActor):
                     metrics['actor/kl_loss'] = kl_loss.detach().item()
                     metrics['actor/kl_coef'] = self.config.kl_loss_coef
 
-                loss = policy_loss / self.gradient_accumulation
+                loss = policy_loss / (self.gradient_accumulation * logical_shards)
                 loss.backward()
 
                 data = {

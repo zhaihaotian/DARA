@@ -30,7 +30,7 @@ GRPO 使用经过原 reward-KL 接线的总 reward；GDPO、DARA 和其他分通
 
 3B 已在四卡 A10040GB 跑完五 seeds。它使用 `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True`；launch.py 按 `--model-size 3b` 设置。3B 沿用表中 batch、response 长度、TP 和训练步数，模型路径指定对应的 3B 权重。
 
-当前补齐与过程比较每10steps保存，任务与H100两卡启动配置见 [CHECKPOINT_STUDY.md](CHECKPOINT_STUDY.md)。两节点各两卡的资源布局、Ray/FSDP启动方式和当前接线状态见 [MULTINODE.md](MULTINODE.md)。
+当前补齐与过程比较每10steps保存，任务见 [CHECKPOINT_STUDY.md](CHECKPOINT_STUDY.md)。H100两卡执行四路逻辑分组的配置和验证见 [TWO_GPU_LOGICAL_FOUR.md](TWO_GPU_LOGICAL_FOUR.md)。两节点各两卡的资源布局、Ray/FSDP启动方式和当前接线状态见 [MULTINODE.md](MULTINODE.md)。
 
 ## Group 消融的预算
 
@@ -61,4 +61,4 @@ GRPO 对三路原 reward 之和使用原有组内归一化与 KL 接线。GDPO �
 
 GRPO、GDPO、DARA每step在 `metrics.jsonl` 中记录各奖励通道的π、权重和活跃group数，两奖励包含correctness/format，三奖励再包含length。日志字段与导出训练曲线的命令见 [HANDOFF.md](HANDOFF.md#训练-dynamics)。
 
-已完成的 3B G4 两奖励累计训练 step 耗时约 4–5 小时；申请至少约 6 小时并预留模型加载、验证、导出时间。G 消融与三奖励的耗时在首个完整 run 后更新，length 会影响生成量。获配 GPU 按四卡一组分配完整 run，CPU/RAM 按集群资源配置。
+已完成的 3B G4 两奖励累计训练 step 耗时约 4–5 小时；申请至少约 6 小时并预留模型加载、验证、导出时间。G 消融与三奖励的耗时在首个完整 run 后更新，length 会影响生成量。获配A100按四卡一组、H100按两卡一组分配完整run，CPU/RAM按集群资源配置。H100四路逻辑分组的实际耗时在首个完整run后更新。
