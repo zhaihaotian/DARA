@@ -44,79 +44,77 @@ def worker(rank, world, device_kind, rendezvous, output):
         torch.cuda.set_device(device)
     dist.init_process_group('nccl' if device_kind == 'cuda' else 'gloo',
                             init_method=rendezvous, rank=rank, world_size=world)
-    try:
-        torch.manual_seed(123)
-        module = torch.nn.Linear(3, 2).to(device)
-        with torch.no_grad():
-            for param in module.parameters():
-                param.mul_(.01)
+    torch.manual_seed(123)
+    module = torch.nn.Linear(3, 2).to(device)
+    with torch.no_grad():
+        for param in module.parameters():
+            param.mul_(.01)
+    if device_kind == 'cuda':
+        from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
+        module = FSDP(module, device_id=device, use_orig_params=True)
+    actor = object.__new__(DataParallelPPOActor)
+    actor.config = OmegaConf.create(dict(ppo_mini_batch_size=8, ppo_micro_batch_size=4,
+        logical_shards=4//world, use_dynamic_bsz=True, ppo_max_token_len_per_gpu=48,
+        use_kl_loss=False, clip_ratio=.2, entropy_coeff=.001, grad_clip=.2))
+    actor.ulysses_sequence_parallel_size = 1
+    actor.actor_module = module
+    actor.actor_optimizer = torch.optim.AdamW(module.parameters(), lr=.002, weight_decay=.01)
+    records, losses, microbatches = [], [], []
+    original_backward = torch.Tensor.backward
+
+    def backward(tensor, *args, **kwargs):
+        losses.append(float(tensor.detach()))
+        return original_backward(tensor, *args, **kwargs)
+
+    def forward(self, micro_batch, temperature):
+        ids = micro_batch['input_ids'][:, 0]
+        microbatches.append(ids.cpu().tolist())
+        features = torch.stack((ids.float()/128, (ids % 7).float()/7, (ids % 11).float()/11), -1)
+        values = self.actor_module(features)
+        n = micro_batch['responses'].shape[-1]
+        return values[:, 1:].sigmoid().expand(-1, n), values[:, :1].expand(-1, n)
+
+    def optimizer_step(self):
+        params = list(self.actor_module.parameters())
+        if device_kind == 'cpu':
+            for param in params:
+                dist.all_reduce(param.grad)
+                param.grad.div_(world)
+        loss = torch.tensor(sum(losses), device=device)
+        dist.all_reduce(loss)
+        loss.div_(world)
         if device_kind == 'cuda':
-            from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
-            module = FSDP(module, device_id=device, use_orig_params=True)
-        actor = object.__new__(DataParallelPPOActor)
-        actor.config = OmegaConf.create(dict(ppo_mini_batch_size=8, ppo_micro_batch_size=4,
-            logical_shards=4//world, use_dynamic_bsz=True, ppo_max_token_len_per_gpu=48,
-            use_kl_loss=False, clip_ratio=.2, entropy_coeff=.001, grad_clip=.2))
-        actor.ulysses_sequence_parallel_size = 1
-        actor.actor_module = module
-        actor.actor_optimizer = torch.optim.AdamW(module.parameters(), lr=.002, weight_decay=.01)
-        records, losses, microbatches = [], [], []
-        original_backward = torch.Tensor.backward
+            with FSDP.summon_full_params(self.actor_module, with_grads=True, writeback=False):
+                gradient = torch.cat([p.grad.flatten() for p in self.actor_module.parameters()]).cpu().tolist()
+        else:
+            gradient = torch.cat([p.grad.flatten() for p in params]).cpu().tolist()
+        norm = DataParallelPPOActor._optimizer_step(self)
+        if device_kind == 'cuda':
+            with FSDP.summon_full_params(self.actor_module, writeback=False):
+                updated = torch.cat([p.detach().flatten() for p in self.actor_module.parameters()]).cpu().tolist()
+        else:
+            updated = torch.cat([p.detach().flatten() for p in params]).cpu().tolist()
+        all_micro = [None] * world
+        dist.all_gather_object(all_micro, list(microbatches))
+        records.append(dict(loss=loss.item(), gradient=gradient, norm=norm.item(), parameters=updated,
+                            microbatches=all_micro))
+        losses.clear()
+        microbatches.clear()
+        return norm
 
-        def backward(tensor, *args, **kwargs):
-            losses.append(float(tensor.detach()))
-            return original_backward(tensor, *args, **kwargs)
-
-        def forward(self, micro_batch, temperature):
-            ids = micro_batch['input_ids'][:, 0]
-            microbatches.append(ids.cpu().tolist())
-            features = torch.stack((ids.float()/128, (ids % 7).float()/7, (ids % 11).float()/11), -1)
-            values = self.actor_module(features)
-            n = micro_batch['responses'].shape[-1]
-            return values[:, 1:].sigmoid().expand(-1, n), values[:, :1].expand(-1, n)
-
-        def optimizer_step(self):
-            params = list(self.actor_module.parameters())
-            if device_kind == 'cpu':
-                for param in params:
-                    dist.all_reduce(param.grad)
-                    param.grad.div_(world)
-            loss = torch.tensor(sum(losses), device=device)
-            dist.all_reduce(loss)
-            loss.div_(world)
-            if device_kind == 'cuda':
-                with FSDP.summon_full_params(self.actor_module, with_grads=True, writeback=False):
-                    gradient = torch.cat([p.grad.flatten() for p in self.actor_module.parameters()]).cpu().tolist()
-            else:
-                gradient = torch.cat([p.grad.flatten() for p in params]).cpu().tolist()
-            norm = DataParallelPPOActor._optimizer_step(self)
-            if device_kind == 'cuda':
-                with FSDP.summon_full_params(self.actor_module, writeback=False):
-                    updated = torch.cat([p.detach().flatten() for p in self.actor_module.parameters()]).cpu().tolist()
-            else:
-                updated = torch.cat([p.detach().flatten() for p in params]).cpu().tolist()
-            all_micro = [None] * world
-            dist.all_gather_object(all_micro, list(microbatches))
-            records.append(dict(loss=loss.item(), gradient=gradient, norm=norm.item(), parameters=updated,
-                                microbatches=all_micro))
-            losses.clear()
-            microbatches.clear()
-            return norm
-
-        actor._forward_micro_batch = MethodType(forward, actor)
-        actor._optimizer_step = MethodType(optimizer_step, actor)
-        batch = fixed_batch().chunk(world)[rank].to(device)
-        with patch.object(torch.Tensor, 'backward', backward):
-            if device_kind == 'cpu':
-                with patch.object(TensorDict, 'cuda', lambda self, *a, **kw: self):
-                    actor.update_policy(batch)
-            else:
+    actor._forward_micro_batch = MethodType(forward, actor)
+    actor._optimizer_step = MethodType(optimizer_step, actor)
+    batch = fixed_batch().chunk(world)[rank].to(device)
+    with patch.object(torch.Tensor, 'backward', backward):
+        if device_kind == 'cpu':
+            with patch.object(TensorDict, 'cuda', lambda self, *a, **kw: self):
                 actor.update_policy(batch)
-        if rank == 0:
-            Path(output).write_text(json.dumps(dict(world_size=world, logical_world_size=4,
-                device=device_kind, updates=records), indent=2)+'\n')
-    finally:
-        dist.destroy_process_group()
+        else:
+            actor.update_policy(batch)
+    if rank == 0:
+        Path(output).write_text(json.dumps(dict(world_size=world, logical_world_size=4,
+            device=device_kind, updates=records), indent=2)+'\n')
+    dist.destroy_process_group()
 
 
 def main():
