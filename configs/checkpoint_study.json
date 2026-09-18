@@ -161,7 +161,7 @@
       "minimum_seconds": 19800,
       "pair_minimum_seconds": 23400,
       "final_extension": true,
-      "checkpoint_study": false,
+      "checkpoint_study": true,
       "status": "planned",
       "gpus": 4
     },
@@ -178,7 +178,7 @@
       "minimum_seconds": 19800,
       "pair_minimum_seconds": 23400,
       "final_extension": true,
-      "checkpoint_study": false,
+      "checkpoint_study": true,
       "status": "planned",
       "gpus": 4
     },

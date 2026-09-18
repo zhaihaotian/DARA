@@ -97,7 +97,9 @@ $$
 
 本轮1.5B过程比较包含GRPO seeds0/2/5、GDPO seeds0/1/5、DARA seeds0/1/2、DVAO seeds3/4/5、GD²PO-Hard seeds0/4/5。每个run评测steps10/20/…/100，共15个run、150份BFCL V4结果，每份覆盖14类3301cases。按方法和训练step分别汇总三个seed的八项Accuracy/Format指标，绘制它们随训练step变化的曲线。种子选择依据见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)。
 
-本轮15个run各自的step100同时生成最终评测结果，第15项DVAO seed3包含在其中。step100的推理与评分执行一次，该结果同时写入过程数据和本轮最终结果表。使用 `evaluation/checkpoint_results.py` 汇总后，过程数据写入 `checkpoint_per_model.csv`、`checkpoint_method_results.csv`，本轮最终结果写入 `process_final_per_model.csv`、`process_final_method_results.csv`。逐模型表保留run ID、模型规模、方法、seed、step与summary路径；汇总表保留完成seed数、目标seed数、均值和样本标准差。命令见 [租机agent评测交接](RENTAL_A100_40G_AGENT.md#bfcl-v4协议与交付)。
+本地3B DVAO seed0与GD²PO-Hard seed0的既有steps10/20/…/100也按相同协议评测，step100直接复用已有结果。3B过程记录目前每个方法为一个seed，按模型尺寸和训练step单独列出。Haotian单侧RD-GDPO补评1.5B五seed与3B四seed的step100模型，用于与双侧的V4结果对照。
+
+过程run各自的step100同时生成最终评测结果，包含租机15个1.5B run（含第15项DVAO seed3）和本地两个3B seed0 run。step100的推理与评分执行一次，该结果同时写入过程数据和本轮最终结果表。使用 `evaluation/checkpoint_results.py` 汇总后，过程数据写入 `checkpoint_per_model.csv`、`checkpoint_method_results.csv`，本轮最终结果写入 `process_final_per_model.csv`、`process_final_method_results.csv`。逐模型表保留run ID、模型规模、方法、seed、step与summary路径；汇总表保留完成seed数、目标seed数、均值和样本标准差。命令见 [租机agent评测交接](RENTAL_A100_40G_AGENT.md#bfcl-v4协议与交付)。
 
 ## 三奖励实验的长度指标
 

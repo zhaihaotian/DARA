@@ -105,14 +105,17 @@ class LaunchTest(unittest.TestCase):
         self.assertEqual(len(runs), 21)
         self.assertEqual(len({run['id'] for run in runs}), 21)
         self.assertEqual(sum(run['final_extension'] for run in runs), 10)
-        self.assertEqual(sum(run['checkpoint_study'] for run in runs), 15)
+        self.assertEqual(sum(run['checkpoint_study'] for run in runs), 17)
         self.assertEqual({run['method'] for run in runs}, {'grpo','gdpo','dara','dvao','gd2po_hard'})
         for method, seeds in plan['checkpoint_seeds'].items():
-            selected = [run['seed'] for run in runs if run['method']==method and run['checkpoint_study']]
+            selected = [run['seed'] for run in runs if run['method']==method and run['checkpoint_study']
+                        and run['model_size']=='1.5b']
             self.assertEqual(sorted(selected), sorted(seeds))
             self.assertEqual(len(selected), 3)
         self.assertEqual(plan['checkpoint_steps'], list(range(10, 101, 10)))
-        self.assertTrue(all(run['model_size']=='1.5b' for run in runs if run['checkpoint_study']))
+        self.assertEqual({(run['method'], run['seed']) for run in runs
+                          if run['checkpoint_study'] and run['model_size']=='3b'},
+                         {('dvao', 0), ('gd2po_hard', 0)})
         self.assertTrue(all(run['save_freq']==10 for run in runs))
 
     def test_dvao_seed3_process_launch_preserves_training_budget(self):

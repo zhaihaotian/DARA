@@ -12,11 +12,15 @@
 
 1.5B的上述五个方法各保留三个seed，逐个评测steps10/20/…/100。GRPO选择0/2/5，GDPO选择0/1/5，DARA选择0/1/2；这三个方法按原始五seed训练Format Reward首次达到0.8的step升序排列，相同step按seed升序，去掉首尾各一个，保留中间三个。原始逐seed数据与选择依据保存在manifest。该选择规则随过程比较结果一起披露。
 
-DVAO的过程种子为3/4/5，新增seed3过程训练，并复用新增seed4/5的过程模型。GD²PO-Hard的过程种子为0/4/5，seed0在原始训练中首次达到Format0.8为step26；重跑seed0并复用新增4/5。除10个最终训练任务外，另需11次1.5B过程训练：GRPO、GDPO、DARA各三次，DVAO seed3和GD²PO-Hard seed0各一次。两个尺寸的最终比较优先获得训练资源，后续可用资源接入过程训练。
+DVAO的过程种子为3/4/5，新增seed3过程训练，并复用新增seed4/5的过程模型。GD²PO-Hard的过程种子为0/4/5，seed0在原始训练中首次达到Format0.8为step26；重跑seed0并复用新增4/5。除10个最终训练任务外，另需11次1.5B过程训练：GRPO、GDPO、DARA各三次，DVAO seed3和GD²PO-Hard seed0各一次。获配资源先执行已有模型的评测，再派发能够完整跑完的训练。
 
 1.5B租机为8×A100 40GB，包含15个待运行任务，清单见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)，执行agent使用独立的 [RENTAL_A100_40G_AGENT.md](RENTAL_A100_40G_AGENT.md)。这15次1.5B训练及150份过程checkpoint评测已交给租机执行agent，本地自动训练队列已移出这些任务。
 
-总实验清单共21个训练任务，包含租机执行的15个1.5B任务和本地负责的6个3B任务。本地3B DVAO seed0已完成训练及最终评测，待训练为DVAO seed1/2和GD²PO-Hard seed0/1/2，共5次。1.5B过程评测共150个checkpoint；3B评测6个step100模型，两个执行地点合计156份新增BFCL V4结果。
+总实验清单共21个训练任务，包含租机执行的15个1.5B任务和本地负责的6个3B任务。本地3B DVAO seed0和GD²PO-Hard seed0已完成训练及最终评测，待训练为两种方法各自的seed1/2，共4次。
+
+2026-09-18新增评测待办：补齐Haotian单侧RD-GDPO的9个step100模型，1.5B为seeds0/1/2/4/5，3B为seeds0/1/2/4；再评测本地3B DVAO seed0、GD²PO-Hard seed0已经保存的steps10/20/…/90，共18份。两个run的step100复用已有评分，过程表保留各自的实际seed0记录。单侧模型沿用原目录，进入既有V4最终模型队列。
+
+过程与新增seed清单合计174份BFCL V4结果：租机1.5B过程模型150份、本地3B最终模型6份，以及上述3B中间checkpoint18份。另补的9个单侧最终模型进入历史最终比较。当前本地可直接执行的评测共27份，每份14类3301cases。调度顺序为最终模型评测、过程checkpoint评测、训练；训练和评测收尾后释放已用完的分配。
 
 ## 启动与保存
 
@@ -43,7 +47,7 @@ python training/run_manifest.py --manifest configs/checkpoint_study.json \
 
 使用14类、3301cases，Non-Live AST按四组macro平均，Simple中的Python/Java/JavaScript等权；Live AST按1351cases加权；Multi-Turn为四类各200cases的均值。Average为三大组等权平均。Format按每题assistant输出的RLLA结构符合率平均，再沿用相同类别权重。各checkpoint先独立算分，然后在相同模型尺寸、方法、step内计算跨seed均值与样本标准差。
 
-历史最终比较汇总44个已完成历史模型和10个新增seed的最终模型，共54个模型。本轮15次1.5B训练还单独汇总各自的step100最终结果，包括租机清单第15项DVAO seed3。step100的同一份评分同时用于过程曲线终点和本轮最终结果。每条原始结果保留具体模型路径、step、seed和训练attempt。
+最终比较目标为原44个历史模型、9个单侧历史模型和10个新增seed最终模型，共63个模型。本轮15次1.5B训练还单独汇总各自的step100最终结果，包括租机清单第15项DVAO seed3。step100的同一份评分同时用于过程曲线终点和本轮最终结果。每条原始结果保留具体模型路径、step、seed和训练attempt。
 
 MSI当前执行目录为 `/scratch.global/lian0190/RD-GDPO-3B/20260913`，自动训练记录为 `runs.json`，任务文件为 `dara_training_tasks.json`。新训练进入 `dara_save10/<run-id>/attempt_<n>`。已完成的DVAO seed0训练和过程模型保留在 `/scratch.global/lian0190/DARA/20260917/1p5b-dvao-g4-s0-two-save10`，复跑对照见 [DVAO_SEED0_REPLAY.md](DVAO_SEED0_REPLAY.md)。
 
