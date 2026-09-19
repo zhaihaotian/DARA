@@ -4,7 +4,7 @@ This directory contains the completed 8×A100 40GB rental experiment defined by 
 
 ## Training dynamics
 
-[`training/training_dynamics.csv`](training/training_dynamics.csv) combines all 1,515 run-step rows and keeps the reward, validation, density, optimization, sequence-length, and timing fields written by training. [`training/training_runs.csv`](training/training_runs.csv) records the method, seed, hardware ranks, elapsed time, and saved steps for each run. The per-run directories retain the original `metrics.jsonl`, `training_dynamics.csv`, expanded config, launch settings, command settings, and runtime metadata.
+[`training/training_dynamics.csv`](training/training_dynamics.csv) combines all 1,515 run-step rows and keeps the reward, validation, density, optimization, sequence-length, and timing fields written by training. [`training/training_runs.csv`](training/training_runs.csv) records the method, seed, hardware ranks, elapsed time, and saved steps for each run. [`training/checkpoint_inventory.csv`](training/checkpoint_inventory.csv) lists the source path, byte size, and file count of all 150 HF checkpoints. The per-run directories retain the original `metrics.jsonl`, `training_dynamics.csv`, expanded config, launch settings, command settings, and runtime metadata.
 
 The process study uses three fixed seeds per method: GRPO 0/2/5, GDPO 0/1/5, DARA 0/1/2, DVAO 3/4/5, and GD²PO-Hard 0/4/5. These are the seeds specified by the rental manifest and documented in [`docs/RENTAL_1P5B_20H.md`](../../docs/RENTAL_1P5B_20H.md).
 

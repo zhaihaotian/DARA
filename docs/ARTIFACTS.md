@@ -15,6 +15,7 @@
 | results/reference/local_artifact_locations.json | 本服务器上的原始日志与最终checkpoint位置 |
 | results/rental_1p5b_20260919/training/training_dynamics.csv | 租机15个run的1515行逐step训练动态 |
 | results/rental_1p5b_20260919/training/runs/ | 15份原始metrics、展开配置、命令和runtime记录 |
+| results/rental_1p5b_20260919/training/checkpoint_inventory.csv | 150份HF模型的原路径、字节数和文件数 |
 | results/rental_1p5b_20260919/evaluation/checkpoint_per_model.csv | 150份checkpoint逐模型BFCL V4结果 |
 | results/rental_1p5b_20260919/evaluation/checkpoint_method_results.csv | 五个方法、十个step、三个seed的过程均值与样本标准差 |
 | results/rental_1p5b_20260919/evaluation/process_final_per_model.csv | 本轮15份step100 final结果 |

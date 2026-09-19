@@ -125,16 +125,24 @@ def validate_evaluation_exports():
 def main():
     runs, dynamics = build_training_exports()
     checkpoint_rows, checkpoint_methods, final_rows, final_methods = validate_evaluation_exports()
+    checkpoint_inventory = read_csv(ROOT / "training" / "checkpoint_inventory.csv")
+    checkpoint_inventory_keys = {
+        (row["run_id"], int(row["step"])) for row in checkpoint_inventory
+    }
+    if len(checkpoint_inventory) != 150 or len(checkpoint_inventory_keys) != 150:
+        raise ValueError("checkpoint_inventory.csv must contain 150 unique run-step rows")
     verification = {
         "training_runs": len(runs),
         "training_dynamics_rows": len(dynamics),
         "saved_checkpoints": 150,
+        "checkpoint_bytes": sum(int(row["size_bytes"]) for row in checkpoint_inventory),
         "checkpoint_evaluations": len(checkpoint_rows),
         "checkpoint_method_step_aggregates": len(checkpoint_methods),
         "final_evaluations": len(final_rows),
         "final_method_aggregates": len(final_methods),
         "all_training_rows_complete": all(row["metrics_rows"] == 101 for row in runs),
         "all_evaluation_keys_unique": len({(row["run_id"], row["step"]) for row in checkpoint_rows}) == 150,
+        "all_checkpoint_inventory_keys_unique": len(checkpoint_inventory_keys) == 150,
         "controller_completion_time_utc": "2026-09-19T18:11:23.275409+00:00",
         "controller_completion_reason": "all_complete",
     }
