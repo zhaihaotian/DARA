@@ -1,0 +1,53 @@
+{
+  "run_id": "haotian_1p5b_gdpo_s5_save10",
+  "manifest": {
+    "id": "haotian_1p5b_gdpo_s5_save10",
+    "method": "gdpo",
+    "seed": 5,
+    "model_size": "1.5b",
+    "steps": 100,
+    "group_size": 4,
+    "rewards": "two",
+    "save_freq": 10,
+    "gpus": 4,
+    "status": "planned",
+    "purpose": "checkpoint_dynamics"
+  },
+  "world_size": 4,
+  "cuda_visible_devices": "4,5,6,7",
+  "checkpoint_staging": "/home/ubuntu/checkpoint-staging/haotian_1p5b_gdpo_s5_save10-101001",
+  "source_snapshot": "/lambda/nfs/haotian/dara-rental-20260917/code_optimized_20260918",
+  "execution_optimizations": [
+    "skip_unused_logprob_entropy",
+    "skip_unused_rollout_logprobs",
+    "stage_checkpoints_locally"
+  ],
+  "ray_address": "10.19.17.131:46234",
+  "ray_tmpdir": "/tmp/dr101001",
+  "command": [
+    "/home/ubuntu/miniforge3/envs/rdgdpo/bin/python",
+    "-u",
+    "/home/ubuntu/DARA/training/launch.py",
+    "--method",
+    "gdpo",
+    "--seed",
+    "5",
+    "--model-size",
+    "1.5b",
+    "--group-size",
+    "4",
+    "--rewards",
+    "two",
+    "--save-freq",
+    "10",
+    "--gpus",
+    "4",
+    "--model",
+    "/home/ubuntu/dara-models/Qwen2.5-1.5B-Instruct",
+    "--output",
+    "/home/ubuntu/DARA/outputs/rental-1p5b/haotian_1p5b_gdpo_s5_save10",
+    "--ray-address",
+    "10.19.17.131:46234"
+  ],
+  "started_at": 1789732974.5503583
+}

@@ -1,0 +1,66 @@
+% Complete final snapshot from process_final_method_results.csv.
+% Completed finals: GRPO seeds 0/2/5; GDPO seeds 0/1/5; DARA seeds 0/1/2; DVAO seeds 3/4/5; GD^2PO-Hard seeds 0/4/5.
+% Requires: booktabs, graphicx
+
+\begin{table}[t]
+    \caption{Performance on BFCL-v4. Acc. denotes tool-calling
+    accuracy and Format denotes output-format compliance. Avg. is the mean over
+    Live, Non-Live, and Multi-Turn. Results are percentages reported as mean
+    $\pm$ sample standard deviation over three final evaluations per method.}
+    \label{tab:bfcl_v4_final}
+    \vspace{6pt}
+    \centering
+    \small
+    \setlength{\tabcolsep}{3.1pt}
+    \renewcommand{\arraystretch}{1.13}
+    \newcommand{\curmsd}[2]{\ensuremath{#1_{\scriptscriptstyle \pm #2}}}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}clcccccccc@{}}
+        \toprule
+        & & \multicolumn{2}{c}{Live}
+        & \multicolumn{2}{c}{Non-Live}
+        & \multicolumn{2}{c}{Multi-Turn}
+        & \multicolumn{2}{c}{Average} \\
+        \cmidrule(lr){3-4}\cmidrule(lr){5-6}
+        \cmidrule(lr){7-8}\cmidrule(l){9-10}
+        Size & Method
+        & Acc. & Format
+        & Acc. & Format
+        & Acc. & Format
+        & Acc. & Format \\
+        \midrule
+        1.5B & GRPO (3/3)
+        & \curmsd{64.15}{0.41} & \curmsd{99.85}{0.07}
+        & \curmsd{78.25}{0.61} & \curmsd{100.00}{0.00}
+        & \curmsd{2.42}{0.59} & \curmsd{39.96}{10.14}
+        & \curmsd{48.27}{0.08} & \curmsd{79.94}{3.36} \\
+        & GDPO (3/3)
+        & \curmsd{67.78}{1.39} & \curmsd{66.94}{57.20}
+        & \curmsd{80.44}{0.83} & \curmsd{66.71}{57.66}
+        & \curmsd{4.13}{1.47} & \curmsd{80.25}{15.76}
+        & \curmsd{50.78}{0.65} & \curmsd{71.30}{43.54} \\
+        & DARA (3/3)
+        & \curmsd{68.54}{0.61} & \curmsd{99.93}{0.07}
+        & \curmsd{80.58}{0.93} & \curmsd{100.00}{0.00}
+        & \curmsd{4.83}{0.14} & \curmsd{92.80}{2.41}
+        & \curmsd{51.32}{0.43} & \curmsd{97.58}{0.82} \\
+        & DVAO (3/3)
+        & \curmsd{62.82}{3.04} & \curmsd{66.86}{57.07}
+        & \curmsd{76.75}{3.44} & \curmsd{66.63}{57.56}
+        & \curmsd{3.42}{1.46} & \curmsd{63.47}{27.70}
+        & \curmsd{47.66}{1.85} & \curmsd{65.66}{47.34} \\
+        & GD$^2$PO-Hard (3/3)
+        & \curmsd{66.22}{3.59} & \curmsd{66.64}{57.71}
+        & \curmsd{77.86}{2.31} & \curmsd{66.67}{57.74}
+        & \curmsd{3.50}{1.21} & \curmsd{57.50}{45.29}
+        & \curmsd{49.19}{2.34} & \curmsd{63.60}{53.42} \\
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table}
+
+% Per-seed values used above, in the same metric order:
+% DVAO seed 4: 59.66, 99.70, 73.12, 99.73, 4.00, 74.45, 45.59, 91.29
+% DVAO seed 5: 65.73,  0.96, 79.96,  0.17, 1.75, 31.97, 49.15, 11.03
+% GD^2PO-Hard seed 4: 66.25, 100.00, 78.46, 100.00, 4.00, 91.01, 49.57, 97.00
+% GD^2PO-Hard seed 5: 62.62,   0.00, 75.31,   0.00, 2.13,  5.98, 46.69,  1.99
