@@ -33,6 +33,6 @@ V3的原始1.5B批次位于`/scratch.global/lian0190/BFCL-v3-evaluation/20260913
 
 这些绝对路径用于现服务器定位。要在别处重新评分已有模型，需要额外同步相应raw/result工件；下载本Git仓库、创建环境并执行固定数据下载脚本后，即可运行新训练和评测；轻量结果表和训练曲线已在Git仓库中。复制已保存的BFCL分片时，按category合并为`evaluation/run.py`使用的`raw/<category>.jsonl`，保留case ID和完整metadata。
 
-2026-09-19完成的租机工件位于`/lambda/nfs/haotian/dara-rental-20260917`：15次训练占约1.07TB，150份BFCL V4原始评测占约31GB。轻量、可直接画图和复算表格的数据已同步到[`results/rental_1p5b_20260919`](../results/rental_1p5b_20260919/README.md)。大型工件镜像使用私有Hugging Face数据仓库[`zhaihaotian/rd-gdpo-experiment-results`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_1p5b_20260919)。
+2026-09-19完成的租机工件位于`/lambda/nfs/haotian/dara-rental-20260917`：15次训练占约1.07TB，150份BFCL V4原始评测占约31GB。轻量、可直接画图和复算表格的数据已同步到[`results/rental_1p5b_20260919`](../results/rental_1p5b_20260919/README.md)。私有Hugging Face数据仓库[`zhaihaotian/rd-gdpo-experiment-results`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_1p5b_20260919)同时保存完整轻量镜像，以及15份按run压缩的BFCL V4原始推理、官方评分、逐题诊断和summary归档；归档总大小853,978,340 bytes。
 
 `scripts/export_reference.py`可以从原combined per_model.csv与训练日志重新导出这份轻量参考包。来源参数显式传入，脚本选择Haotian实验记录。

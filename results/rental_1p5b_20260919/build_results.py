@@ -131,6 +131,9 @@ def main():
     }
     if len(checkpoint_inventory) != 150 or len(checkpoint_inventory_keys) != 150:
         raise ValueError("checkpoint_inventory.csv must contain 150 unique run-step rows")
+    raw_archives = read_csv(EVALUATION_ROOT / "bfcl_v4_archives.csv")
+    if len(raw_archives) != 15 or len({row["archive"] for row in raw_archives}) != 15:
+        raise ValueError("bfcl_v4_archives.csv must contain one archive per training run")
     verification = {
         "training_runs": len(runs),
         "training_dynamics_rows": len(dynamics),
@@ -140,6 +143,8 @@ def main():
         "checkpoint_method_step_aggregates": len(checkpoint_methods),
         "final_evaluations": len(final_rows),
         "final_method_aggregates": len(final_methods),
+        "bfcl_v4_raw_archives": len(raw_archives),
+        "bfcl_v4_raw_archive_bytes": sum(int(row["size_bytes"]) for row in raw_archives),
         "all_training_rows_complete": all(row["metrics_rows"] == 101 for row in runs),
         "all_evaluation_keys_unique": len({(row["run_id"], row["step"]) for row in checkpoint_rows}) == 150,
         "all_checkpoint_inventory_keys_unique": len(checkpoint_inventory_keys) == 150,

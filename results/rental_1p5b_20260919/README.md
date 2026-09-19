@@ -22,4 +22,4 @@ The controller completed with `reason=all_complete` at `2026-09-19T18:11:23.2754
 python results/rental_1p5b_20260919/build_results.py
 ```
 
-The private Hugging Face data mirror is [`zhaihaotian/rd-gdpo-experiment-results`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_1p5b_20260919). It is the intended location for the larger raw BFCL outputs and model-artifact index; Git contains the compact, reviewable, directly plottable data.
+The private Hugging Face data mirror is [`zhaihaotian/rd-gdpo-experiment-results`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_1p5b_20260919). Its [`bfcl_v4_raw_archives`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_1p5b_20260919/bfcl_v4_raw_archives) directory contains one compressed archive per training run with the raw inference, official scores, per-case diagnostics, and summaries for all ten checkpoints. [`evaluation/bfcl_v4_archives.csv`](evaluation/bfcl_v4_archives.csv) records the 15 archive names and sizes. Git contains the compact, reviewable, directly plottable data.
