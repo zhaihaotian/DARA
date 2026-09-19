@@ -1,0 +1,76 @@
+% Generated from checkpoint_method_results_snapshot.csv.
+% Requires: booktabs, graphicx
+
+\begin{table*}[t]
+    \caption{Current BFCL-v4 process evaluation. Acc. denotes tool-calling accuracy and Format denotes output-format compliance. Avg. is the mean over Live, Non-Live, and Multi-Turn. DVAO and GD$^2$PO-Hard report mean $\pm$ sample standard deviation over the two completed seeds (4 and 5); GRPO currently reports seed 0 only. Remaining planned seeds are still being evaluated.}
+    \label{tab:bfcl_v4_process_current}
+    \centering
+    \small
+    \setlength{\tabcolsep}{3.1pt}
+    \renewcommand{\arraystretch}{1.13}
+    \newcommand{\procmsd}[2]{\ensuremath{#1_{\scriptscriptstyle \pm #2}}}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}clcccccccc@{}}
+        \toprule
+        & & \multicolumn{2}{c}{Live} & \multicolumn{2}{c}{Non-Live} & \multicolumn{2}{c}{Multi-Turn} & \multicolumn{2}{c}{Average} \\
+        \cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(l){9-10}
+        Method & Step & Acc. & Format & Acc. & Format & Acc. & Format & Acc. & Format \\
+        \midrule
+        DVAO (3/3) & 10 & \procmsd{56.67}{0.95} & \procmsd{0.12}{0.09} & \procmsd{76.83}{0.88} & \procmsd{0.06}{0.10} & \procmsd{1.88}{0.25} & \procmsd{0.00}{0.01} & \procmsd{45.13}{0.64} & \procmsd{0.06}{0.03} \\
+        DVAO (3/3) & 20 & \procmsd{64.13}{2.40} & \procmsd{0.00}{0.00} & \procmsd{78.74}{0.43} & \procmsd{0.00}{0.00} & \procmsd{2.79}{0.72} & \procmsd{0.20}{0.13} & \procmsd{48.55}{0.89} & \procmsd{0.07}{0.04} \\
+        DVAO (3/3) & 30 & \procmsd{65.73}{0.46} & \procmsd{1.63}{2.82} & \procmsd{80.08}{0.36} & \procmsd{2.58}{4.47} & \procmsd{2.79}{0.47} & \procmsd{1.29}{0.86} & \procmsd{49.53}{0.20} & \procmsd{1.83}{2.71} \\
+        DVAO (3/3) & 40 & \procmsd{65.83}{0.99} & \procmsd{33.26}{57.61} & \procmsd{79.33}{1.12} & \procmsd{33.18}{57.47} & \procmsd{2.42}{0.76} & \procmsd{19.28}{24.00} & \procmsd{49.19}{0.31} & \procmsd{28.57}{46.35} \\
+        DVAO (3/3) & 50 & \procmsd{66.62}{0.90} & \procmsd{33.16}{57.44} & \procmsd{79.82}{1.24} & \procmsd{33.33}{57.74} & \procmsd{2.08}{0.69} & \procmsd{22.53}{24.55} & \procmsd{49.51}{0.51} & \procmsd{29.67}{46.46} \\
+        DVAO (3/3) & 60 & \procmsd{66.30}{1.57} & \procmsd{33.36}{57.59} & \procmsd{79.07}{1.24} & \procmsd{33.33}{57.74} & \procmsd{2.04}{0.59} & \procmsd{29.98}{24.43} & \procmsd{49.14}{0.96} & \procmsd{32.22}{46.31} \\
+        DVAO (3/3) & 70 & \procmsd{66.62}{1.25} & \procmsd{33.43}{57.65} & \procmsd{80.03}{0.75} & \procmsd{33.33}{57.74} & \procmsd{2.96}{0.88} & \procmsd{41.62}{28.74} & \procmsd{49.87}{0.71} & \procmsd{36.13}{47.79} \\
+        DVAO (3/3) & 80 & \procmsd{66.47}{0.46} & \procmsd{33.53}{57.50} & \procmsd{80.50}{0.52} & \procmsd{33.33}{57.74} & \procmsd{2.46}{1.40} & \procmsd{47.28}{29.57} & \procmsd{49.81}{0.78} & \procmsd{38.05}{47.99} \\
+        DVAO (3/3) & 90 & \procmsd{65.38}{0.41} & \procmsd{34.17}{56.95} & \procmsd{80.03}{0.02} & \procmsd{33.57}{57.53} & \procmsd{3.08}{1.25} & \procmsd{53.54}{26.45} & \procmsd{49.50}{0.48} & \procmsd{40.43}{46.78} \\
+        DVAO (3/3) & 100 & \procmsd{62.82}{3.04} & \procmsd{66.86}{57.07} & \procmsd{76.75}{3.44} & \procmsd{66.63}{57.56} & \procmsd{3.42}{1.46} & \procmsd{63.47}{27.70} & \procmsd{47.66}{1.85} & \procmsd{65.66}{47.34} \\
+        \midrule
+        GD$^2$PO-Hard (3/3) & 10 & \procmsd{56.08}{1.20} & \procmsd{0.52}{0.77} & \procmsd{76.35}{0.27} & \procmsd{0.74}{1.13} & \procmsd{1.88}{0.65} & \procmsd{0.19}{0.31} & \procmsd{44.77}{0.22} & \procmsd{0.48}{0.74} \\
+        GD$^2$PO-Hard (3/3) & 20 & \procmsd{63.41}{0.47} & \procmsd{33.09}{57.31} & \procmsd{76.19}{0.80} & \procmsd{33.07}{57.28} & \procmsd{2.50}{0.22} & \procmsd{12.13}{20.15} & \procmsd{47.37}{0.29} & \procmsd{26.09}{44.91} \\
+        GD$^2$PO-Hard (3/3) & 30 & \procmsd{65.24}{0.82} & \procmsd{33.33}{57.74} & \procmsd{77.45}{0.63} & \procmsd{33.29}{57.66} & \procmsd{2.58}{0.36} & \procmsd{12.65}{20.58} & \procmsd{48.42}{0.41} & \procmsd{26.43}{45.33} \\
+        GD$^2$PO-Hard (3/3) & 40 & \procmsd{65.31}{0.85} & \procmsd{33.33}{57.74} & \procmsd{78.92}{0.25} & \procmsd{33.33}{57.74} & \procmsd{2.46}{0.31} & \procmsd{17.48}{26.99} & \procmsd{48.89}{0.27} & \procmsd{28.05}{47.49} \\
+        GD$^2$PO-Hard (3/3) & 50 & \procmsd{65.75}{0.96} & \procmsd{33.31}{57.69} & \procmsd{79.15}{0.57} & \procmsd{33.29}{57.66} & \procmsd{2.62}{0.87} & \procmsd{24.27}{36.69} & \procmsd{49.18}{0.75} & \procmsd{30.29}{50.68} \\
+        GD$^2$PO-Hard (3/3) & 60 & \procmsd{65.68}{1.29} & \procmsd{34.47}{56.78} & \procmsd{79.58}{0.63} & \procmsd{33.80}{57.34} & \procmsd{3.33}{1.56} & \procmsd{30.82}{35.21} & \procmsd{49.53}{1.06} & \procmsd{33.03}{49.55} \\
+        GD$^2$PO-Hard (3/3) & 70 & \procmsd{66.84}{0.83} & \procmsd{66.67}{57.74} & \procmsd{78.69}{0.79} & \procmsd{66.50}{57.59} & \procmsd{3.71}{1.45} & \procmsd{49.16}{39.74} & \procmsd{49.75}{0.89} & \procmsd{60.78}{51.62} \\
+        GD$^2$PO-Hard (3/3) & 80 & \procmsd{65.53}{3.45} & \procmsd{66.64}{57.71} & \procmsd{78.60}{1.17} & \procmsd{66.62}{57.70} & \procmsd{3.42}{1.08} & \procmsd{53.41}{43.57} & \procmsd{49.18}{1.67} & \procmsd{62.22}{52.85} \\
+        GD$^2$PO-Hard (3/3) & 90 & \procmsd{66.10}{1.85} & \procmsd{66.62}{57.69} & \procmsd{79.51}{1.26} & \procmsd{66.62}{57.70} & \procmsd{3.96}{1.37} & \procmsd{55.49}{44.42} & \procmsd{49.85}{1.38} & \procmsd{62.91}{53.13} \\
+        GD$^2$PO-Hard (3/3) & 100 & \procmsd{66.22}{3.59} & \procmsd{66.64}{57.71} & \procmsd{77.86}{2.31} & \procmsd{66.67}{57.74} & \procmsd{3.50}{1.21} & \procmsd{57.50}{45.29} & \procmsd{49.19}{2.34} & \procmsd{63.60}{53.42} \\
+        \midrule
+        GRPO (3/3) & 10 & \procmsd{44.41}{5.68} & \procmsd{5.40}{3.90} & \procmsd{58.09}{8.35} & \procmsd{3.08}{2.97} & \procmsd{0.71}{0.29} & \procmsd{0.94}{0.40} & \procmsd{34.40}{4.60} & \procmsd{3.14}{2.41} \\
+        GRPO (3/3) & 20 & \procmsd{60.40}{0.81} & \procmsd{1.58}{0.84} & \procmsd{77.81}{0.37} & \procmsd{0.58}{0.56} & \procmsd{1.62}{0.50} & \procmsd{0.93}{0.76} & \procmsd{46.61}{0.56} & \procmsd{1.03}{0.72} \\
+        GRPO (3/3) & 30 & \procmsd{63.39}{0.82} & \procmsd{32.89}{38.81} & \procmsd{76.95}{0.91} & \procmsd{41.48}{43.97} & \procmsd{2.17}{0.44} & \procmsd{14.41}{9.96} & \procmsd{47.50}{0.20} & \procmsd{29.59}{30.61} \\
+        GRPO (3/3) & 40 & \procmsd{63.31}{1.56} & \procmsd{99.75}{0.24} & \procmsd{75.85}{1.06} & \procmsd{99.36}{0.64} & \procmsd{2.25}{0.33} & \procmsd{29.09}{4.48} & \procmsd{47.14}{0.74} & \procmsd{76.07}{1.22} \\
+        GRPO (3/3) & 50 & \procmsd{64.05}{1.25} & \procmsd{99.63}{0.13} & \procmsd{77.29}{0.37} & \procmsd{99.62}{0.23} & \procmsd{2.62}{0.54} & \procmsd{25.31}{4.56} & \procmsd{47.99}{0.69} & \procmsd{74.85}{1.46} \\
+        GRPO (3/3) & 60 & \procmsd{63.26}{0.21} & \procmsd{99.78}{0.13} & \procmsd{77.39}{0.75} & \procmsd{99.88}{0.09} & \procmsd{2.38}{0.22} & \procmsd{24.48}{1.00} & \procmsd{47.68}{0.16} & \procmsd{74.71}{0.28} \\
+        GRPO (3/3) & 70 & \procmsd{64.03}{0.64} & \procmsd{99.90}{0.04} & \procmsd{77.38}{1.03} & \procmsd{99.88}{0.12} & \procmsd{3.17}{0.47} & \procmsd{26.07}{1.90} & \procmsd{48.19}{0.36} & \procmsd{75.28}{0.69} \\
+        GRPO (3/3) & 80 & \procmsd{65.06}{0.45} & \procmsd{99.90}{0.04} & \procmsd{77.54}{0.31} & \procmsd{99.90}{0.10} & \procmsd{3.29}{0.26} & \procmsd{29.71}{5.83} & \procmsd{48.63}{0.14} & \procmsd{76.51}{1.90} \\
+        GRPO (3/3) & 90 & \procmsd{63.73}{1.86} & \procmsd{99.83}{0.09} & \procmsd{78.25}{0.91} & \procmsd{99.96}{0.07} & \procmsd{2.92}{0.56} & \procmsd{33.02}{3.85} & \procmsd{48.30}{0.97} & \procmsd{77.60}{1.33} \\
+        GRPO (3/3) & 100 & \procmsd{64.15}{0.41} & \procmsd{99.85}{0.07} & \procmsd{78.25}{0.61} & \procmsd{100.00}{0.00} & \procmsd{2.42}{0.59} & \procmsd{39.96}{10.14} & \procmsd{48.27}{0.08} & \procmsd{79.94}{3.36} \\
+        \midrule
+        GDPO (3/3) & 10 & \procmsd{57.49}{3.89} & \procmsd{0.89}{0.77} & \procmsd{76.58}{1.74} & \procmsd{1.50}{1.30} & \procmsd{1.71}{0.47} & \procmsd{0.41}{0.37} & \procmsd{45.26}{2.01} & \procmsd{0.93}{0.81} \\
+        GDPO (3/3) & 20 & \procmsd{63.98}{0.54} & \procmsd{36.34}{55.01} & \procmsd{78.21}{1.27} & \procmsd{36.83}{54.05} & \procmsd{2.67}{0.75} & \procmsd{12.31}{17.42} & \procmsd{48.28}{0.34} & \procmsd{28.49}{42.15} \\
+        GDPO (3/3) & 30 & \procmsd{64.45}{0.11} & \procmsd{66.57}{57.65} & \procmsd{78.37}{1.13} & \procmsd{66.61}{57.69} & \procmsd{2.12}{0.43} & \procmsd{24.19}{20.58} & \procmsd{48.31}{0.42} & \procmsd{52.46}{45.30} \\
+        GDPO (3/3) & 40 & \procmsd{65.28}{1.03} & \procmsd{66.59}{57.67} & \procmsd{79.01}{1.39} & \procmsd{66.62}{57.70} & \procmsd{2.29}{0.51} & \procmsd{32.52}{28.76} & \procmsd{48.86}{0.97} & \procmsd{55.25}{47.42} \\
+        GDPO (3/3) & 50 & \procmsd{66.96}{1.67} & \procmsd{66.64}{57.71} & \procmsd{79.79}{0.37} & \procmsd{66.67}{57.74} & \procmsd{2.46}{0.79} & \procmsd{40.85}{32.16} & \procmsd{49.74}{0.67} & \procmsd{58.05}{49.09} \\
+        GDPO (3/3) & 60 & \procmsd{67.70}{0.91} & \procmsd{66.67}{57.67} & \procmsd{80.10}{0.53} & \procmsd{66.67}{57.74} & \procmsd{3.08}{0.75} & \procmsd{47.51}{31.35} & \procmsd{50.29}{0.48} & \procmsd{60.28}{48.31} \\
+        GDPO (3/3) & 70 & \procmsd{67.58}{1.28} & \procmsd{66.67}{57.67} & \procmsd{79.90}{0.13} & \procmsd{66.62}{57.70} & \procmsd{3.71}{1.61} & \procmsd{58.12}{35.31} & \procmsd{50.39}{0.97} & \procmsd{63.80}{49.29} \\
+        GDPO (3/3) & 80 & \procmsd{67.78}{1.13} & \procmsd{66.64}{57.71} & \procmsd{80.18}{0.89} & \procmsd{66.62}{57.70} & \procmsd{3.83}{0.59} & \procmsd{64.32}{32.43} & \procmsd{50.60}{0.26} & \procmsd{65.86}{49.01} \\
+        GDPO (3/3) & 90 & \procmsd{68.27}{1.23} & \procmsd{66.69}{57.69} & \procmsd{80.57}{0.42} & \procmsd{66.67}{57.74} & \procmsd{4.29}{1.40} & \procmsd{71.28}{22.62} & \procmsd{51.04}{0.87} & \procmsd{68.21}{45.79} \\
+        GDPO (3/3) & 100 & \procmsd{67.78}{1.39} & \procmsd{66.94}{57.20} & \procmsd{80.44}{0.83} & \procmsd{66.71}{57.66} & \procmsd{4.12}{1.47} & \procmsd{80.25}{15.76} & \procmsd{50.78}{0.65} & \procmsd{71.30}{43.54} \\
+        \midrule
+        DARA (3/3) & 10 & \procmsd{50.78}{1.51} & \procmsd{93.49}{1.57} & \procmsd{71.97}{0.82} & \procmsd{97.03}{0.59} & \procmsd{1.83}{0.31} & \procmsd{28.91}{0.56} & \procmsd{41.53}{0.69} & \procmsd{73.14}{0.89} \\
+        DARA (3/3) & 20 & \procmsd{63.26}{0.19} & \procmsd{99.93}{0.07} & \procmsd{77.34}{0.69} & \procmsd{99.88}{0.12} & \procmsd{1.46}{0.19} & \procmsd{34.65}{0.36} & \procmsd{47.35}{0.18} & \procmsd{78.15}{0.09} \\
+        DARA (3/3) & 30 & \procmsd{65.04}{0.53} & \procmsd{99.90}{0.11} & \procmsd{77.92}{0.40} & \procmsd{99.96}{0.07} & \procmsd{2.83}{0.71} & \procmsd{58.77}{6.92} & \procmsd{48.60}{0.43} & \procmsd{86.21}{2.29} \\
+        DARA (3/3) & 40 & \procmsd{66.27}{0.70} & \procmsd{99.95}{0.04} & \procmsd{78.54}{0.20} & \procmsd{100.00}{0.00} & \procmsd{2.96}{0.52} & \procmsd{78.54}{6.41} & \procmsd{49.26}{0.41} & \procmsd{92.83}{2.14} \\
+        DARA (3/3) & 50 & \procmsd{67.04}{0.73} & \procmsd{99.88}{0.09} & \procmsd{79.66}{0.23} & \procmsd{99.96}{0.07} & \procmsd{4.29}{0.07} & \procmsd{82.05}{9.74} & \procmsd{50.33}{0.30} & \procmsd{93.96}{3.25} \\
+        DARA (3/3) & 60 & \procmsd{68.37}{0.82} & \procmsd{99.98}{0.04} & \procmsd{79.84}{0.22} & \procmsd{100.00}{0.00} & \procmsd{4.62}{0.12} & \procmsd{88.19}{3.48} & \procmsd{50.94}{0.32} & \procmsd{96.06}{1.17} \\
+        DARA (3/3) & 70 & \procmsd{68.84}{0.20} & \procmsd{100.00}{0.00} & \procmsd{79.88}{0.44} & \procmsd{100.00}{0.00} & \procmsd{5.25}{0.45} & \procmsd{90.67}{4.86} & \procmsd{51.32}{0.35} & \procmsd{96.89}{1.62} \\
+        DARA (3/3) & 80 & \procmsd{68.69}{0.34} & \procmsd{100.00}{0.00} & \procmsd{79.98}{0.54} & \procmsd{100.00}{0.00} & \procmsd{4.67}{0.44} & \procmsd{91.79}{2.58} & \procmsd{51.11}{0.08} & \procmsd{97.26}{0.86} \\
+        DARA (3/3) & 90 & \procmsd{68.25}{0.52} & \procmsd{99.95}{0.04} & \procmsd{80.80}{0.36} & \procmsd{100.00}{0.00} & \procmsd{4.88}{0.57} & \procmsd{92.90}{1.60} & \procmsd{51.31}{0.31} & \procmsd{97.62}{0.54} \\
+        DARA (3/3) & 100 & \procmsd{68.54}{0.61} & \procmsd{99.93}{0.07} & \procmsd{80.58}{0.93} & \procmsd{100.00}{0.00} & \procmsd{4.83}{0.14} & \procmsd{92.80}{2.41} & \procmsd{51.32}{0.43} & \procmsd{97.58}{0.82} \\
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table*}

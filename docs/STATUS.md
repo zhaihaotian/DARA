@@ -21,6 +21,20 @@
 
 Training dynamics按逐步reward单独绘图。1.5B训练format首次达到0.8的step：DARA为14/16/15/13/29，平均17.4；GDPO为18/19/75/16/65，平均38.6；GRPO为37/43/34/31/31，平均35.2。原始逐步数据可自行重画。
 
+## 1.5B过程checkpoint实验
+
+2026-09-19完成了租机清单的15/15次100-step训练、150/150份BFCL V4过程评测和15/15份step100 final评测。每个run保留steps10/20/…/100，共150份HF checkpoint。完整轻量数据见[`results/rental_1p5b_20260919`](../results/rental_1p5b_20260919/README.md)，其中训练动态为15×101=1515行，过程逐模型表为150行，final逐模型表为15行。
+
+本轮step100的三个seed汇总如下，数值为百分数、mean±sample SD：
+
+| Method | Seeds | BFCL V4 Avg Acc | BFCL V4 Avg Format |
+|---|---|---:|---:|
+| GRPO | 0/2/5 | 48.27±0.08 | 79.94±3.36 |
+| GDPO | 0/1/5 | 50.78±0.65 | 71.30±43.54 |
+| DARA | 0/1/2 | 51.32±0.43 | 97.58±0.82 |
+| DVAO | 3/4/5 | 47.66±1.85 | 65.66±47.34 |
+| GD²PO-Hard | 0/4/5 | 49.19±2.34 | 63.60±53.42 |
+
 ## 已观察到的基线问题
 
 DVAO seed1、GD²PO-Hard seed2跑完100steps，但format未收敛，末次训练内validation format分别为0.1125和0.0875。其BFCL AST正确率并未同幅崩溃，所以异常主要体现为format表现；三个seed的V4 Avg Format分别为69.02±44.42、67.98±48.58。这两个seed的format表现拉大了跨seed标准差。

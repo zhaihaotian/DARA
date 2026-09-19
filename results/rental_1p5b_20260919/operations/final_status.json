@@ -1,0 +1,420 @@
+{
+  "checked_at_utc": "2026-09-19T18:18:30.000000Z",
+  "controller_updated_at": "2026-09-19T18:11:22.909489+00:00",
+  "training_complete": 15,
+  "training_expected": 15,
+  "checkpoints_scored": 150,
+  "checkpoints_expected": 150,
+  "finals_scored": 15,
+  "finals_expected": 15,
+  "controller_deadline_utc": "2026-09-25T19:19:08Z",
+  "controller_status": "complete_all_complete",
+  "saved_checkpoint_count": 150,
+  "completed_training": {
+    "haotian_1p5b_dvao_s4_save10": {
+      "elapsed_seconds": 9887.618839263916,
+      "finished_at": "2026-09-18T01:16:17.236012Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0
+    },
+    "haotian_1p5b_gd2po_hard_s4_save10": {
+      "elapsed_seconds": 9815.931770086288,
+      "finished_at": "2026-09-18T01:15:05.699543Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0
+    },
+    "haotian_1p5b_dvao_s5_save10": {
+      "elapsed_seconds": 9548.29862165451,
+      "finished_at": "2026-09-18T03:54:14.803485Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ]
+    },
+    "haotian_1p5b_gd2po_hard_s5_save10": {
+      "elapsed_seconds": 9653.054384231567,
+      "finished_at": "2026-09-18T03:57:10.518470Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ]
+    },
+    "haotian_1p5b_gdpo_s0_save10": {
+      "elapsed_seconds": 9539.007899522781,
+      "finished_at": "2026-09-18T06:36:13.774433Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_grpo_s0_save10": {
+      "elapsed_seconds": 9790.895140171051,
+      "finished_at": "2026-09-18T06:37:29.564749Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_dara_s0_save10": {
+      "elapsed_seconds": 9364.961486816406,
+      "finished_at": "2026-09-18T09:12:23.154552Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_grpo_s2_save10": {
+      "elapsed_seconds": 10046.69688630104,
+      "finished_at": "2026-09-18T09:25:00.022660Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_gdpo_s1_save10": {
+      "elapsed_seconds": 9494.587574481964,
+      "finished_at": "2026-09-18T11:50:41.349764Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_dara_s1_save10": {
+      "elapsed_seconds": 9467.192125320435,
+      "finished_at": "2026-09-18T12:02:50.723385Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_grpo_s5_save10": {
+      "elapsed_seconds": 9957.224925756454,
+      "finished_at": "2026-09-18T14:36:42.549743Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_gdpo_s5_save10": {
+      "elapsed_seconds": 9393.983597040176,
+      "finished_at": "2026-09-18T14:39:28.142320Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_dara_s2_save10": {
+      "elapsed_seconds": 9553.873081684113,
+      "finished_at": "2026-09-18T17:15:59.964341Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_gd2po_hard_s0_save10": {
+      "elapsed_seconds": 9408.63283085823,
+      "finished_at": "2026-09-18T17:16:20.297267Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    },
+    "haotian_1p5b_dvao_s3_save10": {
+      "elapsed_seconds": 9314.538897037506,
+      "finished_at": "2026-09-18T21:55:08.409594Z",
+      "saved_checkpoints": [
+        10,
+        20,
+        30,
+        40,
+        50,
+        60,
+        70,
+        80,
+        90,
+        100
+      ],
+      "metrics_and_csv_rows": 101,
+      "exit_code": 0,
+      "execution_optimizations": [
+        "skip_unused_logprob_entropy",
+        "skip_unused_rollout_logprobs",
+        "stage_checkpoints_locally"
+      ],
+      "density_metrics_verified": true
+    }
+  },
+  "active_training": {},
+  "active_evaluations": {
+    "run": "mixed",
+    "phase": "complete",
+    "steps": [],
+    "gpus": [],
+    "jobs_running": 0,
+    "files_per_output": 38,
+    "raw_jsonl_files_per_output": 14,
+    "raw_lines_by_step": {},
+    "completed_scoring_steps": [
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100
+    ],
+    "completed_case_rows": 3301,
+    "summary_verified": true,
+    "report_csvs_verified": 4,
+    "completed_scoring_total": 150,
+    "resumed_from_persisted_raw": true,
+    "evaluation_queue_failed": 0
+  },
+  "gpu_utilization_percent": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "failures": [],
+  "action": "All requested work is complete:15/15 trainings,150/150 saved checkpoints,150/150 BFCL V4 process scores and15/15 step100 final scores. DVAO seed3 step60 completed inference and official CPU scoring with exit0. All150 evaluation records are complete, no active or pending jobs remain, all GPUs are idle, and the controller exited itself with reason all_complete. The four report CSVs have151,51,16 and6 lines and are consistent. Final local tables and CSV snapshots were refreshed; stop the completed heartbeat automation.",
+  "numerical_observations": [
+    {
+      "run": "haotian_1p5b_gdpo_s0_save10",
+      "step": 89,
+      "pre_clip_grad_norm": 1622178315300.8594,
+      "policy_loss": 16226.777792063276,
+      "grad_clip": 1.0,
+      "nonfinite_metrics": [],
+      "following_grad_norms": {
+        "90": 227.03360158205032,
+        "91": 65.5947921872139
+      },
+      "validation_step90_format": 0.975,
+      "validation_step90_correctness": 1.7936445839703083,
+      "status": "Finite transient spike at89; no further large spikes after91 and no nonfinite logged metrics through100. Run completed with exit0 under original protocol.",
+      "reported_to_user": true
+    }
+  ]
+}
