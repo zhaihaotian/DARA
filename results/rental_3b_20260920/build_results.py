@@ -281,6 +281,14 @@ def main():
         raise ValueError("checkpoint_inventory.csv must contain 40 unique run-step rows")
     if any(int(row["size_bytes"]) <= 0 or int(row["file_count"]) <= 0 for row in checkpoint_inventory):
         raise ValueError("every checkpoint inventory row must have a positive size and file count")
+    raw_archives = read_csv(EVALUATION_ROOT / "bfcl_v4_archives.csv")
+    if (
+        len(raw_archives) != 4
+        or {row["run_id"] for row in raw_archives} != set(RUN_IDS)
+        or len({row["archive"] for row in raw_archives}) != 4
+        or any(int(row["size_bytes"]) <= 0 for row in raw_archives)
+    ):
+        raise ValueError("bfcl_v4_archives.csv must contain one positive-size archive per run")
 
     status = json.loads((ROOT / "operations" / "final_status.json").read_text())
     queue = json.loads((ROOT / "operations" / "queue_state.json").read_text())
@@ -321,6 +329,8 @@ def main():
         "checkpoint_config_files": sum(
             1 for path in TRAINING_ROOT.glob("*/actor/global_step_*/config.json")
         ),
+        "bfcl_v4_raw_archives": len(raw_archives),
+        "bfcl_v4_raw_archive_bytes": sum(int(row["size_bytes"]) for row in raw_archives),
         "all_training_rows_complete": all(row["metrics_rows"] == 101 for row in runs),
         "all_evaluation_keys_unique": len(
             {(row["run_id"], row["step"]) for row in checkpoint_rows}

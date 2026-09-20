@@ -8,6 +8,8 @@
   "final_evaluations": 4,
   "final_method_aggregates": 2,
   "checkpoint_config_files": 40,
+  "bfcl_v4_raw_archives": 4,
+  "bfcl_v4_raw_archive_bytes": 208964065,
   "all_training_rows_complete": true,
   "all_evaluation_keys_unique": true,
   "all_checkpoint_inventory_keys_unique": true,

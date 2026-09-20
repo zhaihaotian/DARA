@@ -14,7 +14,7 @@ The [`evaluation`](evaluation) directory contains the four completed BFCL V4 exp
 
 Evaluation covers 3,301 BFCL V4 cases per checkpoint. The fixed protocol uses the ToolRL prompt and parser, temperature 0.6, top-p 0.95, inference seed 0, an 8,192-token generation limit, and the BFCL V4 source at gorilla commit `6ea57973c7a6097fd7c5915698c54c17c5b1b6c8`. Accuracy and Format use the aggregation rules recorded in the runbook.
 
-The raw BFCL inference, official scores, per-case diagnostics, and summaries remain at `/lambda/nfs/haotian/dara-3b-20260919/outputs/eval-v4-checkpoints` on the rental host. A durable archive location can be added here after that archive is published.
+The private Hugging Face data mirror is [`zhaihaotian/rd-gdpo-experiment-results`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_3b_20260920). Its [`bfcl_v4_raw_archives`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_3b_20260920/bfcl_v4_raw_archives) directory contains one archive per run with all ten checkpoints' raw inference, official scores, per-case diagnostics, summaries, inference metadata, and logs. [`evaluation/bfcl_v4_archives.csv`](evaluation/bfcl_v4_archives.csv) records each archive name, run, Hugging Face path, and verified byte size. The four archives total 208,964,065 bytes and contain no checkpoint weights or optimizer state.
 
 ## Completion and verification
 

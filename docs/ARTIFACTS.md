@@ -42,6 +42,6 @@ V3的原始1.5B批次位于`/scratch.global/lian0190/BFCL-v3-evaluation/20260913
 
 2026-09-19完成的租机工件位于`/lambda/nfs/haotian/dara-rental-20260917`：15次训练占约1.07TB，150份BFCL V4原始评测占约31GB。轻量、可直接画图和复算表格的数据已同步到[`results/rental_1p5b_20260919`](../results/rental_1p5b_20260919/README.md)。私有Hugging Face数据仓库[`zhaihaotian/rd-gdpo-experiment-results`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_1p5b_20260919)同时保存完整轻量镜像，以及15份按run压缩的BFCL V4原始推理、官方评分、逐题诊断和summary归档；归档总大小853,978,340 bytes。
 
-2026-09-20完成的3B补种子工件位于`/lambda/nfs/haotian/dara-3b-20260919`：四次训练共保存40份checkpoint，清单中的总大小为544,175,187,240 bytes。轻量训练动态、完整运行元数据、40份checkpoint配置、40份BFCL V4过程结果和四份final结果已同步到[`results/rental_3b_20260920`](../results/rental_3b_20260920/README.md)。模型权重未上传。
+2026-09-20完成的3B补种子工件位于`/lambda/nfs/haotian/dara-3b-20260919`：四次训练共保存40份checkpoint，清单中的总大小为544,175,187,240 bytes。轻量训练动态、完整运行元数据、40份checkpoint配置、40份BFCL V4过程结果和四份final结果已同步到[`results/rental_3b_20260920`](../results/rental_3b_20260920/README.md)及[私有Hugging Face镜像](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_3b_20260920)。HF镜像另含四份按run压缩的BFCL V4原始评测归档，总大小208,964,065 bytes；模型权重未上传。
 
 `scripts/export_reference.py`可以从原combined per_model.csv与训练日志重新导出这份轻量参考包。来源参数显式传入，脚本选择Haotian实验记录。
