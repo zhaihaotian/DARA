@@ -1,0 +1,71 @@
+{
+  "training_steps": 100,
+  "checkpoint_steps": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+  "purpose": "Add two independent seeds for DVAO and GD2PO-Hard on Qwen2.5-1.5B-Instruct.",
+  "runs": [
+    {
+      "id": "haotian_1p5b_dvao_s6_save10",
+      "method": "dvao",
+      "seed": 6,
+      "model_size": "1.5b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 12600,
+      "final_extension": true,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_dvao_s7_save10",
+      "method": "dvao",
+      "seed": 7,
+      "model_size": "1.5b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 12600,
+      "final_extension": true,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_gd2po_hard_s6_save10",
+      "method": "gd2po_hard",
+      "seed": 6,
+      "model_size": "1.5b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 12600,
+      "final_extension": true,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    },
+    {
+      "id": "haotian_1p5b_gd2po_hard_s7_save10",
+      "method": "gd2po_hard",
+      "seed": 7,
+      "model_size": "1.5b",
+      "phase": "final_seed_extension",
+      "steps": 100,
+      "group_size": 4,
+      "rewards": "two",
+      "save_freq": 10,
+      "minimum_seconds": 12600,
+      "final_extension": true,
+      "checkpoint_study": true,
+      "status": "planned",
+      "gpus": 4
+    }
+  ]
+}

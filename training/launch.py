@@ -105,7 +105,7 @@ def configuration(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--method', choices=METHODS, required=True)
-    parser.add_argument('--seed', type=int, choices=[0, 1, 2, 3, 4, 5], required=True)
+    parser.add_argument('--seed', type=int, choices=range(8), required=True)
     parser.add_argument('--model', required=True, help='Qwen2.5-1.5B/3B-Instruct path or model ID')
     parser.add_argument('--model-size', choices=['1.5b', '3b'], required=True)
     parser.add_argument('--data-dir', type=Path, default=REPO/'data'/'rlla_4k')
