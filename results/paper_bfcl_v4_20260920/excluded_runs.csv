@@ -1,0 +1,8 @@
+cohort,run_id,model_size,method,seed,validation_format_step100,training_format_step100,retained,exclusion_reason,source
+final,1.5b-dvao-s1,1.5B,dvao,1,0.1125,0.11328125,False,step100 RLLA validation Format < 0.8,reference/per_model.csv
+final,1.5b-gd2po_hard-s2,1.5B,gd2po_hard,2,0.0875,0.06982421875,False,step100 RLLA validation Format < 0.8,reference/per_model.csv
+final,haotian_1p5b_dvao_s5_save10,1.5B,dvao,5,0.0875,0.0615234375,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+final,haotian_1p5b_gd2po_hard_s5_save10,1.5B,gd2po_hard,5,0.0625,0.02978515625,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_dvao_s5_save10,1.5B,dvao,5,0.0875,0.0615234375,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_gd2po_hard_s5_save10,1.5B,gd2po_hard,5,0.0625,0.02978515625,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_gdpo_s5_save10,1.5B,gdpo,5,0.0875,0.0859375,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv

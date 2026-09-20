@@ -1,0 +1,68 @@
+cohort,run_id,model_size,method,seed,validation_format_step100,training_format_step100,retained,exclusion_reason,source
+final,1.5b-grpo-s0,1.5B,grpo,0,0.9625,0.91162109375,True,,reference/per_model.csv
+final,1.5b-grpo-s1,1.5B,grpo,1,0.975,0.92236328125,True,,reference/per_model.csv
+final,1.5b-grpo-s2,1.5B,grpo,2,0.925,0.86181640625,True,,reference/per_model.csv
+final,1.5b-grpo-s4,1.5B,grpo,4,0.9625,0.92333984375,True,,reference/per_model.csv
+final,1.5b-grpo-s5,1.5B,grpo,5,0.95,0.9052734375,True,,reference/per_model.csv
+final,1.5b-gdpo-s0,1.5B,gdpo,0,0.975,0.94384765625,True,,reference/per_model.csv
+final,1.5b-gdpo-s1,1.5B,gdpo,1,0.975,0.9453125,True,,reference/per_model.csv
+final,1.5b-gdpo-s2,1.5B,gdpo,2,0.975,0.94189453125,True,,reference/per_model.csv
+final,1.5b-gdpo-s4,1.5B,gdpo,4,0.975,0.94140625,True,,reference/per_model.csv
+final,1.5b-gdpo-s5,1.5B,gdpo,5,0.975,0.95751953125,True,,reference/per_model.csv
+final,1.5b-dara-s0,1.5B,dara,0,0.975,0.9365234375,True,,reference/per_model.csv
+final,1.5b-dara-s1,1.5B,dara,1,0.975,0.95361328125,True,,reference/per_model.csv
+final,1.5b-dara-s2,1.5B,dara,2,0.975,0.92822265625,True,,reference/per_model.csv
+final,1.5b-dara-s4,1.5B,dara,4,0.975,0.9423828125,True,,reference/per_model.csv
+final,1.5b-dara-s5,1.5B,dara,5,0.975,0.958984375,True,,reference/per_model.csv
+final,1.5b-dvao-s0,1.5B,dvao,0,0.975,0.95263671875,True,,reference/per_model.csv
+final,1.5b-dvao-s1,1.5B,dvao,1,0.1125,0.11328125,False,step100 RLLA validation Format < 0.8,reference/per_model.csv
+final,1.5b-dvao-s2,1.5B,dvao,2,0.9625,0.392578125,True,,reference/per_model.csv
+final,1.5b-gd2po_hard-s0,1.5B,gd2po_hard,0,0.975,0.93896484375,True,,reference/per_model.csv
+final,1.5b-gd2po_hard-s1,1.5B,gd2po_hard,1,0.975,0.95361328125,True,,reference/per_model.csv
+final,1.5b-gd2po_hard-s2,1.5B,gd2po_hard,2,0.0875,0.06982421875,False,step100 RLLA validation Format < 0.8,reference/per_model.csv
+final,3b-grpo-s0,3B,grpo,0,0.9875,0.947265625,True,,reference/per_model.csv
+final,3b-grpo-s1,3B,grpo,1,0.9875,0.9453125,True,,reference/per_model.csv
+final,3b-grpo-s2,3B,grpo,2,0.9875,0.94921875,True,,reference/per_model.csv
+final,3b-grpo-s4,3B,grpo,4,0.9875,0.953125,True,,reference/per_model.csv
+final,3b-grpo-s5,3B,grpo,5,0.9875,0.95751953125,True,,reference/per_model.csv
+final,3b-gdpo-s0,3B,gdpo,0,0.975,0.96337890625,True,,reference/per_model.csv
+final,3b-gdpo-s1,3B,gdpo,1,0.9875,0.9619140625,True,,reference/per_model.csv
+final,3b-gdpo-s2,3B,gdpo,2,0.975,0.9638671875,True,,reference/per_model.csv
+final,3b-gdpo-s4,3B,gdpo,4,0.975,0.9638671875,True,,reference/per_model.csv
+final,3b-gdpo-s5,3B,gdpo,5,1.0,0.97509765625,True,,reference/per_model.csv
+final,3b-dara-s0,3B,dara,0,1.0,0.9697265625,True,,reference/per_model.csv
+final,3b-dara-s1,3B,dara,1,1.0,0.97314453125,True,,reference/per_model.csv
+final,3b-dara-s2,3B,dara,2,1.0,0.9638671875,True,,reference/per_model.csv
+final,3b-dara-s4,3B,dara,4,0.975,0.97705078125,True,,reference/per_model.csv
+final,3b-dara-s5,3B,dara,5,0.975,0.9775390625,True,,reference/per_model.csv
+final,haotian_1p5b_dvao_s4_save10,1.5B,dvao,4,0.9625,0.86474609375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+final,haotian_1p5b_gd2po_hard_s4_save10,1.5B,gd2po_hard,4,0.975,0.95263671875,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+final,haotian_1p5b_dvao_s5_save10,1.5B,dvao,5,0.0875,0.0615234375,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+final,haotian_1p5b_gd2po_hard_s5_save10,1.5B,gd2po_hard,5,0.0625,0.02978515625,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+final,haotian_3b_dvao_s1_save10,3B,dvao,1,0.975,0.96044921875,True,,rental_3b_20260920/evaluation/checkpoint_per_model.csv
+final,haotian_3b_gd2po_hard_s1_save10,3B,gd2po_hard,1,0.975,0.96044921875,True,,rental_3b_20260920/evaluation/checkpoint_per_model.csv
+final,haotian_3b_dvao_s2_save10,3B,dvao,2,0.975,0.95751953125,True,,rental_3b_20260920/evaluation/checkpoint_per_model.csv
+final,haotian_3b_gd2po_hard_s2_save10,3B,gd2po_hard,2,0.9875,0.96435546875,True,,rental_3b_20260920/evaluation/checkpoint_per_model.csv
+final,haotian_3b_dvao_s0_save10,3B,dvao,0,1.0,0.9697265625,True,,inputs/local_3b_seed0_evaluation.csv
+final,haotian_3b_gd2po_hard_s0_save10,3B,gd2po_hard,0,0.9875,0.96875,True,,inputs/local_3b_seed0_evaluation.csv
+checkpoint,haotian_1p5b_dvao_s4_save10,1.5B,dvao,4,0.9625,0.86474609375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_gd2po_hard_s4_save10,1.5B,gd2po_hard,4,0.975,0.95263671875,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_dvao_s5_save10,1.5B,dvao,5,0.0875,0.0615234375,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_gd2po_hard_s5_save10,1.5B,gd2po_hard,5,0.0625,0.02978515625,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_grpo_s0_save10,1.5B,grpo,0,0.9625,0.89892578125,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_gdpo_s0_save10,1.5B,gdpo,0,0.975,0.93359375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_dara_s0_save10,1.5B,dara,0,0.975,0.9375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_grpo_s2_save10,1.5B,grpo,2,0.9375,0.87255859375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_gdpo_s1_save10,1.5B,gdpo,1,0.975,0.943359375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_dara_s1_save10,1.5B,dara,1,0.975,0.9462890625,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_grpo_s5_save10,1.5B,grpo,5,0.925,0.89794921875,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_gdpo_s5_save10,1.5B,gdpo,5,0.0875,0.0859375,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_dara_s2_save10,1.5B,dara,2,0.975,0.92724609375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_gd2po_hard_s0_save10,1.5B,gd2po_hard,0,0.975,0.9267578125,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_1p5b_dvao_s3_save10,1.5B,dvao,3,0.975,0.947265625,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_3b_dvao_s1_save10,3B,dvao,1,0.975,0.96044921875,True,,rental_3b_20260920/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_3b_gd2po_hard_s1_save10,3B,gd2po_hard,1,0.975,0.96044921875,True,,rental_3b_20260920/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_3b_dvao_s2_save10,3B,dvao,2,0.975,0.95751953125,True,,rental_3b_20260920/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_3b_gd2po_hard_s2_save10,3B,gd2po_hard,2,0.9875,0.96435546875,True,,rental_3b_20260920/evaluation/checkpoint_per_model.csv
+checkpoint,haotian_3b_dvao_s0_save10,3B,dvao,0,1.0,0.9697265625,True,,inputs/local_3b_seed0_evaluation.csv
+checkpoint,haotian_3b_gd2po_hard_s0_save10,3B,gd2po_hard,0,0.9875,0.96875,True,,inputs/local_3b_seed0_evaluation.csv

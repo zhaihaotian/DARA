@@ -1,0 +1,28 @@
+\begin{table*}[t]
+\centering
+\caption{Performance on BFCL V4 at step 100. Acc. denotes tool-calling accuracy and Format denotes output-format compliance. Avg. is the mean over Live, Non-Live, and Multi-Turn. Percentages are reported as mean $\pm$ sample standard deviation. We retain runs with step-100 RLLA validation Format $\geq80\%$. GRPO, GDPO, and DARA use five seeds per size; DVAO and GD$^2$PO-Hard use three retained seeds per size. Base uses one evaluation.}
+\label{tab:bfcl-v4}
+\setlength{\tabcolsep}{4pt}
+\small
+\begin{tabular}{llrrrrrrrr}
+\toprule
+ & & \multicolumn{2}{c}{Live} & \multicolumn{2}{c}{Non-Live} & \multicolumn{2}{c}{Multi-Turn} & \multicolumn{2}{c}{Average} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+Size & Method & Acc. & Format & Acc. & Format & Acc. & Format & Acc. & Format \\
+\midrule
+1.5B & Base & $9.33$ & $0.37$ & $12.06$ & $0.12$ & $0.38$ & $0.21$ & $7.25$ & $0.23$ \\
+ & GRPO & $64.80_{\pm 0.55}$ & $99.88_{\pm 0.04}$ & $78.04_{\pm 0.84}$ & $99.91_{\pm 0.12}$ & $2.55_{\pm 0.46}$ & $43.24_{\pm 15.52}$ & $48.46_{\pm 0.36}$ & $81.01_{\pm 5.18}$ \\
+ & GDPO & $67.05_{\pm 2.40}$ & $99.94_{\pm 0.06}$ & $79.30_{\pm 1.69}$ & $99.97_{\pm 0.06}$ & $4.75_{\pm 0.74}$ & $91.40_{\pm 3.02}$ & $50.37_{\pm 1.12}$ & $97.11_{\pm 1.00}$ \\
+ & DVAO & $64.99_{\pm 4.64}$ & $99.75_{\pm 0.23}$ & $76.84_{\pm 3.30}$ & $99.62_{\pm 0.45}$ & $4.08_{\pm 0.14}$ & $81.19_{\pm 8.28}$ & $48.64_{\pm 2.64}$ & $93.52_{\pm 2.91}$ \\
+ & GD$^2$PO-Hard & $67.97_{\pm 1.56}$ & $\mathbf{99.98}_{\pm 0.04}$ & $79.44_{\pm 1.01}$ & $\mathbf{100.00}_{\pm 0.00}$ & $4.67_{\pm 1.05}$ & $89.08_{\pm 2.16}$ & $50.70_{\pm 0.98}$ & $96.35_{\pm 0.73}$ \\
+ & DARA & $\mathbf{68.42}_{\pm 1.31}$ & $99.91_{\pm 0.12}$ & $\mathbf{80.25}_{\pm 0.78}$ & $99.97_{\pm 0.06}$ & $\mathbf{4.85}_{\pm 0.68}$ & $\mathbf{92.77}_{\pm 1.88}$ & $\mathbf{51.17}_{\pm 0.78}$ & $\mathbf{97.55}_{\pm 0.64}$ \\
+\midrule
+3B & Base & $47.67$ & $54.92$ & $36.23$ & $34.23$ & $1.75$ & $9.16$ & $28.55$ & $32.77$ \\
+ & GRPO & $69.31_{\pm 0.25}$ & $99.78_{\pm 0.12}$ & $81.86_{\pm 0.82}$ & $99.84_{\pm 0.19}$ & $6.53_{\pm 0.83}$ & $66.66_{\pm 3.63}$ & $52.57_{\pm 0.44}$ & $88.76_{\pm 1.22}$ \\
+ & GDPO & $69.30_{\pm 0.99}$ & $99.93_{\pm 0.09}$ & $82.60_{\pm 0.94}$ & $\mathbf{100.00}_{\pm 0.00}$ & $9.07_{\pm 1.49}$ & $89.79_{\pm 2.34}$ & $53.66_{\pm 0.96}$ & $96.57_{\pm 0.77}$ \\
+ & DVAO & $70.00_{\pm 0.56}$ & $99.90_{\pm 0.09}$ & $83.03_{\pm 0.50}$ & $99.99_{\pm 0.01}$ & $\mathbf{9.62}_{\pm 0.33}$ & $91.21_{\pm 1.49}$ & $\mathbf{54.22}_{\pm 0.24}$ & $97.04_{\pm 0.47}$ \\
+ & GD$^2$PO-Hard & $69.45_{\pm 1.58}$ & $99.73_{\pm 0.04}$ & $\mathbf{83.11}_{\pm 1.37}$ & $\mathbf{100.00}_{\pm 0.00}$ & $9.12_{\pm 1.21}$ & $91.28_{\pm 2.45}$ & $53.90_{\pm 1.11}$ & $97.00_{\pm 0.82}$ \\
+ & DARA & $\mathbf{70.39}_{\pm 0.98}$ & $\mathbf{99.97}_{\pm 0.04}$ & $83.05_{\pm 0.81}$ & $\mathbf{100.00}_{\pm 0.00}$ & $9.00_{\pm 0.99}$ & $\mathbf{91.69}_{\pm 2.02}$ & $54.15_{\pm 0.58}$ & $\mathbf{97.22}_{\pm 0.66}$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

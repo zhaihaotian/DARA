@@ -1,0 +1,21 @@
+\begin{table*}[t]
+\centering
+\caption{BFCL V4 for Qwen2.5-1.5B-Instruct at training step 60. Acc. denotes tool-calling accuracy and Format denotes output-format compliance. Average is the mean over Live, Non-Live, and Multi-Turn. Results are percentages, reported as mean $\pm$ sample standard deviation. Base is the untrained model. Checkpoints are retained when step-60 RLLA validation Format is at least 80\%. GRPO and DARA have three retained seeds each, GDPO has two, and DVAO and GD$^2$PO-Hard have one each. Single-seed results are shown as point estimates.}
+\label{tab:bfcl-v4-step60}
+\setlength{\tabcolsep}{4pt}
+\small
+\begin{tabular}{llrrrrrrrr}
+\toprule
+ & & \multicolumn{2}{c}{Live} & \multicolumn{2}{c}{Non-Live} & \multicolumn{2}{c}{Multi-Turn} & \multicolumn{2}{c}{Average} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+Size & Method & Acc. & Format & Acc. & Format & Acc. & Format & Acc. & Format \\
+\midrule
+1.5B & Base & $9.33$ & $0.37$ & $12.06$ & $0.12$ & $0.38$ & $0.21$ & $7.25$ & $0.23$ \\
+ & GRPO & $63.26_{\pm 0.21}$ & $99.78_{\pm 0.13}$ & $77.39_{\pm 0.75}$ & $99.88_{\pm 0.09}$ & $2.38_{\pm 0.22}$ & $24.48_{\pm 1.00}$ & $47.68_{\pm 0.16}$ & $74.71_{\pm 0.28}$ \\
+ & GDPO & $68.21_{\pm 0.37}$ & $99.96_{\pm 0.05}$ & $\mathbf{79.84}_{\pm 0.43}$ & $\mathbf{100.00}_{\pm 0.00}$ & $3.44_{\pm 0.62}$ & $64.28_{\pm 16.72}$ & $50.50_{\pm 0.47}$ & $88.08_{\pm 5.59}$ \\
+ & DVAO & $68.10$ & $99.85$ & $79.54$ & $\mathbf{100.00}$ & $2.25$ & $57.04$ & $49.96$ & $85.63$ \\
+ & GD$^2$PO-Hard & $67.14$ & $\mathbf{100.00}$ & $79.81$ & $\mathbf{100.00}$ & $\mathbf{5.12}$ & $70.28$ & $50.69$ & $90.09$ \\
+ & DARA & $\mathbf{68.37}_{\pm 0.82}$ & $99.98_{\pm 0.04}$ & $\mathbf{79.84}_{\pm 0.22}$ & $\mathbf{100.00}_{\pm 0.00}$ & $4.62_{\pm 0.12}$ & $\mathbf{88.19}_{\pm 3.48}$ & $\mathbf{50.94}_{\pm 0.32}$ & $\mathbf{96.06}_{\pm 1.17}$ \\
+\bottomrule
+\end{tabular}
+\end{table*}

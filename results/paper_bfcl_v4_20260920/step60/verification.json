@@ -1,0 +1,90 @@
+{
+  "selection_metric": "step60 val/test_format/rlla",
+  "threshold": 0.8,
+  "candidates": 21,
+  "retained": 16,
+  "excluded": 5,
+  "group_average_max_error": 1.4210854715202004e-14,
+  "coverage": [
+    {
+      "model_size": "1.5B",
+      "method": "grpo",
+      "step": 60,
+      "n": 3,
+      "seeds": "0,2,5",
+      "status": "evaluated"
+    },
+    {
+      "model_size": "1.5B",
+      "method": "gdpo",
+      "step": 60,
+      "n": 2,
+      "seeds": "0,1",
+      "status": "evaluated"
+    },
+    {
+      "model_size": "1.5B",
+      "method": "dvao",
+      "step": 60,
+      "n": 1,
+      "seeds": "3",
+      "status": "evaluated"
+    },
+    {
+      "model_size": "1.5B",
+      "method": "gd2po_hard",
+      "step": 60,
+      "n": 1,
+      "seeds": "4",
+      "status": "evaluated"
+    },
+    {
+      "model_size": "1.5B",
+      "method": "dara",
+      "step": 60,
+      "n": 3,
+      "seeds": "0,1,2",
+      "status": "evaluated"
+    },
+    {
+      "model_size": "3B",
+      "method": "grpo",
+      "step": 60,
+      "n": 0,
+      "seeds": "",
+      "status": "only_step100_saved"
+    },
+    {
+      "model_size": "3B",
+      "method": "gdpo",
+      "step": 60,
+      "n": 0,
+      "seeds": "",
+      "status": "only_step100_saved"
+    },
+    {
+      "model_size": "3B",
+      "method": "dvao",
+      "step": 60,
+      "n": 3,
+      "seeds": "0,1,2",
+      "status": "evaluated"
+    },
+    {
+      "model_size": "3B",
+      "method": "gd2po_hard",
+      "step": 60,
+      "n": 3,
+      "seeds": "0,1,2",
+      "status": "evaluated"
+    },
+    {
+      "model_size": "3B",
+      "method": "dara",
+      "step": 60,
+      "n": 0,
+      "seeds": "",
+      "status": "only_step100_saved"
+    }
+  ]
+}

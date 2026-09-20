@@ -1,0 +1,16 @@
+cohort,run_id,model_size,method,seed,validation_format_step100,training_format_step100,retained,exclusion_reason,source,in_process_figure
+checkpoint,haotian_1p5b_dvao_s4_save10,1.5B,dvao,4,0.9625,0.86474609375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,False
+checkpoint,haotian_1p5b_gd2po_hard_s4_save10,1.5B,gd2po_hard,4,0.975,0.95263671875,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_dvao_s5_save10,1.5B,dvao,5,0.0875,0.0615234375,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,False
+checkpoint,haotian_1p5b_gd2po_hard_s5_save10,1.5B,gd2po_hard,5,0.0625,0.02978515625,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,False
+checkpoint,haotian_1p5b_grpo_s0_save10,1.5B,grpo,0,0.9625,0.89892578125,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_gdpo_s0_save10,1.5B,gdpo,0,0.975,0.93359375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_dara_s0_save10,1.5B,dara,0,0.975,0.9375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_grpo_s2_save10,1.5B,grpo,2,0.9375,0.87255859375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_gdpo_s1_save10,1.5B,gdpo,1,0.975,0.943359375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_dara_s1_save10,1.5B,dara,1,0.975,0.9462890625,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_grpo_s5_save10,1.5B,grpo,5,0.925,0.89794921875,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_gdpo_s5_save10,1.5B,gdpo,5,0.0875,0.0859375,False,step100 RLLA validation Format < 0.8,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,False
+checkpoint,haotian_1p5b_dara_s2_save10,1.5B,dara,2,0.975,0.92724609375,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True
+checkpoint,haotian_1p5b_gd2po_hard_s0_save10,1.5B,gd2po_hard,0,0.975,0.9267578125,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,False
+checkpoint,haotian_1p5b_dvao_s3_save10,1.5B,dvao,3,0.975,0.947265625,True,,rental_1p5b_20260919/evaluation/checkpoint_per_model.csv,True

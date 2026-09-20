@@ -1,0 +1,25 @@
+{
+  "pr": 1,
+  "pr_commit": "a954110",
+  "final_rows_all": 48,
+  "final_rows_retained": 44,
+  "checkpoint_rows_all": 210,
+  "checkpoint_rows_retained": 180,
+  "checkpoint_steps": [
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
+  ],
+  "retention_metric": "step100 val/test_format/rlla",
+  "retention_threshold": 0.8,
+  "group_average_max_error": 1.4210854715202004e-14,
+  "unique_final_size_method_seed": true,
+  "complete_process_trajectories": true
+}

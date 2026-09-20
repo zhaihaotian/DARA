@@ -1,0 +1,11 @@
+model_size,method,step,n,seeds,status
+1.5B,grpo,60,3,"0,2,5",evaluated
+1.5B,gdpo,60,2,"0,1",evaluated
+1.5B,dvao,60,1,3,evaluated
+1.5B,gd2po_hard,60,1,4,evaluated
+1.5B,dara,60,3,"0,1,2",evaluated
+3B,grpo,60,0,,only_step100_saved
+3B,gdpo,60,0,,only_step100_saved
+3B,dvao,60,3,"0,1,2",evaluated
+3B,gd2po_hard,60,3,"0,1,2",evaluated
+3B,dara,60,0,,only_step100_saved
