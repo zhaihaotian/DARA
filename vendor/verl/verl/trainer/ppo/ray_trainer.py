@@ -191,7 +191,9 @@ def compute_advantage(data: DataProto, adv_estimator, gamma=1.0, lam=1.0, num_re
         else:
             new_advantage, metrics = core_algos.compute_dara_combined_advantage(
                 channel_advantages, index, channel_names,
-                w_max=float((algorithm_config or {}).get('dara', {}).get('w_max', 5.0)))
+                w_max=float((algorithm_config or {}).get('dara', {}).get('w_max', 5.0)),
+                calibration=(algorithm_config or {}).get('dara', {}).get(
+                    'calibration', 'symmetric'))
             data.meta_info['dara_metrics'] = metrics
         advantages = masked_whiten(new_advantage, response_mask) * response_mask
         data.batch['advantages'] = advantages

@@ -26,6 +26,16 @@ class ThreeRewardsTest(unittest.TestCase):
         self.assertEqual(metrics['dara/pi_length'], 0)
         self.assertEqual(metrics['dara/w_length'], 5)
 
+    def test_positive_calibration_matches_the_original_single_sided_rule(self):
+        channels = [torch.tensor([[1.], [-1.], [1.], [-1.]]),
+                    torch.tensor([[1.], [-1.], [0.], [0.]])]
+        result, _ = compute_dara_combined_advantage(
+            channels, np.array(['a', 'a', 'b', 'b']), ['correctness', 'format'],
+            calibration='positive')
+        expected = channels[0] + (
+            2**0.5 * channels[1].clamp(min=0) + channels[1].clamp(max=0))
+        torch.testing.assert_close(result, expected)
+
     def test_third_channel_changes_every_core_estimator(self):
         for method in ('grpo', 'gdpo', 'dara'):
             data = make_batch()[0]

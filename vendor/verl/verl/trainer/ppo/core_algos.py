@@ -194,7 +194,8 @@ def compute_channel_densities(channel_advantages, index):
 def compute_dara_combined_advantage(channel_advantages,
                                       index: torch.Tensor,
                                       channel_names=None,
-                                      w_max: float = 5.0):
+                                      w_max: float = 5.0,
+                                      calibration: str = "symmetric"):
     """
     DARA: density-calibrated, symmetric multi-channel combination.
 
@@ -211,6 +212,8 @@ def compute_dara_combined_advantage(channel_advantages,
         combined: (N, response_len) sum_j A_tilde_j (pre-whiten).
         metrics: dict with pi_<ch>, w_<ch>, active_groups_<ch>.
     """
+    if calibration not in ("positive", "symmetric"):
+        raise ValueError("DARA calibration must be positive or symmetric")
     if channel_names is None:
         channel_names = [f"ch{j}" for j in range(len(channel_advantages))]
     pis, active_counts = compute_channel_densities(channel_advantages, index)
@@ -228,7 +231,10 @@ def compute_dara_combined_advantage(channel_advantages,
 
     combined = torch.zeros_like(channel_advantages[0])
     for A_j, w_j in zip(channel_advantages, weights):
-        A_tilde_j = w_j * A_j
+        if calibration == "positive":
+            A_tilde_j = w_j * A_j.clamp(min=0) + A_j.clamp(max=0)
+        else:
+            A_tilde_j = w_j * A_j
         combined = combined + A_tilde_j
 
     metrics = {}

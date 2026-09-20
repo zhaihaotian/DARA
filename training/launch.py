@@ -8,7 +8,8 @@ import sys
 
 REPO = Path(__file__).resolve().parents[1]
 FRAMEWORK = REPO / 'vendor' / 'verl'
-METHODS = ('grpo', 'gdpo', 'dara', 'dvao', 'gdpo_saw', 'gd2po_hard', 'rvpo')
+METHODS = ('grpo', 'gdpo', 'dara', 'rdgdpo_positive', 'dvao', 'gdpo_saw',
+           'gd2po_hard', 'rvpo')
 
 
 def configuration(args):
@@ -18,7 +19,7 @@ def configuration(args):
         raise ValueError('Paired allocations use four GPUs in total.')
     if args.nnodes == 2 and not args.ray_address:
         raise ValueError('Two-node training requires --ray-address for the four-GPU Ray cluster.')
-    estimator = args.method
+    estimator = 'dara' if args.method == 'rdgdpo_positive' else args.method
     if args.rewards == 'three' and args.method not in ('grpo', 'gdpo', 'dara'):
         raise ValueError('The three-reward experiment is defined for GRPO, GDPO and DARA.')
     output = args.output.resolve()
@@ -66,7 +67,10 @@ def configuration(args):
         'trainer.total_epochs': 15,
     }
     method_settings = {
-        'dara': {'+algorithm.dara.w_max': 5.0},
+        'dara': {'+algorithm.dara.w_max': 5.0,
+                 '+algorithm.dara.calibration': 'symmetric'},
+        'rdgdpo_positive': {'+algorithm.dara.w_max': 5.0,
+                            '+algorithm.dara.calibration': 'positive'},
         'dvao': {'+algorithm.dvao.base_weights': [0.5, 0.5],
                  '+algorithm.dvao.denominator_epsilon': 1e-8},
         'gdpo_saw': {'+algorithm.gdpo_saw.theoretical_minima': [-3.0, 0.0],
