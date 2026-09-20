@@ -1,0 +1,5 @@
+run_id,model_size,method,seed,world_size,cuda_visible_devices,started_at_utc,elapsed_seconds,metrics_rows,dynamics_rows,saved_checkpoint_steps
+haotian_3b_dvao_s1_save10,3b,dvao,1,4,"0,1,2,3",2026-09-19T19:04:51.596368+00:00,16455.033536195755,101,101,10/20/30/40/50/60/70/80/90/100
+haotian_3b_dvao_s2_save10,3b,dvao,2,4,"4,5,6,7",2026-09-19T23:33:23.314890+00:00,16390.126519680023,101,101,10/20/30/40/50/60/70/80/90/100
+haotian_3b_gd2po_hard_s1_save10,3b,gd2po_hard,1,4,"4,5,6,7",2026-09-19T19:04:51.645896+00:00,16109.607421875,101,101,10/20/30/40/50/60/70/80/90/100
+haotian_3b_gd2po_hard_s2_save10,3b,gd2po_hard,2,4,"0,1,2,3",2026-09-19T23:39:09.911878+00:00,16314.536488771439,101,101,10/20/30/40/50/60/70/80/90/100

@@ -1,0 +1,19 @@
+{
+  "time": "2026-09-20T08:38:13.306751+00:00",
+  "lease_deadline": "2026-10-01T00:00:00+00:00",
+  "remaining_seconds": 919306.6932489872,
+  "training_complete": 4,
+  "training_expected": 4,
+  "checkpoints_scored": 40,
+  "checkpoints_expected": 40,
+  "finals_scored": 4,
+  "finals_expected": 4,
+  "active": [],
+  "pending_training": [],
+  "training_failed": [],
+  "evaluations_remaining": [],
+  "groups": {
+    "0": "evaluation",
+    "1": "evaluation"
+  }
+}

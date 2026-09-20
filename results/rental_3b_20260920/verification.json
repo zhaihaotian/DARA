@@ -1,0 +1,17 @@
+{
+  "training_runs": 4,
+  "training_dynamics_rows": 404,
+  "saved_checkpoints": 40,
+  "checkpoint_bytes": 544175187240,
+  "checkpoint_evaluations": 40,
+  "checkpoint_method_step_aggregates": 20,
+  "final_evaluations": 4,
+  "final_method_aggregates": 2,
+  "checkpoint_config_files": 40,
+  "all_training_rows_complete": true,
+  "all_evaluation_keys_unique": true,
+  "all_checkpoint_inventory_keys_unique": true,
+  "all_run_metadata_complete": true,
+  "controller_completion_time_utc": "2026-09-20T08:38:13.545905+00:00",
+  "controller_completion_reason": "all_complete"
+}

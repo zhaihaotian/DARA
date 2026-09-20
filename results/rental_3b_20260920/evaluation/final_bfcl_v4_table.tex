@@ -1,0 +1,24 @@
+% Generated from process_final_method_results.csv.
+% Requires: booktabs, graphicx
+
+\begin{table}[t]
+    \caption{Performance of the completed 3B seed-extension runs on BFCL-v4. Acc. denotes tool-calling accuracy and Format denotes output-format compliance. Average is the mean over Live, Non-Live, and Multi-Turn. Results are percentages reported as mean $\pm$ sample standard deviation over seeds 1 and 2.}
+    \label{tab:bfcl_v4_3b_final}
+    \centering
+    \small
+    \setlength{\tabcolsep}{3.1pt}
+    \renewcommand{\arraystretch}{1.13}
+    \newcommand{\msd}[2]{\ensuremath{#1_{\scriptscriptstyle \pm #2}}}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}clcccccccc@{}}
+        \toprule
+        & & \multicolumn{2}{c}{Live} & \multicolumn{2}{c}{Non-Live} & \multicolumn{2}{c}{Multi-Turn} & \multicolumn{2}{c}{Average} \\
+        \cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(l){9-10}
+        Method & Step & Acc. & Format & Acc. & Format & Acc. & Format & Acc. & Format \\
+        \midrule
+        DVAO (2/2) & 100 & \msd{70.32}{0.00} & \msd{99.93}{0.10} & \msd{82.84}{0.55} & \msd{100.00}{0.00} & \msd{9.81}{0.09} & \msd{90.58}{1.43} & \msd{54.32}{0.21} & \msd{96.84}{0.44} \\
+        GD$^2$PO-Hard (2/2) & 100 & \msd{70.36}{0.37} & \msd{99.74}{0.05} & \msd{83.82}{0.84} & \msd{100.00}{0.00} & \msd{9.38}{1.59} & \msd{90.41}{2.75} & \msd{54.52}{0.37} & \msd{96.72}{0.93} \\
+        \bottomrule
+    \end{tabular}%
+    }
+\end{table}

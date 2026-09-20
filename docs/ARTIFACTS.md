@@ -20,6 +20,13 @@
 | results/rental_1p5b_20260919/evaluation/checkpoint_method_results.csv | 五个方法、十个step、三个seed的过程均值与样本标准差 |
 | results/rental_1p5b_20260919/evaluation/process_final_per_model.csv | 本轮15份step100 final结果 |
 | results/rental_1p5b_20260919/evaluation/process_final_method_results.csv | 本轮五个方法的final均值与样本标准差 |
+| results/rental_3b_20260920/training/training_dynamics.csv | 3B DVAO与GD²PO-Hard四个run的404行逐step训练动态 |
+| results/rental_3b_20260920/training/runs/ | 四份原始metrics、展开配置、命令、runtime和40份checkpoint config |
+| results/rental_3b_20260920/training/checkpoint_inventory.csv | 40份HF模型的原路径、字节数和文件数 |
+| results/rental_3b_20260920/evaluation/checkpoint_per_model.csv | 40份checkpoint逐模型BFCL V4结果 |
+| results/rental_3b_20260920/evaluation/checkpoint_method_results.csv | 两个方法、十个step、两个seed的过程均值与样本标准差 |
+| results/rental_3b_20260920/evaluation/process_final_per_model.csv | 四份3B step100 final结果 |
+| results/rental_3b_20260920/evaluation/process_final_method_results.csv | 两个3B方法的final均值与样本标准差 |
 
 训练曲线中`train_format`来自`critic/format_score/mean`，`train_correctness`来自`critic/correctness_score/mean`，correctness reward的范围为[-3,3]。`val_format`只在step0/10/…/100有值。CSV空单元格表示该项未记录；DARA的π使用对应的已记录指标。
 
@@ -34,5 +41,7 @@ V3的原始1.5B批次位于`/scratch.global/lian0190/BFCL-v3-evaluation/20260913
 这些绝对路径用于现服务器定位。要在别处重新评分已有模型，需要额外同步相应raw/result工件；下载本Git仓库、创建环境并执行固定数据下载脚本后，即可运行新训练和评测；轻量结果表和训练曲线已在Git仓库中。复制已保存的BFCL分片时，按category合并为`evaluation/run.py`使用的`raw/<category>.jsonl`，保留case ID和完整metadata。
 
 2026-09-19完成的租机工件位于`/lambda/nfs/haotian/dara-rental-20260917`：15次训练占约1.07TB，150份BFCL V4原始评测占约31GB。轻量、可直接画图和复算表格的数据已同步到[`results/rental_1p5b_20260919`](../results/rental_1p5b_20260919/README.md)。私有Hugging Face数据仓库[`zhaihaotian/rd-gdpo-experiment-results`](https://huggingface.co/datasets/zhaihaotian/rd-gdpo-experiment-results/tree/main/rental_1p5b_20260919)同时保存完整轻量镜像，以及15份按run压缩的BFCL V4原始推理、官方评分、逐题诊断和summary归档；归档总大小853,978,340 bytes。
+
+2026-09-20完成的3B补种子工件位于`/lambda/nfs/haotian/dara-3b-20260919`：四次训练共保存40份checkpoint，清单中的总大小为544,175,187,240 bytes。轻量训练动态、完整运行元数据、40份checkpoint配置、40份BFCL V4过程结果和四份final结果已同步到[`results/rental_3b_20260920`](../results/rental_3b_20260920/README.md)。模型权重未上传。
 
 `scripts/export_reference.py`可以从原combined per_model.csv与训练日志重新导出这份轻量参考包。来源参数显式传入，脚本选择Haotian实验记录。
