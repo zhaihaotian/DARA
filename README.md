@@ -19,6 +19,8 @@
 | 所有 seed 的最终评测表 | [ALL_SEEDS.md](results/reference/ALL_SEEDS.md) |
 | 事后筛选的诊断表 | [SELECTED_SEEDS.md](results/reference/SELECTED_SEEDS.md) |
 | 自己画训练曲线 | [training_dynamics.csv](results/reference/training_dynamics.csv) |
+| 15次租机训练、150份过程评测与15份final | [rental_1p5b_20260919](results/rental_1p5b_20260919/README.md) |
+| 4次3B补种子训练、40份过程评测与4份final | [rental_3b_20260920](results/rental_3b_20260920/README.md) |
 | Group 消融的可执行矩阵 | [group_ablation.json](configs/group_ablation.json) |
 | 三奖励的可执行矩阵 | [three_rewards.json](configs/three_rewards.json) |
 

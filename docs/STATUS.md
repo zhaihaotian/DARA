@@ -1,13 +1,14 @@
 # 当前实验状态
 
-截至本次交接，共整理 Haotian 下42个完整100step训练run及两个base的最终评测，44个模型均有当前V3两组AST和V4三组结果。现有结果全部为correctness+format两奖励；新三奖励矩阵尚未执行。
+当前参考包包含Haotian下42个完整100step训练run及两个base的最终评测；本轮另外完成四个3B补种子run，因此现有完整100step训练合计46个。现有结果全部为correctness+format两奖励；新三奖励矩阵尚未执行。
 
 | 模型 | 方法 | 已完成 training seeds | Final BFCL V3/V4 |
 |---|---|---|---|
 | 1.5B | GRPO、GDPO、DARA | 各0、1、2、4、5，共15run | 已完成 |
 | 1.5B | RVPO、DVAO、GDPO-SAW、GD²PO-Hard | 各0、1、2，共12run | 已完成 |
 | 3B | GRPO、GDPO、DARA | 各0、1、2、4、5，共15run | 已完成 |
-| 3B | RVPO、DVAO、GDPO-SAW、GD²PO-Hard | 尚未训练 | 没有对应训练后结果 |
+| 3B | DVAO、GD²PO-Hard | 各seed 1、2，共4run | BFCL V4过程与final已完成 |
+| 3B | RVPO、GDPO-SAW | 尚未训练 | 没有对应训练后结果 |
 | 1.5B / 3B | Base | 不适用 | 各一份固定协议结果 |
 
 完整数值见 [ALL_SEEDS.md](../results/reference/ALL_SEEDS.md) 和 [per_model.csv](../results/reference/per_model.csv)。核心结果如下，均为五seed、百分数、mean±sample SD：
@@ -20,6 +21,31 @@
 | 3B | DARA | 70.41±1.06 | 82.98±0.84 | 54.15±0.58 | 97.22±0.66 |
 
 Training dynamics按逐步reward单独绘图。1.5B训练format首次达到0.8的step：DARA为14/16/15/13/29，平均17.4；GDPO为18/19/75/16/65，平均38.6；GRPO为37/43/34/31/31，平均35.2。原始逐步数据可自行重画。
+
+## 1.5B过程checkpoint实验
+
+2026-09-19完成了租机清单的15/15次100-step训练、150/150份BFCL V4过程评测和15/15份step100 final评测。每个run保留steps10/20/…/100，共150份HF checkpoint。完整轻量数据见[`results/rental_1p5b_20260919`](../results/rental_1p5b_20260919/README.md)，其中训练动态为15×101=1515行，过程逐模型表为150行，final逐模型表为15行。
+
+本轮step100的三个seed汇总如下，数值为百分数、mean±sample SD：
+
+| Method | Seeds | BFCL V4 Avg Acc | BFCL V4 Avg Format |
+|---|---|---:|---:|
+| GRPO | 0/2/5 | 48.27±0.08 | 79.94±3.36 |
+| GDPO | 0/1/5 | 50.78±0.65 | 71.30±43.54 |
+| DARA | 0/1/2 | 51.32±0.43 | 97.58±0.82 |
+| DVAO | 3/4/5 | 47.66±1.85 | 65.66±47.34 |
+| GD²PO-Hard | 0/4/5 | 49.19±2.34 | 63.60±53.42 |
+
+## 3B DVAO / GD²PO-Hard补种子实验
+
+2026-09-20完成了DVAO与GD²PO-Hard各seed 1/2的四次100-step训练、40/40份BFCL V4过程评测和4/4份step100 final评测。每个run保留steps10/20/…/100，共40份HF checkpoint。完整轻量数据见[`results/rental_3b_20260920`](../results/rental_3b_20260920/README.md)，其中训练动态为4×101=404行，过程逐模型表为40行，final逐模型表为4行。
+
+本轮step100的两个seed汇总如下，数值为百分数、mean±sample SD：
+
+| Method | Seeds | BFCL V4 Avg Acc | BFCL V4 Avg Format |
+|---|---|---:|---:|
+| DVAO | 1/2 | 54.32±0.21 | 96.84±0.44 |
+| GD²PO-Hard | 1/2 | 54.52±0.37 | 96.72±0.93 |
 
 ## 已观察到的基线问题
 

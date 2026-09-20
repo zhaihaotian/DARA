@@ -1,0 +1,51 @@
+{
+  "run_id": "haotian_3b_gd2po_hard_s2_save10",
+  "manifest": {
+    "id": "haotian_3b_gd2po_hard_s2_save10",
+    "method": "gd2po_hard",
+    "seed": 2,
+    "model_size": "3b",
+    "steps": 100,
+    "group_size": 4,
+    "rewards": "two",
+    "save_freq": 10,
+    "gpus": 4
+  },
+  "world_size": 4,
+  "cuda_visible_devices": "0,1,2,3",
+  "checkpoint_staging": "/home/ubuntu/checkpoint-staging/haotian_3b_gd2po_hard_s2_save10-304488",
+  "source_repo": "/home/ubuntu/DARA",
+  "execution_optimizations": [
+    "skip_unused_logprob_entropy",
+    "skip_unused_rollout_logprobs",
+    "stage_checkpoints_locally"
+  ],
+  "ray_address": "10.19.17.131:52336",
+  "ray_tmpdir": "/tmp/dara3b-304488",
+  "command": [
+    "/home/ubuntu/miniforge3/envs/rdgdpo/bin/python",
+    "-u",
+    "/home/ubuntu/DARA/training/launch.py",
+    "--method",
+    "gd2po_hard",
+    "--seed",
+    "2",
+    "--model-size",
+    "3b",
+    "--group-size",
+    "4",
+    "--rewards",
+    "two",
+    "--save-freq",
+    "10",
+    "--gpus",
+    "4",
+    "--model",
+    "/home/ubuntu/dara-models/Qwen2.5-3B-Instruct",
+    "--output",
+    "/lambda/nfs/haotian/dara-3b-20260919/outputs/training/haotian_3b_gd2po_hard_s2_save10",
+    "--ray-address",
+    "10.19.17.131:52336"
+  ],
+  "started_at": 1789861149.9118779
+}

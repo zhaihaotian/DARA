@@ -1,0 +1,17 @@
+{
+  "training_runs": 15,
+  "training_dynamics_rows": 1515,
+  "saved_checkpoints": 150,
+  "checkpoint_bytes": 1068644748000,
+  "checkpoint_evaluations": 150,
+  "checkpoint_method_step_aggregates": 50,
+  "final_evaluations": 15,
+  "final_method_aggregates": 5,
+  "bfcl_v4_raw_archives": 15,
+  "bfcl_v4_raw_archive_bytes": 853978340,
+  "all_training_rows_complete": true,
+  "all_evaluation_keys_unique": true,
+  "all_checkpoint_inventory_keys_unique": true,
+  "controller_completion_time_utc": "2026-09-19T18:11:23.275409+00:00",
+  "controller_completion_reason": "all_complete"
+}

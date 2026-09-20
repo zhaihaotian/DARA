@@ -14,13 +14,13 @@
 
 DVAO的过程种子为3/4/5，新增seed3过程训练，并复用新增seed4/5的过程模型。GD²PO-Hard的过程种子为0/4/5，seed0在原始训练中首次达到Format0.8为step26；重跑seed0并复用新增4/5。除10个最终训练任务外，另需11次1.5B过程训练：GRPO、GDPO、DARA各三次，DVAO seed3和GD²PO-Hard seed0各一次。获配资源先执行已有模型的评测，再派发能够完整跑完的训练。
 
-1.5B租机为8×A100 40GB，包含15个待运行任务，清单见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)，执行agent使用独立的 [RENTAL_A100_40G_AGENT.md](RENTAL_A100_40G_AGENT.md)。这15次1.5B训练及150份过程checkpoint评测已交给租机执行agent，本地自动训练队列已移出这些任务。
+1.5B租机为8×A100 40GB，包含15个任务，清单见 [RENTAL_1P5B_20H.md](RENTAL_1P5B_20H.md)，执行agent使用独立的 [RENTAL_A100_40G_AGENT.md](RENTAL_A100_40G_AGENT.md)。截至2026-09-19，这15次1.5B训练、150份过程checkpoint评测和15份step100 final评测已全部完成。完整轻量结果、逐step训练动态和运行记录见 [rental_1p5b_20260919](../results/rental_1p5b_20260919/README.md)。
 
 总实验清单共21个训练任务，包含租机执行的15个1.5B任务和本地负责的6个3B任务。本地3B DVAO seed0和GD²PO-Hard seed0已完成训练及最终评测，待训练为两种方法各自的seed1/2，共4次。
 
 2026-09-18新增评测待办：补齐Haotian单侧RD-GDPO的9个step100模型，1.5B为seeds0/1/2/4/5，3B为seeds0/1/2/4；再评测本地3B DVAO seed0、GD²PO-Hard seed0已经保存的steps10/20/…/90，共18份。两个run的step100复用已有评分，过程表保留各自的实际seed0记录。单侧模型沿用原目录，进入既有V4最终模型队列。
 
-过程与新增seed清单合计174份BFCL V4结果：租机1.5B过程模型150份、本地3B最终模型6份，以及上述3B中间checkpoint18份。另补的9个单侧最终模型进入历史最终比较。当前本地可直接执行的评测共27份，每份14类3301cases。调度顺序为最终模型评测、过程checkpoint评测、训练；训练和评测收尾后释放已用完的分配。
+过程与新增seed清单合计174份BFCL V4结果：租机1.5B过程模型150份、本地3B最终模型6份，以及上述3B中间checkpoint18份。租机的150份已经完成；本地3B和单侧模型仍按各自队列记录推进。另补的9个单侧最终模型进入历史最终比较。每份评测为14类3301cases。调度顺序为最终模型评测、过程checkpoint评测、训练；训练和评测收尾后释放已用完的分配。
 
 ## 启动与保存
 

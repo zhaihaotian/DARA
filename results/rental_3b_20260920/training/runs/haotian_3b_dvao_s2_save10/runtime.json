@@ -1,0 +1,51 @@
+{
+  "run_id": "haotian_3b_dvao_s2_save10",
+  "manifest": {
+    "id": "haotian_3b_dvao_s2_save10",
+    "method": "dvao",
+    "seed": 2,
+    "model_size": "3b",
+    "steps": 100,
+    "group_size": 4,
+    "rewards": "two",
+    "save_freq": 10,
+    "gpus": 4
+  },
+  "world_size": 4,
+  "cuda_visible_devices": "4,5,6,7",
+  "checkpoint_staging": "/home/ubuntu/checkpoint-staging/haotian_3b_dvao_s2_save10-299674",
+  "source_repo": "/home/ubuntu/DARA",
+  "execution_optimizations": [
+    "skip_unused_logprob_entropy",
+    "skip_unused_rollout_logprobs",
+    "stage_checkpoints_locally"
+  ],
+  "ray_address": "10.19.17.131:44553",
+  "ray_tmpdir": "/tmp/dara3b-299674",
+  "command": [
+    "/home/ubuntu/miniforge3/envs/rdgdpo/bin/python",
+    "-u",
+    "/home/ubuntu/DARA/training/launch.py",
+    "--method",
+    "dvao",
+    "--seed",
+    "2",
+    "--model-size",
+    "3b",
+    "--group-size",
+    "4",
+    "--rewards",
+    "two",
+    "--save-freq",
+    "10",
+    "--gpus",
+    "4",
+    "--model",
+    "/home/ubuntu/dara-models/Qwen2.5-3B-Instruct",
+    "--output",
+    "/lambda/nfs/haotian/dara-3b-20260919/outputs/training/haotian_3b_dvao_s2_save10",
+    "--ray-address",
+    "10.19.17.131:44553"
+  ],
+  "started_at": 1789860803.3148901
+}
