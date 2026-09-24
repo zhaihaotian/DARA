@@ -37,10 +37,12 @@ class RLLAHandler(ToolRLHandler):
         available = 1000 if self.max_context_length < input_tokens + 2 else min(maximum, self.max_context_length-input_tokens-2)
         if available == 0:
             raise ValueError('maximum context length exhausted: no generation tokens remain after the prompt and reserved tokens')
-        request = dict(model=self.model_path_or_id, prompt=prompt, temperature=0.6, top_p=0.95,
+        temperature = getattr(self, 'eval_temperature', 0.6)
+        top_p = getattr(self, 'eval_top_p', 0.95)
+        request = dict(model=self.model_path_or_id, prompt=prompt, temperature=temperature, top_p=top_p,
                        max_tokens=available, seed=0, extra_body={'top_k': -1, 'repetition_penalty': 1})
         inference_data['inference_input_log'] = dict(formatted_prompt=prompt, turn_type=inference_data['turn_type'],
-                                                    temperature=0.6, top_p=0.95, max_tokens=available, seed=0)
+                                                    temperature=temperature, top_p=top_p, max_tokens=available, seed=0)
         started = time.monotonic()
         # Long 3B completions can exceed five minutes while the GPU stays busy.
         response = self.client.completions.create(**request, timeout=1800)

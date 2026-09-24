@@ -16,7 +16,7 @@ class LaunchTest(unittest.TestCase):
     def test_all_planned_configurations_reach_hydra_with_fixed_budgets(self):
         for group in (4, 8, 16, 32):
             for method in launch.METHODS:
-                rewards = ('two', 'three') if method in ('grpo', 'gdpo', 'dara') else ('two',)
+                rewards = ('two', 'three') if method in ('grpo', 'gdpo', 'dara', 'rdgdpo_positive') else ('two',)
                 for reward in rewards:
                     args = SimpleNamespace(method=method,seed=0,group_size=group,model_size='1.5b',
                                            rewards=reward,save_freq=100,nnodes=1,ray_address=None,

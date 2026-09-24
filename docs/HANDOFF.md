@@ -2,6 +2,8 @@
 
 拿到仓库访问权限后，从下面的安装流程开始。训练设置见 [TRAINING.md](TRAINING.md)，评测设置见 [EVALUATION.md](EVALUATION.md)，已有结果见 [STATUS.md](STATUS.md)。
 
+本分支的 Length≥64 二值三奖励实验按 [HANDOFF_LENGTH64.md](HANDOFF_LENGTH64.md) 执行：1.5B、四方法各 seeds1/2，共8次训练，step100分别以T=0.6和T=1.0评测，top_p固定1，共16次BFCL V4评测。
+
 ## 获取仓库、环境和模型
 
 在 Linux x86_64、Conda 和 NVIDIA GPU 环境中执行：

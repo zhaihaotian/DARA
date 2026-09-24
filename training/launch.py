@@ -20,8 +20,11 @@ def configuration(args):
     if args.nnodes == 2 and not args.ray_address:
         raise ValueError('Two-node training requires --ray-address for the four-GPU Ray cluster.')
     estimator = 'dara' if args.method == 'rdgdpo_positive' else args.method
-    if args.rewards == 'three' and args.method not in ('grpo', 'gdpo', 'dara'):
-        raise ValueError('The three-reward experiment is defined for GRPO, GDPO and DARA.')
+    if args.rewards == 'three' and args.method not in ('grpo', 'gdpo', 'dara', 'rdgdpo_positive'):
+        raise ValueError('The three-reward experiment supports GRPO, GDPO and both DARA variants.')
+    length_min_words = getattr(args, 'length_min_words', 0)
+    if length_min_words < 0 or (length_min_words and args.rewards != 'three'):
+        raise ValueError('--length-min-words must be nonnegative and requires --rewards three.')
     output = args.output.resolve()
     data = args.data_dir.resolve()
     model = str(Path(args.model).resolve()) if Path(args.model).exists() else args.model
@@ -99,6 +102,7 @@ def configuration(args):
                  'INTERMEDIATEREWARD', 'FORMAT_GRADED'):
         environment[name] = '0'
     environment['WITHLENGTH'] = '1' if args.rewards == 'three' else '0'
+    environment['LENGTH_MIN_WORDS'] = str(length_min_words)
     if args.model_size == '3b':
         environment['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
     command = [sys.executable, '-u', '-m', 'verl.trainer.main_ppo']
@@ -115,6 +119,8 @@ def main():
     parser.add_argument('--data-dir', type=Path, default=REPO/'data'/'rlla_4k')
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--rewards', choices=['two', 'three'], default='two')
+    parser.add_argument('--length-min-words', type=int, default=0,
+                        help='Positive threshold for binary think-word reward; 0 uses the dense length reward')
     parser.add_argument('--group-size', type=int, choices=[4, 8, 16, 32], default=4)
     parser.add_argument('--save-freq', type=int, choices=[10, 100], default=100,
                         help='Save a Hugging Face model every N training steps')
@@ -128,6 +134,7 @@ def main():
     settings, environment, command = configuration(args)
     record = dict(method=args.method, seed=args.seed, group_size=args.group_size,
                   model_size=args.model_size, rewards=args.rewards,
+                  length_min_words=args.length_min_words,
                   gpus=args.gpus, responses_per_step=2048, optimizer_updates_per_step=4,
                   rollout_seed=0, settings=settings, environment=environment, command=command)
     if args.dry_run:

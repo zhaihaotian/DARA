@@ -19,7 +19,14 @@ def main():
     p.add_argument('--output', type=Path, required=True)
     p.add_argument('--server-python', required=True, help='vLLM 0.11.0 environment interpreter')
     p.add_argument('--port', type=int, default=8000)
+    p.add_argument('--temperature', type=float, default=None)
+    p.add_argument('--top-p', type=float, default=None)
+    p.add_argument('--length-min-words', type=int, default=0)
     a = p.parse_args()
+    if a.length_min_words < 0:
+        p.error('--length-min-words must be nonnegative')
+    if a.version != 'v4' and (a.temperature is not None or a.top_p is not None):
+        p.error('Decoding overrides are supported by the V4 adapter')
     out = a.output.resolve(); out.mkdir(parents=True, exist_ok=True)
     (out/'raw').mkdir(exist_ok=True)
     os.environ.update(BFCL_PROJECT_ROOT=str(out), LOCAL_SERVER_ENDPOINT='127.0.0.1',
@@ -47,6 +54,12 @@ def main():
                   counts=counts, temperature=0 if a.version=='v3' else 0.6,
                   top_p=1 if a.version=='v3' else 0.95, max_new_tokens=int(os.environ['BFCL_MAX_NEW_TOKENS']),
                   seed=0, top_k=-1, repetition_penalty=1, concurrency=48, max_context_length=32768)
+    if a.temperature is not None:
+        config['temperature'] = a.temperature
+    if a.top_p is not None:
+        config['top_p'] = a.top_p
+    if a.length_min_words:
+        config['length_min_words'] = a.length_min_words
     record = out/'inference.json'
     if record.exists() and json.loads(record.read_text()) != config:
         raise ValueError('Output directory belongs to a different model or protocol')
@@ -70,6 +83,8 @@ def main():
                 except OSError:
                     time.sleep(2)
             handler = RLLAHandler('rlla-eval', config['temperature'])
+            handler.eval_temperature = config['temperature']
+            handler.eval_top_p = config['top_p']
             handler.tokenizer = AutoTokenizer.from_pretrained(a.model)
             handler.max_context_length = 32768
             handler.model_path_or_id = 'eval'

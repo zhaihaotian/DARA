@@ -1,0 +1,128 @@
+{
+  "name": "length_ge64_binary",
+  "model_size": "1.5b",
+  "description": "Four methods, seeds 1 and 2, binary think-word reward at 64.",
+  "evaluation": {
+    "version": "v4",
+    "final_step": 100,
+    "profiles": [
+      {
+        "id": "t0p6-p1",
+        "temperature": 0.6,
+        "top_p": 1.0
+      },
+      {
+        "id": "t1p0-p1",
+        "temperature": 1.0,
+        "top_p": 1.0
+      }
+    ],
+    "length_min_words": 64
+  },
+  "runs": [
+    {
+      "id": "1p5b-grpo-g4-s1-three-len64",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "grpo",
+      "rewards": "three",
+      "length_min_words": 64,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100,
+      "status": "planned"
+    },
+    {
+      "id": "1p5b-grpo-g4-s2-three-len64",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "grpo",
+      "rewards": "three",
+      "length_min_words": 64,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100,
+      "status": "planned"
+    },
+    {
+      "id": "1p5b-gdpo-g4-s1-three-len64",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "gdpo",
+      "rewards": "three",
+      "length_min_words": 64,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100,
+      "status": "planned"
+    },
+    {
+      "id": "1p5b-gdpo-g4-s2-three-len64",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "gdpo",
+      "rewards": "three",
+      "length_min_words": 64,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100,
+      "status": "planned"
+    },
+    {
+      "id": "1p5b-dara-g4-s1-three-len64",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "dara",
+      "rewards": "three",
+      "length_min_words": 64,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100,
+      "status": "planned"
+    },
+    {
+      "id": "1p5b-dara-g4-s2-three-len64",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "dara",
+      "rewards": "three",
+      "length_min_words": 64,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100,
+      "status": "planned"
+    },
+    {
+      "id": "1p5b-rdgdpo_positive-g4-s1-three-len64",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "rdgdpo_positive",
+      "rewards": "three",
+      "length_min_words": 64,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100,
+      "status": "planned"
+    },
+    {
+      "id": "1p5b-rdgdpo_positive-g4-s2-three-len64",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "rdgdpo_positive",
+      "rewards": "three",
+      "length_min_words": 64,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100,
+      "status": "planned"
+    }
+  ]
+}

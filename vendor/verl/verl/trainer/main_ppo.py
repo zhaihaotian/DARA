@@ -129,7 +129,14 @@ def main(config):
         print("!!! Initializing Ray...")
         # this is for local ray cluster
         print(config)
-        ray.init(runtime_env={'env_vars': {'TOKENIZERS_PARALLELISM': 'true', 'NCCL_DEBUG': 'WARN', 'EXPERIMENT_NAME': config.trainer.experiment_name, 'FORMAT_GRADED': os.getenv('FORMAT_GRADED', '0')}})
+        ray.init(runtime_env={'env_vars': {
+            'TOKENIZERS_PARALLELISM': 'true', 'NCCL_DEBUG': 'WARN',
+            'EXPERIMENT_NAME': config.trainer.experiment_name,
+            'FORMAT_GRADED': os.getenv('FORMAT_GRADED', '0'),
+            'WITHLENGTH': os.getenv('WITHLENGTH', '0'),
+            'LENGTH_MIN_WORDS': os.getenv('LENGTH_MIN_WORDS', '0'),
+            'SCHEDULELENGTH': os.getenv('SCHEDULELENGTH', '0'),
+        }})
 
     ray.get(main_task.remote(config))
 

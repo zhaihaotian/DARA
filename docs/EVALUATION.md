@@ -103,6 +103,8 @@ $$
 
 ## 三奖励实验的长度指标
 
+Length≥64实验使用 `evaluation/run.py --version v4 --temperature 0.6 --top-p 1 --length-min-words 64` 与 `--temperature 1 --top-p 1 --length-min-words 64` 两档。配置保存到inference.json，评分自动读取阈值；`groups.length`为二值Length Reward，`groups.length_ge_64`为达标比例，输出→case→category→group的平均顺序与下述协议一致。运行和汇总命令见 [HANDOFF_LENGTH64.md](HANDOFF_LENGTH64.md)。
+
 在相同 BFCL 输出上，提取最后一个 `<think>` 后、紧接的 `</think>` 前的文本，以空白分隔计算词数 n。Length Reward 为：
 
 $$
