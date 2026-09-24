@@ -25,8 +25,8 @@ def main():
                '--output', str(a.output_root/row['id'])]
     if 'save_freq' in row:
         command += ['--save-freq', str(row['save_freq'])]
-    if 'length_min_words' in row:
-        command += ['--length-min-words', str(row['length_min_words'])]
+    if 'length_max_words' in row:
+        command += ['--length-max-words', str(row['length_max_words'])]
     if a.dry_run:
         command.append('--dry-run')
     subprocess.run(command, check=True)

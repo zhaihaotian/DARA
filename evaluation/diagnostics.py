@@ -21,7 +21,7 @@ def clean(text):
     return text.split('<|im_start|>assistant')[-1].split('<|im_end|>')[0].strip()
 
 
-def score_case(row, length_min_words=0):
+def score_case(row, length_max_words=0):
     texts = [clean(t) for t in flatten(row['result'])]
     formats, lengths, compliance, words, binary_compliance = [], [], [], [], []
     with contextlib.redirect_stdout(io.StringIO()):
@@ -30,15 +30,15 @@ def score_case(row, length_min_words=0):
             formats.append(float(any(rlla.customize_format_reward_func(completion, [selector], 0, 1, 0)[0]
                                      for selector in ('<tool_call>', '<response>', '<tool_call><response>'))))
             lengths.append(rlla.customize_length_reward_func(
-                completion, [''], 0, 1, 0, length_min_words=length_min_words)[0])
+                completion, [''], 0, 1, 0, length_max_words=length_max_words)[0])
             valid = '<think>' in text and '</think>' in text
             n = len(text.split('<think>')[-1].split('</think>')[0].strip().split()) if valid else 0
             words.append(n)
             compliance.append(float(valid and n >= 512))
-            binary_compliance.append(float(valid and n >= length_min_words))
+            binary_compliance.append(float(valid and n <= length_max_words))
     means = {name: statistics.mean(values) if values else 0.0
              for name, values in [('format', formats), ('length', lengths),
                                   ('length_ge_512', compliance), ('think_words', words)]}
-    if length_min_words:
-        means[f'length_ge_{length_min_words}'] = statistics.mean(binary_compliance) if binary_compliance else 0.0
+    if length_max_words:
+        means[f'length_le_{length_max_words}'] = statistics.mean(binary_compliance) if binary_compliance else 0.0
     return dict(id=row['id'], emissions=len(texts), **means)

@@ -21,10 +21,10 @@ def main():
     p.add_argument('--port', type=int, default=8000)
     p.add_argument('--temperature', type=float, default=None)
     p.add_argument('--top-p', type=float, default=None)
-    p.add_argument('--length-min-words', type=int, default=0)
+    p.add_argument('--length-max-words', type=int, default=0)
     a = p.parse_args()
-    if a.length_min_words < 0:
-        p.error('--length-min-words must be nonnegative')
+    if a.length_max_words < 0:
+        p.error('--length-max-words must be nonnegative')
     if a.version != 'v4' and (a.temperature is not None or a.top_p is not None):
         p.error('Decoding overrides are supported by the V4 adapter')
     out = a.output.resolve(); out.mkdir(parents=True, exist_ok=True)
@@ -58,8 +58,8 @@ def main():
         config['temperature'] = a.temperature
     if a.top_p is not None:
         config['top_p'] = a.top_p
-    if a.length_min_words:
-        config['length_min_words'] = a.length_min_words
+    if a.length_max_words:
+        config['length_max_words'] = a.length_max_words
     record = out/'inference.json'
     if record.exists() and json.loads(record.read_text()) != config:
         raise ValueError('Output directory belongs to a different model or protocol')

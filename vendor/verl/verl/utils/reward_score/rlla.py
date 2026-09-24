@@ -99,7 +99,8 @@ def customize_format_reward_func(completions, answer, step, max_possible_reward,
 
 # customized reward functions: length
 def customize_length_reward_func(completions, answer, step, max_possible_reward, min_possible_reward, **kwargs):
-    length_min_words = int(kwargs.get('length_min_words', os.getenv('LENGTH_MIN_WORDS', '0')))
+    """Score the think word count using the configured length reward rule."""
+    length_max_words = int(kwargs.get('length_max_words', os.getenv('LENGTH_MAX_WORDS', '0')))
     # schedule length
     if os.getenv("SCHEDULELENGTH", 0) == "1":
         print("SCHEDULELENGTH is set to 1, so schedule max reward for length is used")
@@ -107,7 +108,6 @@ def customize_length_reward_func(completions, answer, step, max_possible_reward,
     else:
         max_reward_len = 512
     
-    """Reward function that gives higher scores to longer completions."""
     responses = [completion[0]['content'] for completion in completions]
     rewards = []
     
@@ -117,7 +117,7 @@ def customize_length_reward_func(completions, answer, step, max_possible_reward,
             continue
         think_responses = response.split("<think>")[-1].split("</think>")[0].strip()
         words = len(think_responses.split())
-        reward = float(words >= length_min_words) if length_min_words > 0 else round(words / max_reward_len, 2)
+        reward = float(words <= length_max_words) if length_max_words > 0 else round(words / max_reward_len, 2)
         if reward > 1.0:
             reward = 1.0
         

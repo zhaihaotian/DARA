@@ -1,4 +1,4 @@
-"""Export both decoding temperatures of the length>=64 experiment."""
+"""Export both decoding temperatures of the length<=16 experiment."""
 import argparse
 from collections import defaultdict
 import csv
@@ -7,7 +7,7 @@ from pathlib import Path
 import statistics
 
 GROUPS = ('live', 'non_live', 'multi_turn', 'average')
-METRICS = ('accuracy', 'format', 'length', 'length_ge_64', 'think_words')
+METRICS = ('accuracy', 'format', 'length', 'length_le_16', 'think_words')
 
 
 def collect(manifest, evaluation_root):
@@ -22,10 +22,10 @@ def collect(manifest, evaluation_root):
                 continue
             summary = json.loads(path.read_text())
             inference = json.loads((directory / 'inference.json').read_text())
-            if (summary['version'], summary['n_cases'], summary.get('length_min_words')) != ('v4', 3301, 64):
-                raise ValueError(f'Expected complete V4 length>=64 results: {path}')
-            if (inference['temperature'], inference['top_p'], inference.get('length_min_words')) != (
-                    profile['temperature'], profile['top_p'], 64):
+            if (summary['version'], summary['n_cases'], summary.get('length_max_words')) != ('v4', 3301, 16):
+                raise ValueError(f'Expected complete V4 length<=16 results: {path}')
+            if (inference['temperature'], inference['top_p'], inference.get('length_max_words')) != (
+                    profile['temperature'], profile['top_p'], 16):
                 raise ValueError(f'Inference settings do not match the profile: {directory}')
             row = dict(run_id=run['id'], model_size=run['model_size'], method=run['method'],
                        seed=run['seed'], step=100, profile=profile['id'],
@@ -33,7 +33,7 @@ def collect(manifest, evaluation_root):
             for group in GROUPS:
                 for metric in METRICS:
                     value = summary['groups'][metric][group]
-                    row[f'{group}_{metric}'] = value * 100 if metric in ('accuracy', 'format', 'length_ge_64') else value
+                    row[f'{group}_{metric}'] = value * 100 if metric in ('accuracy', 'format', 'length_le_16') else value
             row['three_reward_overall'] = (row['average_accuracy'] + row['average_format']) / 100 + row['average_length']
             rows.append(row)
     grouped = defaultdict(list)
@@ -56,7 +56,7 @@ def collect(manifest, evaluation_root):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--manifest', type=Path, default=Path(__file__).resolve().parents[1] / 'configs/length_ge64_binary.json')
+    parser.add_argument('--manifest', type=Path, default=Path(__file__).resolve().parents[1] / 'configs/length_le16_binary.json')
     parser.add_argument('--evaluation-root', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()

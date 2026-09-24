@@ -134,7 +134,7 @@ def main(config):
             'EXPERIMENT_NAME': config.trainer.experiment_name,
             'FORMAT_GRADED': os.getenv('FORMAT_GRADED', '0'),
             'WITHLENGTH': os.getenv('WITHLENGTH', '0'),
-            'LENGTH_MIN_WORDS': os.getenv('LENGTH_MIN_WORDS', '0'),
+            'LENGTH_MAX_WORDS': os.getenv('LENGTH_MAX_WORDS', '0'),
             'SCHEDULELENGTH': os.getenv('SCHEDULELENGTH', '0'),
         }})
 

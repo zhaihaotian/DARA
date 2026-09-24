@@ -45,7 +45,7 @@ GRPO 使用经过原 reward-KL 接线的总 reward；GDPO、DARA 和其他分通
 
 ## 三奖励
 
-本分支的Length≥64二值实验使用 `--rewards three --length-min-words 64`，think区域达到64词得1，否则得0；具体八次训练与两档温度评测见 [HANDOFF_LENGTH64.md](HANDOFF_LENGTH64.md)。
+本分支的Length≤16二值实验使用 `--rewards three --length-max-words 16`，think区域不超过16词得1，否则得0；具体八次训练与两档温度评测见 [HANDOFF_LENGTH16.md](HANDOFF_LENGTH16.md)。
 
 原两奖励是 correctness ∈[-3,3] 和 format ∈{0,1}。新增实验使用 `--rewards three`，额外加入原 GDPO/ToolRL scorer 中已有的 length reward：
 

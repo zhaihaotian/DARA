@@ -8,7 +8,7 @@
 
 | 需求 | 文档或入口 |
 |---|---|
-| Length≥64 二值三奖励实验：四方法×两seed、两档温度 | [HANDOFF_LENGTH64.md](docs/HANDOFF_LENGTH64.md) |
+| Length≤16 二值三奖励实验：四方法×两seed、两档温度 | [HANDOFF_LENGTH16.md](docs/HANDOFF_LENGTH16.md) |
 | 合作者从 clone 到训练、评测的完整流程 | [HANDOFF.md](docs/HANDOFF.md)、[AGENTS.md](AGENTS.md) |
 | 8×A100 40GB租机执行agent交接 | [RENTAL_A100_40G_AGENT.md](docs/RENTAL_A100_40G_AGENT.md) |
 | 3B DVAO / GD²PO-Hard补种子交接 | [HANDOFF_3B_DVAO_HARD.md](docs/HANDOFF_3B_DVAO_HARD.md) |
