@@ -1,0 +1,28 @@
+{
+  "python": "/path/to/dara-math-v07/venv/bin/python",
+  "framework": "/path/to/dara-math-v07/framework-paper",
+  "output_root": "/path/to/outputs",
+  "gpus": 8,
+  "nodes": 1,
+  "tp": 1,
+  "gpu_memory_utilization": 0.9,
+  "max_num_seqs": 256,
+  "filter_cap": 2,
+  "max_tokens_per_gpu": 16384,
+  "optimizer_offload": false,
+  "logger": [
+    "console",
+    "wandb"
+  ],
+  "models": {
+    "r1-1.5b": "/models/DeepSeek-R1-Distill-Qwen-1.5B",
+    "qwen3-instruct": "/models/Qwen3-4B-Instruct-2507",
+    "qwen3-thinking": "/models/Qwen3-4B-Thinking-2507",
+    "r1-7b": "/models/DeepSeek-R1-Distill-Qwen-7B"
+  },
+  "environment": {
+    "VLLM_ATTENTION_BACKEND": "FLASH_ATTN",
+    "RAY_USAGE_STATS_ENABLED": "0",
+    "VLLM_NO_USAGE_STATS": "1"
+  }
+}

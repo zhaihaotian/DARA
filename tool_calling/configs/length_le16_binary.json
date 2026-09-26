@@ -1,0 +1,163 @@
+{
+  "name": "length_le16_binary",
+  "model_size": "1.5b",
+  "description": "Three rewards (correctness, format, binary think length <= 16 words); GRPO, GDPO, DARA-Asym, DARA-Sym; seeds 0, 1, 2.",
+  "evaluation": {
+    "version": "v4",
+    "final_step": 100,
+    "profiles": [
+      {
+        "id": "t0p6-p0p95",
+        "temperature": 0.6,
+        "top_p": 0.95
+      }
+    ],
+    "length_max_words": 16
+  },
+  "runs": [
+    {
+      "id": "1p5b-grpo-g4-s0-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 0,
+      "method": "grpo",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-gdpo-g4-s0-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 0,
+      "method": "gdpo",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g4-s0-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 0,
+      "method": "dara_sym",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g4-s0-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 0,
+      "method": "dara_asym",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-grpo-g4-s1-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "grpo",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-gdpo-g4-s1-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "gdpo",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g4-s1-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "dara_sym",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g4-s1-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "dara_asym",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-grpo-g4-s2-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "grpo",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-gdpo-g4-s2-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "gdpo",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g4-s2-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "dara_sym",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g4-s2-three-len16",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "dara_asym",
+      "rewards": "three",
+      "length_max_words": 16,
+      "gpus": 4,
+      "steps": 100,
+      "save_freq": 100
+    }
+  ]
+}

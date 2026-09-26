@@ -1,0 +1,491 @@
+{
+  "name": "group_ablation",
+  "description": "Rollout-group analysis: G in {4, 8, 16, 32} with 2,048 responses per step; GRPO, GDPO, DARA-Asym, DARA-Sym; seeds 0, 1, 2.",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "runs": [
+    {
+      "id": "1p5b-grpo-g4-s0-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 0,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g4-s1-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g4-s2-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g4-s0-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 0,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g4-s1-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g4-s2-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g4-s0-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 0,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g4-s1-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g4-s2-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g4-s0-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 0,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g4-s1-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 1,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g4-s2-two",
+      "model_size": "1.5b",
+      "group_size": 4,
+      "seed": 2,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g8-s0-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 0,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g8-s1-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 1,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g8-s2-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 2,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g8-s0-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 0,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g8-s1-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 1,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g8-s2-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 2,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g8-s0-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 0,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g8-s1-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 1,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g8-s2-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 2,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g8-s0-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 0,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g8-s1-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 1,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g8-s2-two",
+      "model_size": "1.5b",
+      "group_size": 8,
+      "seed": 2,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g16-s0-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 0,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g16-s1-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 1,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g16-s2-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 2,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g16-s0-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 0,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g16-s1-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 1,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g16-s2-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 2,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g16-s0-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 0,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g16-s1-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 1,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g16-s2-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 2,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g16-s0-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 0,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g16-s1-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 1,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g16-s2-two",
+      "model_size": "1.5b",
+      "group_size": 16,
+      "seed": 2,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g32-s0-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 0,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g32-s1-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 1,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-grpo-g32-s2-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 2,
+      "method": "grpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g32-s0-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 0,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g32-s1-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 1,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-gdpo-g32-s2-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 2,
+      "method": "gdpo",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g32-s0-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 0,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g32-s1-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 1,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_asym-g32-s2-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 2,
+      "method": "dara_asym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g32-s0-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 0,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g32-s1-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 1,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    },
+    {
+      "id": "1p5b-dara_sym-g32-s2-two",
+      "model_size": "1.5b",
+      "group_size": 32,
+      "seed": 2,
+      "method": "dara_sym",
+      "rewards": "two",
+      "gpus": 4,
+      "steps": 100
+    }
+  ]
+}

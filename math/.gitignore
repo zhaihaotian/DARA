@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+outputs/
+wandb/
+*.log
+**/global_step_*/
+*.safetensors

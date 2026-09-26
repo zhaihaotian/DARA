@@ -1,0 +1,8 @@
+torch==2.8.0
+vllm==0.11.0
+transformers==4.57.3
+ray[default]==2.50.0
+math-verify==0.9.0
+numpy==1.26.4
+pyarrow==25.0.1
+tensordict==0.10.0
