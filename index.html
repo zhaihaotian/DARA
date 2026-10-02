@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DARA: Make Sparse Rewards Count — Density-Aware Reward Aggregation for Multi-Reward RL</title>
+  <meta name="description" content="DARA calibrates multi-reward RL by active-group density. Under GDPO normalization, a reward's advantage energy is proportional to how often it is active; DARA equalizes it, so sparse rewards are learned faster.">
+  <meta property="og:title" content="Make Sparse Rewards Count: Density-Aware Reward Aggregation for Multi-Reward RL">
+  <meta property="og:description" content="Why do some rewards learn slowly even with GDPO? Advantage energy scales with active-group density. DARA equalizes it.">
+  <meta property="og:image" content="static/img/og_preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <link rel="stylesheet" href="static/css/style.css">
+  <script defer src="static/js/data.js"></script>
+  <script defer src="static/js/main.js"></script>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span>DARA</span></a>
+    <a class="nl" href="#abstract">Abstract</a>
+    <a class="nl" href="#problem">Problem</a>
+    <a class="nl" href="#insight">Insight</a>
+    <a class="nl" href="#method">Method</a>
+    <a class="nl" href="#tool">Tool calling</a>
+    <a class="nl" href="#math">Math</a>
+    <a class="nl" href="#ablation">Ablation</a>
+    <a class="nl" href="#bibtex">BibTeX</a>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <h1><span class="grad">Make Sparse Rewards Count</span></h1>
+    <p class="subtitle">Density-Aware Reward Aggregation for Multi-Reward RL</p>
+
+    <div class="authors">
+      <span class="au">Tong Zheng<sup>1*</sup></span>
+      <span class="au">Skylar Zhai<sup>2*</sup></span>
+      <span class="au">Zhan Cheng<sup>3*</sup></span>
+      <span class="au">TianMing Sha<sup>4</sup></span>
+      <span class="au">Youling Huang<sup>5</sup></span>
+      <span class="au">Shuo Zhou<sup>6</sup></span>
+      <span class="au">Shaotong Qi<sup>7</sup></span>
+      <span class="au">Jingcheng Liang<sup>2</sup></span>
+      <span class="au">Xuwei Ding<sup>3</sup></span>
+      <span class="au">Pengcheng Xu<sup>8†</sup></span>
+    </div>
+    <div class="affils">
+      <span><sup>1</sup>University of Chinese Academy of Sciences</span>
+      <span><sup>2</sup>University of Minnesota Twin Cities</span>
+      <span><sup>3</sup>University of Wisconsin–Madison</span>
+      <span><sup>4</sup>Stony Brook University</span>
+      <span><sup>5</sup>Dalian University of Technology</span>
+      <span><sup>6</sup>Beijing Foreign Studies University</span>
+      <span><sup>7</sup>Southeast University</span>
+      <span><sup>8</sup>Kuaishou Technology</span>
+    </div>
+    <div class="notes">* Equal contribution &nbsp; † Corresponding author</div>
+
+    <div class="btns">
+      <a class="btn" href="https://arxiv.org/abs/2610.00574" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>
+        arXiv</a>
+      <a class="btn" href="https://github.com/zhaihaotian/DARA" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.4-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+        Code</a>
+      <a class="btn ghost" href="https://huggingface.co/papers/2610.00574" target="_blank" rel="noopener">🤗 Paper page</a>
+      <a class="btn ghost" href="#bibtex">BibTeX</a>
+    </div>
+
+    <div class="tldr">
+      <b class="k">TL;DR</b>
+      Why does GDPO still learn some rewards much more slowly? Under reward-wise normalization, a reward's <b>advantage energy</b>
+      scales with its <b>active-group density</b>, so sparse rewards get drowned out. <b>DARA</b> reweights each reward to equalize
+      this energy, with no hand-tuned weights: sparse objectives are learned in up to 65% fewer steps, with competitive final performance.
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="big r">26%</div><div class="lbl">fewer steps to reach 0.8 format reward in tool calling (step 14 vs. 19 for GDPO)</div></div>
+      <div class="stat"><div class="big b">65%</div><div class="lbl">fewer steps to 99% length compliance on DeepSeek-R1-7B (step 50 vs. 142)</div></div>
+      <div class="stat"><div class="big r">6</div><div class="lbl">backbones from 1.5B to 7B, across tool calling and math reasoning</div></div>
+      <div class="stat"><div class="big b">Drop-in</div><div class="lbl">only GDPO's reward aggregation changes; the policy objective is untouched</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="figure boxed">
+    <img src="static/figures/DARA_method_overview_both_variants.svg" alt="DARA overview: reward-wise normalization, density calibration, weighted aggregation; DARA reaches high format reward earlier">
+    <div class="caption"><b>Figure 1.</b> (a) DARA normalizes each reward within its rollout group, measures how often each reward is active, and upweights rarely active rewards before aggregation. In the toy batch, reward 2 is active in 1 of 4 groups, so GDPO gives it ¼ of the energy of reward 1; DARA (w₂ = 2) restores 1 : 1. (b) Tool calling: DARA reaches high format reward earlier, and its density peak arrives earlier too.</div>
+  </div>
+</div>
+
+<!-- ================= ABSTRACT ================= -->
+<section id="abstract">
+  <div class="wrap">
+    <div class="eyebrow">Abstract</div>
+    <p>
+      Multi-reward reinforcement learning trains large language models to satisfy multiple behavioral objectives simultaneously.
+      Reward-wise normalization, as used in GDPO, preserves reward-specific relative information within rollout groups, but different
+      objectives can still exhibit uneven learning progress. We study this behavior through <em>advantage energy</em>, the sum of a
+      reward's squared advantages over a batch. Under idealized GDPO normalization, we show that this energy is proportional to
+      <em>active-group density</em>: the fraction of rollout groups in which the reward provides nonzero relative advantages. This reveals
+      a residual batch-level signal imbalance and provides a basis for calibrating reward contributions. Based on this relation, we
+      propose <b>Density-Aware Reward Aggregation (DARA)</b>. We derive an inverse-square-root density correction that gives greater weight
+      to signals from less frequently active rewards. DARA computes its weights from each rollout batch, adapting to changes in reward
+      activity throughout training without modifying the underlying policy optimization objective. Experiments on tool calling and
+      mathematical reasoning show that DARA learns the targeted behaviors faster than GDPO, reaching high format compliance in up to 26%
+      fewer training steps on tool calling and near-saturated length compliance in up to 65% fewer steps on mathematical reasoning, while
+      remaining competitive in final performance.
+    </p>
+  </div>
+</section>
+
+<!-- ================= PROBLEM ================= -->
+<section id="problem" class="alt">
+  <div class="wrap">
+    <div class="eyebrow">The problem</div>
+    <h2>GDPO normalizes each reward separately, yet rewards still learn at very different speeds</h2>
+    <p class="lead">
+      GRPO sums rewards before normalizing, which can make different reward combinations indistinguishable.
+      GDPO fixes this by normalizing each reward within its group first. But the GDPO paper itself reports that
+      learning stays uneven:
+    </p>
+
+    <div class="grid3" style="margin-top:22px">
+      <div class="card">
+        <div class="num">OBSERVATION 1</div>
+        <h4>The easy objective wins</h4>
+        <p>With equal reward weights, the model often maximizes the easier objective at the expense of the harder one.</p>
+      </div>
+      <div class="card">
+        <div class="num">OBSERVATION 2</div>
+        <h4>Weights must be "large enough"</h4>
+        <p>On DeepSeek-R1-7B, GDPO sweeps the length-reward weight over {1.0, 0.75, 0.5, 0.25}. Weights of 0.75 and 0.5 barely change
+          the length behavior; only 0.25 produces a clear shift. The right weight has to be found by repeated training runs.</p>
+      </div>
+      <div class="card">
+        <div class="num">OBSERVATION 3</div>
+        <h4>Treated as reward hacking</h4>
+        <p>GDPO describes this preference for the easier reward as a form of reward hacking, and works around it by conditioning
+          the easy reward on the hard one.</p>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:10px">Summarized from Section 3 and Section 4.2.1 of
+      <a href="https://arxiv.org/abs/2601.05242" target="_blank" rel="noopener">GDPO: Group reward-Decoupled Normalization Policy Optimization for Multi-reward RL Optimization</a>.</p>
+
+    <div class="question">
+      <b>Two questions this leaves open</b>
+      What optimization mechanism makes some rewards learn slower? And can reward weights be <em>derived</em> from that mechanism,
+      instead of tuned by trial and error?
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSIGHT ================= -->
+<section id="insight">
+  <div class="wrap">
+    <div class="eyebrow">Key insight</div>
+    <h2>A reward provides a learning signal only when its values differ within a group</h2>
+    <p class="lead">
+      A batch has \(B\) prompts. For each prompt \(x_i\), the policy samples a group of \(G\) responses, and each response
+      \(y^{(i,j)}\) receives \(K\) rewards \(r_k^{(i,j)}\), one per reward channel \(k=1,\dots,K\) (e.g. correctness and format).
+      GDPO normalizes each reward channel within its group:
+      \(A_k^{(i,j)}=\bigl(r_k^{(i,j)}-\mu_{i,k}\bigr)/\bigl(\sigma_{i,k}+\epsilon\bigr)\).
+    </p>
+    <p class="lead">
+      If all \(G\) responses in group \(i\) get the same value of reward \(k\), then \(A_k^{(i,j)}=0\) for the whole group and reward
+      \(k\) gives no learning signal there. Reward \(k\) is <b>active</b> in group \(i\) when its values differ within the group, and
+      its <b>active-group density</b> \(\pi_k\) is the fraction of the \(B\) groups in which it is active.
+    </p>
+
+    <div class="grid2" style="margin-top:8px">
+      <div class="eq">
+        <div class="small muted">Advantage energy of reward \(k\): how much advantage mass it puts into the update</div>
+        \[ E_k=\sum_{i=1}^{B}\sum_{j=1}^{G}\bigl(A_k^{(i,j)}\bigr)^2 \]
+      </div>
+      <div class="eq hl">
+        <div class="small muted">Under GDPO normalization, every active group contributes exactly \(G-1\), so</div>
+        \[ E_k = B\,\pi_k\,(G-1) \]
+      </div>
+    </div>
+
+    <p>
+      GDPO equalizes the scale <em>inside</em> each active group, but the batch total still scales linearly with how often the reward
+      is active. That is the leftover imbalance. For a binary reward with success rate \(p\), a group of size \(G\) is active with
+      probability \(1-p^G-(1-p)^G\). A reward that is almost never solved and a reward that is almost always satisfied are both
+      rarely active, so both get very little energy. In the appendix we further show that, under a stated covariance condition, this
+      energy also governs the fluctuation of each reward's policy-gradient contribution.
+    </p>
+
+    <h3>Try it: density, energy, and the DARA correction</h3>
+    <div class="card" id="playground">
+      <div class="play">
+        <div class="ctrl">
+          <label>Rollouts per group</label>
+          <div class="seg" id="pg-G"></div>
+          <label>Reward A success rate <span id="pg-pA-v"></span></label>
+          <input type="range" id="pg-pA" min="0" max="1" step="0.01" value="0.5">
+          <label>Reward B success rate <span id="pg-pB-v"></span></label>
+          <input type="range" id="pg-pB" min="0" max="1" step="0.01" value="0.05">
+          <div class="presets">
+            <button data-preset="4,0.5,0.05">Hard reward, rarely solved (G = 4)</button>
+            <button data-preset="16,0.5,0.98">Near-saturated reward (G = 16)</button>
+            <button data-preset="32,0.5,0.05">Same hard reward, larger group (G = 32)</button>
+          </div>
+        </div>
+        <div>
+          <div id="pg-plot"></div>
+          <div class="readout">
+            <div class="box">GDPO energy ratio B / A<div class="v" id="pg-gdpo"></div></div>
+            <div class="box">DARA-Sym energy ratio B / A<div class="v" id="pg-dara"></div></div>
+          </div>
+          <p class="small muted" style="margin-top:8px"><span id="pg-w"></span>
+            <span id="pg-cap" style="display:none;color:#d1453b"> · the required weight exceeds the cap w<sub>max</sub> = 5, so energy is only partially matched</span></p>
+        </div>
+      </div>
+      <p class="small muted" style="margin:10px 0 0">Expected density for binary rewards when every prompt has the same success rate. With prompts of
+        different difficulty, density is lower than this (Jensen's inequality, see the appendix).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= METHOD ================= -->
+<section id="method" class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Method</div>
+    <h2>DARA: give every reward the same advantage energy</h2>
+    <p class="lead">
+      Scaling reward \(k\) by \(\alpha_k\) scales its energy by \(\alpha_k^2\). To match the reward with the highest density
+      \(\pi_{\mathrm{ref}}=\max_k \pi_k\), we need \(\alpha_k^2\pi_k=\pi_{\mathrm{ref}}\). This gives the inverse-square-root rule:
+    </p>
+    <div class="eq hl">
+      \[ w_k=\min\!\Bigl(w_{\max},\ \sqrt{\pi_{\mathrm{ref}}/\pi_k}\Bigr)
+      \quad\Longrightarrow\quad E_k(w_k)=B\,\pi_{\mathrm{ref}}\,(G-1)\ \ \text{for every reward (before the cap binds)} \]
+    </div>
+    <p>
+      The weights are recomputed from every rollout batch, so they follow each reward as it becomes active, saturates, or
+      fades. Rewards that are rarely active get a larger weight exactly when they do provide a comparison.
+      The cap \(w_{\max}\) limits amplification when a reward is active in very few groups.
+    </p>
+
+    <div class="grid2">
+      <div class="card">
+        <h4><span class="pill sym">DARA-Sym</span>direct energy matching</h4>
+        <p>Multiply both positive and negative advantages by \(w_k\). This is the exact energy calibration above.</p>
+      </div>
+      <div class="card">
+        <h4><span class="pill asym">DARA-Asym</span>amplify only what went right</h4>
+        <p>Only positive advantages get the extra weight: \(A_k + (w_k-1)[A_k]_+\). When rewards conflict (e.g. a correct but
+          over-long answer), this avoids also amplifying the negative push. Its energy lies between GDPO's and DARA-Sym's.</p>
+      </div>
+    </div>
+
+<pre class="code"><span class="c"># rewards: [B, G, K] = prompts x rollouts x reward channels</span>
+A   = (rewards - rewards.mean(1, keepdim=True)) / (rewards.std(1, keepdim=True) + eps)
+<span class="h">pi  = (A.abs().sum(1) > tau).float().mean(0)            <span class="c"># active-group density</span></span>
+<span class="h">w   = torch.where(pi > 0, (pi.max() / pi).sqrt().clamp(max=w_max), 1.0)</span>
+<span class="h">A   = w * A <span class="k">if</span> sym <span class="k">else</span> A + (w - 1) * A.clamp(min=0)    <span class="c"># DARA-Sym / DARA-Asym</span></span>
+S   = A.sum(-1)
+adv = (S - S.mean()) / (S.std() + eps)                 <span class="c"># then the usual policy loss</span></pre>
+    <p class="small muted">Sketch of the advantage computation (Algorithm 1 in the paper). The highlighted lines are what DARA adds to GDPO.</p>
+  </div>
+</section>
+
+<!-- ================= TOOL CALLING ================= -->
+<section id="tool">
+  <div class="wrap">
+    <div class="eyebrow">Experiments · Tool calling</div>
+    <h2>Correctness + format: the sparse format reward is learned earlier</h2>
+    <p class="lead">
+      Following ToolRL and GDPO, Qwen2.5-1.5B/3B-Instruct learn to call tools, with a binary format reward and a correctness reward
+      in [−3, 3]. We compare with GRPO, GDPO and two concurrent methods, DVAO and GD²PO-Hard, and evaluate on BFCL-v4.
+    </p>
+
+    <h3>Density predicts when format is learned</h3>
+    <div class="card"><div id="chart-fig1b"></div>
+      <div class="chart-note">Qwen2.5-1.5B-Instruct, 5 seeds. Interactive version of Figure 1(b).</div>
+    </div>
+    <div class="callout"><div class="ic">📈</div><p>
+      The format reward rises fastest exactly when its active-group density peaks. DARA moves both the density peak and the
+      rapid-learning phase earlier: the median format reward reaches 0.8 at <b>step 14–15</b>, versus 19 for GDPO and 34 for GRPO.</p></div>
+
+    <h3>Faster learning carries over to BFCL-v4</h3>
+    <div class="card"><div id="chart-bfcl"></div>
+      <div class="chart-note">Checkpoint-wise BFCL-v4 evaluation of Qwen2.5-1.5B-Instruct, averaged over Live, Non-Live and Multi-Turn.</div>
+    </div>
+    <p>
+      For the baselines, accuracy is mostly in place by step 20, while format compliance lags until step 30–40. This is the
+      uneven learning the theory describes; DARA learns both early. At step 60, DARA-Sym and DARA-Asym have the highest Average Accuracy (50.94% and 50.69%) and Average Format
+      (96.06% and 96.02%); the best baseline reaches 50.50% and 90.11%. At step 100, when most methods have converged, DARA stays
+      competitive:
+    </p>
+    <div class="tbl-wrap">
+      <table class="res">
+        <thead>
+          <tr><th rowspan="2">Method</th><th colspan="2">Qwen2.5-1.5B-Instruct</th><th colspan="2">Qwen2.5-3B-Instruct</th></tr>
+          <tr><th>Avg. Acc.</th><th>Avg. Format</th><th>Avg. Acc.</th><th>Avg. Format</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Base</td><td>7.25</td><td>0.23</td><td>28.55</td><td>32.77</td></tr>
+          <tr class="sep"><td>GRPO</td><td>48.46</td><td>81.01</td><td>52.57</td><td>88.76</td></tr>
+          <tr><td>GDPO</td><td>50.37</td><td>97.11</td><td>53.66</td><td>96.57</td></tr>
+          <tr><td>DVAO</td><td>48.64</td><td>93.52</td><td><b>54.22</b></td><td>97.04</td></tr>
+          <tr><td>GD²PO-Hard</td><td>50.13</td><td>95.52</td><td>53.90</td><td>97.00</td></tr>
+          <tr class="sep ours"><td>DARA-Asym</td><td>50.59</td><td><b>97.90</b></td><td>53.63</td><td>96.50</td></tr>
+          <tr class="ours"><td>DARA-Sym</td><td><b>51.17</b></td><td>97.55</td><td>54.15</td><td><b>97.22</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted">BFCL-v4 at step 100, mean over 5 training seeds. Per-subset results (Live / Non-Live / Multi-Turn) are in Table 1 of the paper.</p>
+
+    <h3>Larger groups → higher density → faster convergence</h3>
+    <p>
+      The theory makes a testable prediction. A group is active when it contains both a success and a failure, which happens with
+      probability \(1-p^G-(1-p)^G\) and grows with group size \(G\). So even with the <b>same number of responses per step</b>
+      (2,048), splitting them into larger groups makes more groups produce a gradient for the format reward, and the format reward
+      should be learned faster. We vary \(G\in\{4,8,16,32\}\):
+    </p>
+    <div class="figure boxed">
+      <img src="static/figures/group_size_format_density_trajectories.svg" alt="Format active-group density for G = 4, 8, 16, 32">
+      <div class="caption">Format active-group density for each group size (median and IQR, 3 seeds). Markers on the dashed line show when the
+        format reward first reaches 0.8; open markers mean it does not reach 0.8 within 100 steps.</div>
+    </div>
+    <div class="callout"><div class="ic">✅</div><p>
+      Exactly as predicted: larger \(G\) raises the format density for every method, and the 0.8 crossing comes earlier.
+      GDPO learns format slowly and inconsistently at small \(G\) and only reliably at \(G=16\) and \(32\). DARA also benefits from
+      larger groups, and reaches 0.8 earlier than GRPO and GDPO at <b>every</b> group size, because its calibration compensates for sparse
+      activity.</p></div>
+
+    <h3>Adding a third reward without crowding out the others</h3>
+    <p>
+      We add a length reward that requires the <code>&lt;think&gt;</code> block to have at most 16 words. A new objective competes for
+      learning signal. Under GDPO, it pulls format compliance down; DARA calibrates each reward by its own density and keeps format nearly intact:
+    </p>
+    <div class="tbl-wrap">
+      <table class="res">
+        <thead>
+          <tr><th rowspan="2">Method</th><th colspan="2">Average Format</th><th colspan="2">Multi-Turn Format</th><th rowspan="2">Avg. Len. (3 rewards)</th></tr>
+          <tr><th>2 rewards</th><th>3 rewards</th><th>2 rewards</th><th>3 rewards</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>GDPO</td><td>97.11</td><td>94.39 <span class="muted">(−2.72)</span></td><td>91.40</td><td>83.17 <span class="muted">(−8.23)</span></td><td>97.96</td></tr>
+          <tr class="sep ours"><td>DARA-Asym</td><td>97.90</td><td>96.93 <span class="muted">(−0.97)</span></td><td>94.17</td><td>90.80 <span class="muted">(−3.37)</span></td><td>98.05</td></tr>
+          <tr class="ours"><td>DARA-Sym</td><td>97.55</td><td><b>97.43</b> <span class="muted">(−0.12)</span></td><td>92.77</td><td><b>92.30</b> <span class="muted">(−0.47)</span></td><td><b>98.72</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted">BFCL-v4 at step 100, Qwen2.5-1.5B-Instruct. Average Accuracy is comparable across methods (50.46–50.63). Full results: Tables 1 and 2 of the paper.</p>
+  </div>
+</section>
+
+<!-- ================= MATH ================= -->
+<section id="math" class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Experiments · Mathematical reasoning</div>
+    <h2>Correctness + length: the gap opens where the length reward becomes sparse</h2>
+    <p class="lead">
+      Two competing binary rewards: a correct final answer, and a response of at most 4,000 tokens. We train on DeepScaleR-Preview
+      with DeepSeek-R1-1.5B, Qwen3-4B-Instruct and DeepSeek-R1-7B (plus Qwen3-4B-Thinking), and evaluate on MATH-500, AIME 2024,
+      AMC 2022/23, Minerva and OlympiadBench.
+    </p>
+
+    <div class="figure boxed">
+      <img src="static/figures/fig_training_rewards_r1_1p5b_new.svg" alt="Training reward dynamics on DeepSeek-R1-1.5B">
+      <div class="caption">Training rewards on DeepSeek-R1-1.5B. Left: correctness; right: length. Static denotes the fixed-weight control (w = 5).</div>
+    </div>
+
+    <h3>The advantage grows near saturation, exactly where density drops</h3>
+    <p>
+      Early on, many groups contain both short and over-long answers, so the length reward is dense and all methods look alike. As
+      compliance approaches 100%, mixed groups become rare: the length reward turns sparse right where the last bit of improvement is
+      hardest. This is the regime DARA targets.
+    </p>
+    <div class="grid2">
+      <div class="figure boxed"><img src="static/figures/fig_thresholds_qwen3_4b_new.svg" alt="First stable crossing, Qwen3-4B-Instruct"></div>
+      <div class="figure boxed"><img src="static/figures/fig_thresholds_r1_7b_new.svg" alt="First stable crossing, DeepSeek-R1-7B"></div>
+    </div>
+    <div class="caption">Training step at which each method stably reaches a length-compliance threshold (lower is faster).</div>
+    <div class="callout"><div class="ic">⚡</div><p>
+      At 80% compliance, DARA and GDPO are tied (step 20 on Qwen3-4B-Instruct). At <b>99%</b>, DARA-Asym / DARA-Sym / GDPO need
+      steps 66 / 59 / 111 on Qwen3-4B-Instruct and <b>56 / 50 / 142</b> on DeepSeek-R1-7B: <b>41–65% fewer steps</b> than GDPO.</p></div>
+
+    <h3>The speed-up transfers to held-out benchmarks</h3>
+    <div class="figure boxed">
+      <img src="static/figures/fig_heldout_evaluation_r1_7b_new.svg" alt="Held-out evaluation on DeepSeek-R1-7B">
+      <div class="caption">DeepSeek-R1-7B evaluated every 10 steps. Left: macro pass@1 accuracy; right: % of responses longer than 4,000 tokens.
+        Both DARA variants first reach 95% held-out length compliance at step 50, versus step 70 for GDPO.</div>
+    </div>
+
+    <h3>Results</h3>
+    <div class="tbl-wrap">
+      <table class="res">
+        <thead>
+          <tr><th rowspan="2">Method</th><th colspan="3">DeepSeek-R1-1.5B</th><th colspan="3">Qwen3-4B-Instruct</th><th colspan="3">DeepSeek-R1-7B</th></tr>
+          <tr><th>Acc ↑</th><th>Exceed ↓</th><th>Joint ↑</th><th>Acc ↑</th><th>Exceed ↓</th><th>Joint ↑</th><th>Acc ↑</th><th>Exceed ↓</th><th>Joint ↑</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Base</td><td>48.93</td><td>65.23</td><td>27.75</td><td>68.15</td><td>33.60</td><td>51.69</td><td>64.66</td><td>56.16</td><td>36.32</td></tr>
+          <tr class="sep"><td>GRPO</td><td>45.52</td><td>11.03</td><td>44.69</td><td><b>62.14</b></td><td>8.07</td><td><b>60.48</b></td><td>58.26</td><td>9.73</td><td>56.74</td></tr>
+          <tr><td>GDPO</td><td>44.12</td><td>8.66</td><td>43.47</td><td>60.82</td><td>7.64</td><td>59.19</td><td>57.45</td><td>6.82</td><td>56.48</td></tr>
+          <tr><td>DVAO</td><td>45.58</td><td>11.35</td><td>44.57</td><td>61.37</td><td>4.77</td><td>60.34</td><td>58.15</td><td>5.75</td><td>57.53</td></tr>
+          <tr><td>GD²PO-Hard</td><td>44.24</td><td>11.41</td><td>43.45</td><td>60.58</td><td>7.28</td><td>59.16</td><td>57.78</td><td>7.96</td><td>56.35</td></tr>
+          <tr class="sep ours"><td>DARA-Asym</td><td><b>45.83</b></td><td>8.16</td><td><b>45.14</b></td><td>60.30</td><td>4.38</td><td>59.68</td><td><b>58.31</b></td><td>3.73</td><td><b>57.83</b></td></tr>
+          <tr class="ours"><td>DARA-Sym</td><td>44.43</td><td><b>5.18</b></td><td>44.12</td><td>58.76</td><td><b>1.69</b></td><td>58.52</td><td>55.96</td><td><b>1.09</b></td><td>55.79</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small muted">Macro averages over five benchmarks (%). Exceed: responses longer than 4,000 tokens. Joint: correct <em>and</em> within the length limit.</p>
+    <p>
+      DARA-Sym has the lowest Exceed on all three models. DARA-Asym keeps more accuracy and achieves the best Joint score and accuracy on
+      both DeepSeek-R1 models. On Qwen3-4B, GRPO leads at step 50; after training to step 100, the gap nearly closes: DARA-Asym reaches
+      62.17% vs. 62.99% accuracy on Qwen3-4B-Instruct and 64.23% vs. 64.82% on Qwen3-4B-Thinking, while cutting Exceed from 0.70% to 0.25%
+      and from 1.86% to 0.94%.
+    </p>
+
+  </div>
+</section>
+
+<!-- ================= ABLATION ================= -->
+<section id="ablation">
+  <div class="wrap">
+    <div class="eyebrow">Ablation</div>
+    <h2>Isn't this just a bigger weight on the sparse reward?</h2>
+    <p class="lead">
+      We replace DARA's per-batch weights with a fixed, large weight on the length reward (correctness 1, length 5), keeping everything
+      else identical. A fixed weight does speed up length optimization, as GDPO also found, but it pays for it in accuracy.
+    </p>
+    <div class="grid2" style="align-items:start">
+      <div class="tbl-wrap">
+        <table class="res">
+          <thead><tr><th>DeepSeek-R1-1.5B</th><th>Acc ↑</th><th>Exceed ↓</th><th>Joint ↑</th></tr></thead>
+          <tbody>
+            <tr class="ours"><td>DARA-Asym</td><td><b>48.03</b></td><td>4.21</td><td><b>47.76</b></td></tr>
+            <tr><td>Static-Asym (w = 5)</td><td>46.84</td><td><b>3.14</b></td><td>46.72</td></tr>
+            <tr class="sep ours"><td>DARA-Sym</td><td><b>46.71</b></td><td>0.89</td><td><b>46.67</b></td></tr>
+            <tr><td>Static-Sym (w = 5)</td><td>45.97</td><td><b>0.87</b></td><td>45.96</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h4>Why a density-based weight is different</h4>
+        <p>A static weight amplifies the length reward from the first step, even while it is still dense. DARA's length weight
+          starts near 1 (about 1.03 at step 1 on DeepSeek-R1-1.5B) and grows only as the reward turns sparse, so extra signal goes
+          where it is missing. In the training curves above, the static control has the lowest correctness reward.</p>
+        <p>It also removes the manual tuning that GDPO needed (see <a href="#problem">The problem</a>): instead of sweeping a fixed
+          weight over repeated runs, DARA computes the weights from active-group density in every batch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BIBTEX ================= -->
+<section id="bibtex" class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Citation</div>
+    <h2>BibTeX</h2>
+    <div class="bib">
+      <button class="copy" id="copy-bib">Copy</button>
+<pre class="code" id="bibtex">@article{zheng2026dara,
+  title   = {Make Sparse Rewards Count: Density-Aware Reward Aggregation for Multi-Reward {RL}},
+  author  = {Zheng, Tong and Zhai, Skylar and Cheng, Zhan and Sha, TianMing and Huang, Youling and
+             Zhou, Shuo and Qi, Shaotong and Liang, Jingcheng and Ding, Xuwei and Xu, Pengcheng},
+  journal = {arXiv preprint arXiv:2610.00574},
+  year    = {2026}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    DARA · Make Sparse Rewards Count: Density-Aware Reward Aggregation for Multi-Reward RL
+  </div>
+</footer>
+
+</body>
+</html>
